@@ -1,6 +1,6 @@
 # Instructions for AI Coding Agents
 
-This file applies to all coding work in **Astro Static Studio**. Read [VISION](docs/VISION.md), [MVP](docs/MVP.md), [ARCHITECTURE](docs/ARCHITECTURE.md), and [CONTRACTS](docs/CONTRACTS.md) before proposing changes. These are planning documents, not evidence that an implementation exists.
+This file applies to all coding work in **Astro Static Studio**. Read [VISION](docs/VISION.md), [MVP](docs/MVP.md), [ARCHITECTURE](docs/ARCHITECTURE.md), [CONTRACTS](docs/CONTRACTS.md), and [CONTENT_MODEL](docs/CONTENT_MODEL.md) before proposing changes. This repository contains an implemented desktop local editor, Astro renderer, and Cloudflare QA preview publishing path; proposed future features remain proposals unless verified in code and tests.
 
 ## Mission and boundaries
 Build a **small, mobile-first, user-friendly CMS for Astro static sites**. The sample portfolio `sararahanjam.com` is a reference, not the whole product. A non-technical Content Editor should update content and publish without seeing code, Git, or build settings.
@@ -64,3 +64,11 @@ A change is done only when the acceptance criteria are met, supported test/build
 
 ## Communication
 Use clear, short English (roughly B1–B2 readability). Separate verified facts, proposals, and open questions. Be precise and avoid repeating the user's instructions.
+
+## Current v1 versus future content model
+
+- **Current source of truth:** `packages/contracts/src/index.ts` defines Content v1: only page/project entries and text/gallery components in `content/content.json`. The existing site uses a direct JSON import, not Astro Content Collections.
+- **Future proposal:** `docs/CONTENT_MODEL.md` specifies a template-first, Pages + typed Collections experience with per-collection categories and collection-view blocks. It is **not** an instruction to silently rewrite the schema or UI.
+- Before implementing it, preserve the working loopback API, backups, Cloudflare publish protections, existing sample data, IDs, URLs and asset paths. Prepare a versioned, tested migration with rollback, and follow issue #5 usability evidence.
+- Reuse Astro build-time Content Layer loaders and pagination only after confirming they serve the specific migration; never confuse static route pagination with local dashboard API paging.
+- Default to one supported template and preset forms/blocks. RTL/LTR must be supported and tested by each approved theme; it is not achieved by a `dir` attribute alone.

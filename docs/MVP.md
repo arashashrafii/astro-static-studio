@@ -3,11 +3,11 @@
 ## Goal
 Prove that a non-technical owner can manage a simple portfolio with **one Astro template** and a local React/TypeScript dashboard. Studio runs on the owner's device without a Studio-operated server or database. Sara Rahanjam is the sample output; do not build a universal site builder yet.
 
-## Content Editor features
+## Target owner capabilities (features below are not all implemented)
 - See a simple dashboard with Projects, Articles, Pages, Media, and Publish.
 - Add, edit, reorder, and remove portfolio projects.
 - Edit project title, description, category, and gallery images.
-- Add and edit simple articles and their pictures.
+- Add and edit simple articles and their pictures (**proposed next content-model phase; current v1 supports only page/project entries**).
 - Edit content in predefined Home, About, and Contact sections. Contact may use email/phone links; no server-side form is required for this example.
 - Upload JPEG or PNG photos from a phone or desktop, inspect image quality, convert suitable output to WebP, and use meaningful alt text. Preserve source files or an export path when needed for artwork fidelity.
 - Save drafts and preview before publication.
@@ -25,7 +25,7 @@ Prove that a non-technical owner can manage a simple portfolio with **one Astro 
 - Android is the first packaged target; iOS is deferred until Android is validated.
 - Full local Astro builds on Android are a feasibility gate; the existing renderer experiment does not prove this capability.
 - Desktop run uses Node.js/npm and does not require a separate installer.
-- Do not introduce a database or backend until a real requirement justifies one.
+- Keep the current local-only Node API; do not introduce a hosted backend or database without a demonstrated need.
 - Avoid a broad plugin ecosystem, e-commerce, or complex user-management screens.
 
 ## Acceptance criteria
@@ -33,7 +33,7 @@ Prove that a non-technical owner can manage a simple portfolio with **one Astro 
 2. Editor can add one project with three images, preview, and publish it without Git or terminal knowledge.
 3. JPEG and PNG conversion includes a visible before/after file-size and quality check. Images display correctly with appropriate alt text.
 4. Editor can update About and Contact without changing source code.
-5. Admin can create a simple page using a supported layout preset.
+5. The single owner can create a simple page using a supported layout preset; there is no separate Admin role in the local MVP.
 6. Build produces static output; navigation, project URLs, responsive images, and galleries work after deployment.
 7. CMS shows an actionable failure message when the build or deploy fails, and prior published content is not silently lost.
 8. No publish credentials or long-lived tokens appear in browser bundles or Git history.
@@ -47,6 +47,22 @@ Desktop setup requires Node.js/npm. Android is the first native package target. 
 Multiple publisher adapters; curated Astro theme gallery; visual page builder; iOS before Android proof; collaborative editing.
 
 ## Prototype order
-First local content/preview, then secure publishing, then test the complete mobile editing flow.
+Local content/preview and a Cloudflare QA preview publish are implemented; the remaining immediate gate is task-based testing with a non-technical desktop owner. Android full-build feasibility and packaging come later. The proposed collection/block redesign follows an incremental, backed-up content migration, not a one-shot replacement.
 
 References: [MDN PWA installability](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable).
+
+## Current implementation versus proposed follow-up
+
+**Implemented in this repository (desktop local workflow):** React/TypeScript PWA shell, loopback Node API, Astro sample renderer, `content/content.json` validated with Zod v1, page/project editing with text and gallery components, image conversion, local backup/restore, temporary-directory static build and Cloudflare Pages QA preview publishing. Cloudflare production publishing, real non-technical acceptance testing, Android product workflow, free-template picker, RTL/LTR site setting, article/artist/photo collection types, rich-text editor and static pagination are **not verified as implemented**.
+
+**Proposed follow-up, outside the existing v1 acceptance baseline:** a guided template-first setup, editable Pages and typed Collections with one-level categories, simple collection-view page blocks, plain rich text, theme-supported direction setting and two independent paging concerns (CMS data retrieval and generated static URLs). No arbitrary schema builder or drag-and-drop editor. See [CONTENT_MODEL.md](CONTENT_MODEL.md).
+
+Treat these as **future acceptance criteria**, not proof that the features work:
+- Owner creates an Articles collection from a preset and adds an entry without technical terms.
+- Owner creates a Photos collection, assigns Winter/Summer categories, and adds a gallery view to a page.
+- Owner can put the same collection on Home (limited items) and Articles (paginated list) without duplicating records.
+- RTL and LTR pass real layout tests on each supported theme; changing direction does not translate content.
+- A backup/restore round-trip and content migration preserve all existing v1 projects/pages, published flags, slugs, media and galleries.
+- A dashboard listing fetches only one page of entries from its local API; static site pagination produces separate HTML pages.
+
+Do not increase MVP scope before desktop usability issue #5 is reviewed.

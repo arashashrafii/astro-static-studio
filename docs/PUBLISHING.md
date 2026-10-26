@@ -1,12 +1,12 @@
 # First publishing provider decision
 
-**Status: Cloudflare Pages Direct Upload is implemented for M2; the full sample-site preview still needs a real-account retry after the bounded asset upload change.**
+**Status (2026-10-26): Cloudflare Pages Direct Upload is implemented. The full sample-site QA preview upload completed, deployment metadata matched the selected project/branch, and the owner confirmed the preview became accessible. The agent did not independently verify final public reachability from its restricted environment. Production publishing remains untested. See [M2_VALIDATION](M2_VALIDATION.md).**
 
 ## Decision
 
 Use **Cloudflare Pages Direct Upload through Wrangler** for the first publishing adapter. It matches Studio's local build model: Studio produces static assets locally, and Wrangler can upload a prebuilt directory directly from the owner's computer. Direct Upload cannot later be switched to Git integration; moving to Git integration requires a new Pages project and domain/configuration migration. The owner approved this tradeoff for M2.
 
-No Cloudflare account was connected and no remote project or deployment was created during implementation. Studio defaults to a preview deployment and requires a separate in-product confirmation before publishing to production.
+A disposable Cloudflare QA project was created and a preview deployment completed during validation; do not mistake it for a production release. Studio defaults to a preview deployment and requires a separate in-product confirmation before publishing to production.
 
 ## Implemented flow
 

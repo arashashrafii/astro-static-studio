@@ -19,7 +19,7 @@ npm test
 npm run build
 ```
 
-The current usable slice is a local single-site editor with projects/pages, text and galleries, draft recovery, WebP media conversion, Astro static output, and a PWA dashboard shell. Site builds go to a temporary directory first; a failed build leaves the previous successful output intact. Cloud publishing, theme selection, iOS and on-device Android Astro builds are not implemented. The Android APK in `experiments/offline-astro` is an earlier technical experiment, not the Studio app.
+The current usable slice is a local single-site editor with projects/pages, text and galleries, draft recovery, WebP media conversion, Astro static output, and a PWA dashboard shell. Site builds go to a temporary directory first; a failed build leaves the previous successful output intact. Cloudflare Pages Direct Upload and a preview deployment flow are implemented and were exercised with a QA project; the owner confirmed the preview became accessible. Production publishing has not been verified. Template selection, a general collection manager, RTL/LTR theme switching, iOS support, and full on-device Android Astro builds are not implemented. The Android APK in `experiments/offline-astro` is an earlier technical experiment, not the Studio app.
 
 ## Structure
 
@@ -30,4 +30,10 @@ The current usable slice is a local single-site editor with projects/pages, text
 - `packages/contracts`: validated content/theme/publisher contracts.
 - `packages/theme`: initial Atelier theme metadata.
 
-See [Vision](docs/VISION.md), [MVP](docs/MVP.md), [Architecture](docs/ARCHITECTURE.md), [Publishing decision](docs/PUBLISHING.md), and [Roadmap](docs/ROADMAP.md).
+See [Vision](docs/VISION.md), [MVP](docs/MVP.md), [Architecture](docs/ARCHITECTURE.md), [Content and page model (proposed)](docs/CONTENT_MODEL.md), [Current contracts](docs/CONTRACTS.md), [Publishing decision](docs/PUBLISHING.md), and [Roadmap](docs/ROADMAP.md).
+
+## Product direction (proposal, not shipped)
+
+Keep the non-technical owner journey simple: choose an **approved free template**, configure site identity and language/direction, edit **Pages** and **Collections**, preview, and publish. A page can contain simple predefined blocks, including a collection display (cards, list, or gallery). Collection entries and categories are managed separately from the page on which they appear.
+
+This is a **future content-model/UI proposal**, not a description of the current v1 schema. Today the implementation has only `page`/`project` entries and `text`/`gallery` blocks loaded from one JSON file; see [CONTENT_MODEL](docs/CONTENT_MODEL.md) for migration boundaries and sequencing.

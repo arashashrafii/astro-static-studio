@@ -1,6 +1,6 @@
 # Implementation Roadmap
 
-**Status:** Desktop local editing/build, setup/recovery and the first Cloudflare preview publishing flow are implemented. Milestone 1 usability validation remains open; M2 preview publishing is complete. Native mobile builds remain later work.
+**Status:** Desktop local editing/build, setup/recovery and Cloudflare QA preview publishing exist. Milestone 1 non-technical usability validation is still open; M2 preview publishing is complete with owner-confirmed reachability. The template-first/collection-driven content redesign is **proposed, not implemented**. Native mobile builds remain later work.
 
 ## Goal
 Deliver a simple, mobile-first CMS for Astro websites. Customers can edit projects, text and pictures, then publish a static site without using Git or a terminal.
@@ -47,8 +47,21 @@ This repository now contains an adapted copy of the Sara editor, local API, cont
 - Issues: [#10 enforce portable contracts](https://github.com/arashashrafii/astro-static-studio/issues/10), [#11 second approved template](https://github.com/arashashrafii/astro-static-studio/issues/11), [#12 evaluate another publisher](https://github.com/arashashrafii/astro-static-studio/issues/12).
 - Define/validate portable content, component, theme and publishing contracts.
 - Adapt a second approved Astro template; **do not claim arbitrary templates work automatically**.
-- Explore another static host (Cloudflare Pages, S3-compatible storage, etc.) through a tested publishing adapter.
+- Evaluate a **second** static host (for example, S3-compatible storage) through a tested publishing adapter; Cloudflare Pages is already the first provider.
 - Consider a curated template gallery, offline workflows, and native packages only after the core journey succeeds.
+
+## Proposed content/UX evolution — AFTER desktop usability validation
+
+Design reference: [CONTENT_MODEL.md](CONTENT_MODEL.md). These are not completed roadmap items and do not modify the current Content v1 contract.
+
+1. **Evidence first:** finish [#5](https://github.com/arashashrafii/astro-static-studio/issues/5) with a non-technical owner on the current desktop workflow. Preserve the working publish and backup behavior.
+2. **Template-first setup:** keep the bundled approved template as the initial free choice; later test a second adapted free template before exposing selection. Add site language and whole-site RTL/LTR controls only when the chosen theme passes direction/accessibility tests.
+3. **Unified content domain:** introduce named typed Collections (Articles, Projects, Photos, People) with preset guided forms, one-level categories, item-level pages when enabled, and shared data/validation without building a schema editor.
+4. **Page composer:** allow a Page to contain ordered predefined text, image and collection-view blocks; collection views reference stored items and choose cards/list/gallery. Avoid freeform drag-and-drop.
+5. **Storage + performance:** safely migrate Content v1 with backup and compatibility checks. Move toward per-entry storage as needed; implement server-side local API paging/filtering separately from static `paginate()` routes and measure real build performance.
+6. **Rich text + usability:** provide a small safe editor for bold, links, lists and images; validate mobile ergonomics and safe rendering. Do not promise mobile full Astro builds until issue #8 is validated.
+
+Implement small reviewable slices and update [CONTRACTS.md](CONTRACTS.md) only after code/tests support the new version; #10 is the contract enforcement checkpoint. New roadmap issues may be created later after scope and ownership are agreed.
 
 ## Agent-first delivery process
 1. **Plan or Research (only when needed):** Confirm the requirement and check available tools before reinventing one. Clearly separate verified facts from proposals.
@@ -62,4 +75,4 @@ This is a **workflow of roles**, not a requirement for three paid or constantly 
 Every implementation issue states: objective, current code/links, scope and exclusions, acceptance criteria, tests/checks, security risks, dependencies and a clear definition of done. Make small, reviewable changes; report actual results, never invented completion.
 
 ## Next task
-Complete issue [#5 desktop workflow usability validation](https://github.com/arashashrafii/astro-static-studio/issues/5): run the task-based session, record blockers, and simplify the dashboard around those findings.
+Complete issue [#5 desktop workflow usability validation](https://github.com/arashashrafii/astro-static-studio/issues/5): run the task-based session and record blockers. Use those findings before implementing the proposed template/collection/page UX in [CONTENT_MODEL.md](CONTENT_MODEL.md).
