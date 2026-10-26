@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {ContentSchema,ComponentSchema} from '@astro-static-studio/contracts';
+import {readFile} from 'node:fs/promises';
+const sample=JSON.parse(await readFile(new URL('../content/content.json',import.meta.url),'utf8'));
+test('sample conforms to versioned contract',()=>assert.equal(ContentSchema.safeParse(sample).success,true));
+test('site email can be empty during setup but rejects malformed non-empty email',()=>{const c=structuredClone(sample);c.site.email='';assert.equal(ContentSchema.safeParse(c).success,true);c.site.email='owner-at-example';assert.equal(ContentSchema.safeParse(c).success,false)});
+test('reject traversal, reserved slugs and duplicate routes',()=>{for(const slug of ['../escape','projects','media','a/b']){const c=structuredClone(sample);c.entries[0].slug=slug;assert.equal(ContentSchema.safeParse(c).success,false)}const c=structuredClone(sample);c.entries[1].slug=c.entries[0].slug;assert.equal(ContentSchema.safeParse(c).success,false)});
+test('gallery only accepts managed local WebP media',()=>{assert.equal(ComponentSchema.safeParse({type:'gallery',images:[{src:'/media/1234-abcd.webp',alt:'sample'}]}).success,true);for(const src of ['https://remote/image.webp','/media/../secret.webp','/media/a.png'])assert.equal(ComponentSchema.safeParse({type:'gallery',images:[{src,alt:''}]}).success,false)});
+test('reject unknown component types',()=>assert.equal(ComponentSchema.safeParse({type:'script',body:'alert(1)'}).success,false));

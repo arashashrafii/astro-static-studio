@@ -1,0 +1,20 @@
+{
+  "name": "astro-offline-rendering-poc",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "prepare:renderer": "node scripts/prepare-renderer.mjs",
+    "prepare:android": "npm run prepare:renderer && node scripts/prepare-android-assets.mjs",
+    "export": "node scripts/export-site.mjs",
+    "demo": "node scripts/serve-demo.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@astrojs/compiler-rs": "0.5.2",
+    "astro": "7.4.2",
+    "esbuild": "0.28.2"
+  }
+}

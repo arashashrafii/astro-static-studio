@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Offline Astro renderer experiment</title>
+    <style>
+      :root { color-scheme: light; font-family: system-ui, sans-serif; color: #24221e; background: #f5f2eb; }
+      body { margin: 0 auto; max-width: 72rem; padding: 1rem; }
+      main { display: grid; grid-template-columns: minmax(18rem, 1fr) minmax(18rem, 1fr); gap: 1.5rem; }
+      textarea { width: 100%; min-height: 27rem; font: 14px/1.5 ui-monospace, monospace; }
+      button, input { font: inherit; padding: .6rem .8rem; }
+      iframe { width: 100%; height: 36rem; border: 1px solid #bbb; background: white; }
+      #downloads li { margin-block: .5rem; }
+      #status { min-height: 1.5em; }
+      @media (max-width: 700px) { main { grid-template-columns: 1fr; } }
+    </style>
+    <script id="initial-content" type="application/json">
+      {"siteTitle":"Mira Solis","tagline":"Ceramic artist · Portland","heading":"Objects shaped by light and clay.","introduction":"A small collection of hand-built vessels and everyday forms.","contact":"Contact: studio@example.test","projects":[{"slug":"paper-study","title":"Paper study","description":"A quiet study in folded form, warm color, and shadow.","image":"images/paper-study.svg","alt":"A cream ceramic vessel beside a folded ochre paper shape"}]}
+    </script>
+    <script id="sample-image" type="text/plain">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="title"><title id="title">A cream vessel beside folded ochre paper</title><rect width="720" height="480" fill="#e6d9c8"/><path d="M430 82 660 182 524 418 350 300Z" fill="#bd7941"/><path d="M430 82 524 418 350 300Z" fill="#d99455"/><ellipse cx="212" cy="378" rx="126" ry="25" fill="#c7b39b"/><path d="M154 198c0-45 26-80 58-80s58 35 58 80l30 149c8 39-21 69-88 69s-96-30-88-69z" fill="#f5eee2"/><ellipse cx="212" cy="198" rx="58" ry="18" fill="#ded0bd"/><ellipse cx="212" cy="198" rx="39" ry="9" fill="#8d7761"/></svg>
+    </script>
+    <script type="module" src="./demo.mjs"></script>
+  </head>
+  <body>
+    <h1>Offline Astro renderer experiment</h1>
+    <p>Edit the structured content, optionally select a local photo, then generate a downloadable static-site archive.</p>
+    <main>
+      <section>
+        <label for="content">Site content (JSON)</label>
+        <textarea id="content" spellcheck="false"></textarea>
+        <p><label for="photo">Replace the sample image (optional):</label><br /><input id="photo" type="file" accept="image/jpeg,image/png,image/webp" /></p>
+        <button id="build" type="button">Generate static files</button>
+        <p id="status" role="status" aria-live="polite"></p>
+        <ul id="downloads"></ul>
+      </section>
+      <section>
+        <h2>Home page preview</h2>
+        <iframe id="preview" title="Generated static site preview" sandbox="allow-same-origin"></iframe>
+      </section>
+    </main>
+  </body>
+</html>

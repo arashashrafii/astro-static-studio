@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { content } from '../lib/content';
+export async function getStaticPaths(){const data=await content();return data.entries.filter(e=>e.published).map(entry=>({params:{slug:entry.kind==='project'?`portfolio/${entry.slug}`:entry.slug},props:{entry,data}}));}
+const {entry,data}=Astro.props;
+---
+<Layout data={data} title={entry.title}><span class="eyebrow">{entry.kind==='project'?'PROJECT':'JOURNAL'}</span><h1>{entry.title}</h1><p class="muted">{entry.summary}</p>{entry.components.map(c=>c.type==='text'?<p class="prose">{c.body}</p>:<section class="gallery">{c.images.map(im=><figure><img src={im.src} alt={im.alt}/><figcaption>{im.alt}</figcaption></figure>)}</section>)}</Layout>

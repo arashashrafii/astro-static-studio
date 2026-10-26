@@ -1,50 +1,50 @@
 # Implementation Roadmap
 
-**Status:** Planning. No application code is verified in this repository.
+**Status:** Desktop local editing/build, setup/recovery and the first Cloudflare preview publishing flow are implemented. Milestone 1 usability validation remains open; M2 preview publishing is complete. Native mobile builds remain later work.
 
 ## Goal
 Deliver a simple, mobile-first CMS for Astro websites. Customers can edit projects, text and pictures, then publish a static site without using Git or a terminal.
 
-## Important starting point
-The user previously developed a local prototype for **sararahanjam.com**. As of the initial planning review, its GitHub repository contains no files. **Do not start coding again until the local work has been reviewed.** The product repository, `astro-static-studio`, holds the reusable CMS plan; the Sara Rahanjam repository is a first test site.
+## Current baseline
+This repository now contains an adapted copy of the Sara editor, local API, contracts, Astro renderer, and Sara sample content/media. The original `sararahanjam.com` repository remains separate and unchanged. Sara is the first sample output; Astro Static Studio is the product.
 
-## Milestone 0 — Audit and recover existing work (FIRST)
-- Identify the current local project and Git remote; do not assume the work was lost.
-- Make a safe backup; verify no tokens, passwords, customer personal data, or `.env` files will be committed.
-- Push existing code to the correct private repository or provide it for inspection. No force push or destructive reset.
-- Inspect actual files, dependencies, existing Astro site, PWA dashboard, image pipeline, and unfinished features.
-- Run the documented install, lint, typecheck, tests and local builds **where possible**. Record results or missing prerequisites.
-- Compare current code with VISION, MVP and ARCHITECTURE; document what is reusable and what is missing.
-- Produce a brief inventory and **one recommended next issue**. No speculative rewrite.
+## Milestone 0 — Establish the Studio product baseline (DONE)
+- Run the dashboard, local API, sample Astro site, typecheck, tests and static builds from this repository.
+- Fix integration failures, preserve the Sara site as sample output, and keep the last successful build when a later build fails.
+- Reconcile product docs with the verified local-first architecture and real gaps.
 
-**Done when:** The actual code has been reviewed, its local run steps are known, and we can name one safe improvement.
+**Done when:** A tester can start Studio here, edit sample content, generate static output, and inspect the dashboard and site. A failed build keeps the last successful site.
 
-## Milestone 1 — Local vertical slice
-- Reuse the current code where possible.
-- With one Astro theme, render one project page and gallery from versioned content.
-- Build a **mobile-first React/TypeScript PWA** form to edit one project (title, description, images).
-- Import JPEG/PNG, preview and convert appropriately to WebP with size/quality checks.
-- Preview the static output locally before publishing.
+## Milestone 1 — [Complete the desktop dashboard](https://github.com/arashashrafii/astro-static-studio/milestone/3) (IN PROGRESS)
+- Issues: [#2 site setup](https://github.com/arashashrafii/astro-static-studio/issues/2), [#3 page/project editing](https://github.com/arashashrafii/astro-static-studio/issues/3), [#4 backup/recovery](https://github.com/arashashrafii/astro-static-studio/issues/4), [#5 usability validation](https://github.com/arashashrafii/astro-static-studio/issues/5).
+- [x] Let an owner start a new local site from the supported template instead of editing only the Sara sample; protect replacement with a backup.
+- [x] Complete page/project editing controls and make preview and local output behavior clear.
+- [x] Add validated local recovery for content and media; show image size/quality impact.
+- [ ] Test the full workflow with a non-technical desktop user, including a failure/recovery case.
+- Under #5: simplify the dashboard and publishing layout after project creation and preview publishing are validated; sole-account selection is handled in M2.
 
-**Done when:** A tester can edit a project with three pictures and view correct generated static pages locally.
+**Done when:** A non-technical owner can set up a site, edit its pages and projects, preview and build it, and recover from a failed build without touching code or losing prior output. The owner usability check is still required; automated checks alone do not close this milestone.
 
-## Milestone 2 — Secure one-click publish
-- Pick one publishing destination for the first test; GitHub-based Actions is a candidate, not an irreversible requirement.
-- Choose and document a safe identity and write mechanism. Do not ship long-lived GitHub/hosting secrets in the browser.
-- Save validated content, trigger a trusted Astro build, deploy static files, and show success/failure.
-- Support useful error messages and recovery from failed publishes.
+## Milestone 2 — [Add one remote publishing destination](https://github.com/arashashrafii/astro-static-studio/milestone/1) (DONE)
+- Issues: [#6 choose provider](https://github.com/arashashrafii/astro-static-studio/issues/6), [#7 implement publishing](https://github.com/arashashrafii/astro-static-studio/issues/7).
+- [x] Owner approved Cloudflare Pages Direct Upload in [PUBLISHING](PUBLISHING.md); it cannot be changed later to Git integration on the same project.
+- [x] Confirm a Cloudflare test project/account is available for a preview deployment proof.
+- [x] Keep the first implementation to one host; the M1 non-technical usability check remains open.
+- [x] Authorize publishing without putting credentials in dashboard JavaScript; Wrangler is forced to use OS keyring storage.
+- [x] Build locally, validate and deploy static files through the provider boundary, and show verified success or safe actionable failure.
+- [x] Keep the Cloudflare upload adapter separate from local Astro build logic; Arvan S3 is deferred.
+- [x] Complete a real preview deployment and manual dashboard flow with a test Cloudflare account. The owner confirmed the published preview is now accessible; the earlier agent-side network restriction is recorded in [M2 validation](M2_VALIDATION.md).
 
-**Done when:** A tester can publish the project without touching GitHub; verified published pages update without leaking credentials.
+**Done when:** A tester can publish the project without touching GitHub; the owner confirmed the preview is accessible and credentials were not exposed.
 
-## Milestone 3 — Usability, quality and roles
-- Test real Android, iOS and Windows browsers; check PWA install behavior only where supported.
-- Cover editing Home/About/Contact, content validation, image accessibility, and safe failure handling.
-- Keep Admin and Editor capabilities separate and enforce permission checks in any trusted service, not just the UI.
-- Add focused automated tests and an independent review for each feature.
+## Milestone 3 — [Validate Android local use](https://github.com/arashashrafii/astro-static-studio/milestone/2) (later)
+- Issues: [#8 test full local Astro build](https://github.com/arashashrafii/astro-static-studio/issues/8), [#9 package and verify Android workflow](https://github.com/arashashrafii/astro-static-studio/issues/9).
+- Package the dashboard workflow for Android after desktop is stable.
+- Test real-device file/media access and offline behavior.
+- Confirm whether a full Astro build can run locally on Android; do not equate the fixed-renderer APK experiment with this requirement.
 
-**Done when:** At least one non-technical tester can update and publish a site from a phone without technical help.
-
-## Milestone 4 — Extensibility (later)
+## Milestone 4 — [Extensibility](https://github.com/arashashrafii/astro-static-studio/milestone/4) (later)
+- Issues: [#10 enforce portable contracts](https://github.com/arashashrafii/astro-static-studio/issues/10), [#11 second approved template](https://github.com/arashashrafii/astro-static-studio/issues/11), [#12 evaluate another publisher](https://github.com/arashashrafii/astro-static-studio/issues/12).
 - Define/validate portable content, component, theme and publishing contracts.
 - Adapt a second approved Astro template; **do not claim arbitrary templates work automatically**.
 - Explore another static host (Cloudflare Pages, S3-compatible storage, etc.) through a tested publishing adapter.
@@ -62,4 +62,4 @@ This is a **workflow of roles**, not a requirement for three paid or constantly 
 Every implementation issue states: objective, current code/links, scope and exclusions, acceptance criteria, tests/checks, security risks, dependencies and a clear definition of done. Make small, reviewable changes; report actual results, never invented completion.
 
 ## Next task
-See the GitHub issue **Audit existing local Sara Rahanjam implementation**. Audit first; then decide what to build next based on actual code.
+Complete issue [#5 desktop workflow usability validation](https://github.com/arashashrafii/astro-static-studio/issues/5): run the task-based session, record blockers, and simplify the dashboard around those findings.

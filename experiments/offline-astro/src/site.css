@@ -1,0 +1,23 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+  color: #26241f;
+  background: #faf8f3;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; }
+.site-header, main, footer { width: min(100% - 2rem, 58rem); margin-inline: auto; }
+.site-header { padding-block: 1.25rem; display: flex; justify-content: space-between; gap: 1rem; }
+.site-header a { font-weight: 700; text-decoration: none; }
+.site-header span, .eyebrow { color: #69675f; }
+.intro { padding-block: 4rem 3rem; max-width: 42rem; }
+h1 { font-size: clamp(2rem, 8vw, 4.5rem); line-height: 1.05; margin: .3em 0; }
+.work ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1.5rem; }
+.work li a { text-decoration: none; }
+.work img, .project-detail img { width: 100%; height: auto; display: block; border-radius: .5rem; }
+.project-detail { padding-block: 2rem 4rem; max-width: 48rem; }
+.project-detail h1 { margin-block: 1rem; }
+.project-detail img { margin-top: 2rem; }
+footer { padding-block: 2rem; color: #69675f; }

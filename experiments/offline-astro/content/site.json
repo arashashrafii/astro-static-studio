@@ -1,0 +1,16 @@
+{
+  "siteTitle": "Mira Solis",
+  "tagline": "Ceramic artist · Portland",
+  "heading": "Objects shaped by light and clay.",
+  "introduction": "A small collection of hand-built vessels and everyday forms.",
+  "contact": "Contact: studio@example.test",
+  "projects": [
+    {
+      "slug": "paper-study",
+      "title": "Paper study",
+      "description": "A quiet study in folded form, warm color, and shadow.",
+      "image": "images/paper-study.svg",
+      "alt": "A cream ceramic vessel beside a folded ochre paper shape"
+    }
+  ]
+}

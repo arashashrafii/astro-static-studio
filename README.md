@@ -1,52 +1,33 @@
 # Astro Static Studio
 
-A simple content-management and publishing tool for Astro-based static websites.
+A local-first content studio for managing an Astro static website. The application and sample site run from this repository; Sara Rahanjam is the included reference content/theme instance, not a separate product repository.
 
-**Status:** Planning. This repository contains product and architecture documents, not a finished application.
+## Run locally
 
-## Vision
+Requirements: Node.js 22+ and npm.
 
-Help non-technical people update personal websites, artist portfolios, and small project galleries without learning Astro, Git, or deployment.
+```sh
+npm install
+npm run dev
+```
 
-The customer edits content and selects **Publish**. The system builds static pages and publishes them to the chosen static host.
+Open the dashboard at `http://127.0.0.1:5173`. The Astro preview runs at `http://127.0.0.1:4321`; a loopback-only local API at `127.0.0.1:4322` saves validated content and media, and runs the static build. Keep the development processes running while editing/building.
 
-## Roles
+```sh
+npm run check
+npm test
+npm run build
+```
 
-- **Content Editor:** Add and edit text, projects, articles, images, galleries, and page content within approved layouts.
-- **Admin:** Configure website settings, select supported layouts/themes, configure publishing, and manage access.
+The current usable slice is a local single-site editor with projects/pages, text and galleries, draft recovery, WebP media conversion, Astro static output, and a PWA dashboard shell. Site builds go to a temporary directory first; a failed build leaves the previous successful output intact. Cloud publishing, theme selection, iOS and on-device Android Astro builds are not implemented. The Android APK in `experiments/offline-astro` is an earlier technical experiment, not the Studio app.
 
-The first release does **not** include a drag-and-drop visual page builder.
+## Structure
 
-## Proposed stack
+- `apps/admin`: Persian RTL React dashboard/PWA.
+- `apps/api`: local-only content, media and build API.
+- `apps/site`: Astro static renderer and Sara sample site.
+- `content`: sample site content.
+- `packages/contracts`: validated content/theme/publisher contracts.
+- `packages/theme`: initial Atelier theme metadata.
 
-- **Astro:** Generate public static HTML, CSS, and optional JavaScript.
-- **React + TypeScript PWA:** Simple content management dashboard.
-- **JSON/Markdown and image files:** Portable content storage; independent of theme.
-- **WebP image processing:** Optimize images before publishing, with quality checks.
-- **Publisher adapter:** Build and deploy through a supported workflow (first target: GitHub, other static hosts later).
-
-Static hosting is only for the public site; editing, credentials, and builds happen elsewhere.
-
-## Project documents
-
-- [Product vision](docs/VISION.md)
-- [MVP scope](docs/MVP.md)
-- [Architecture and design decisions](docs/ARCHITECTURE.md)
-- [Content and theme contracts](docs/CONTRACTS.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Instructions for coding agents](AGENTS.md)
-
-## Example site
-
-[sararahanjam.com](https://sararahanjam.com) is the reference portfolio and first migration test, **not** the full product. The tool should support separate installations per customer.
-
-## Key principles
-
-1. Keep the editor simple for non-technical users.
-2. Separate content, themes, CMS, builds, and hosting.
-3. Start with one example site and one theme.
-4. Keep public output static; avoid unnecessary services.
-5. Make all advanced options optional and admin-only.
-6. Do not assume any external Astro theme works without adaptation.
-
-> No implementation is approved by these planning documents. Confirm the MVP decisions before coding.
+See [Vision](docs/VISION.md), [MVP](docs/MVP.md), [Architecture](docs/ARCHITECTURE.md), [Publishing decision](docs/PUBLISHING.md), and [Roadmap](docs/ROADMAP.md).

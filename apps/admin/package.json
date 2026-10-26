@@ -1,0 +1,1 @@
+{"name":"@astro-static-studio/admin","private":true,"type":"module","scripts":{"dev":"vite --host 127.0.0.1 --port 5173 --strictPort","build":"vite build"},"dependencies":{"@astro-static-studio/contracts":"*","react":"^19.2.0","react-dom":"^19.2.0"},"devDependencies":{"vite":"^8.3.5","@vitejs/plugin-react":"latest","vite-plugin-pwa":"latest"}}

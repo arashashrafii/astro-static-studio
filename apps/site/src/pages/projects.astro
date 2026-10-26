@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Projects from '../components/Projects.astro';
+import { content } from '../lib/content';
+const data=await content();
+---
+<Layout data={data} title="Projects"><span class="eyebrow">{data.site.name} · PORTFOLIO</span><h1>Projects</h1>{data.entries.some(e=>e.kind==='project'&&e.published)?<Projects entries={data.entries.filter(e=>e.kind==='project'&&e.published)}/>:<p>هنوز پروژه‌ای منتشر نشده است.</p>}</Layout>

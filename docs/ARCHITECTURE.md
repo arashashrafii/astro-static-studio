@@ -1,32 +1,33 @@
 # Architecture Proposal
 
-**Status: design proposal, not an implemented system.**
+**Status: partial implementation.** The local editor, file-backed API, Astro renderer, image conversion and local build path now exist here, adapted from the Sara reference project. A first Cloudflare Pages adapter is implemented; real-account preview validation, theme selection and phone-native Astro builds remain open.
 
 ## Boundaries
 1. **CMS UI:** A mobile-first React + TypeScript PWA. Editors use guided forms; Admin sees advanced settings.
 2. **Content & media:** Portable validated JSON/Markdown records and optimized media, stored separately from theme markup.
 3. **Theme renderer:** Astro components/layouts render the records to HTML, CSS, and optional JavaScript at build time.
-4. **Build/publish runner:** A trusted build environment turns content + theme into static assets and deploys them.
+4. **Build/publish runner:** Node.js on the owner's device builds content + theme into static assets. A provider adapter may upload them after the owner authorizes a destination.
 5. **Static host:** Serves the published assets. It is not responsible for CMS writes or build execution.
 
 Data flow:
 **Editor -> CMS forms -> validation + secure write -> content version -> build runner -> Astro static output -> publishing adapter -> static host**
 
 ## Installation model
-Start with a separate installation/repository for each customer. Avoid a central multi-tenant platform. Admin configures the chosen host; the Editor never sees deployment credentials.
+Start with a separate local installation/repository for each customer. Avoid a central multi-tenant platform and a Studio-hosted backend. The local owner authorizes publishing; credentials must stay out of browser code.
 
 ## Technical baseline
 - Public site: **Astro** with pre-rendered routes and components.
 - CMS: **React + TypeScript** as a responsive **PWA**, likely with Vite (to confirm when implementation starts).
 - Content: versioned JSON/Markdown and media files. Schema validation is mandatory.
 - Images: select JPEG/PNG on mobile/desktop, process to WebP before committing where supported, choose quality/dimensions, preserve clarity and alt text. Build-time resizing remains available for theme-specific image sizes.
-- Publishing: start with a Git-based workflow and a trusted runner (for example GitHub Actions). Later introduce hosting adapters only after testing a concrete host's capability.
+- Publishing: first build locally and verify static output. Add one tested provider adapter after local output works; do not make GitHub Actions or a hosted runner a product dependency.
+- First provider: owner-approved Cloudflare Pages Direct Upload via Wrangler. See [PUBLISHING](PUBLISHING.md). Real-account preview validation is still pending; Direct Upload projects cannot later switch to Git integration.
 - Theme contract: content schema remains stable and each theme maps supported page and block types to its own components.
 - Local development: CMS and Astro preview can run on localhost; production PWA installation and secure authentication need appropriate HTTPS hosting.
 
 ## Security and reliability
-- **Never place repository write tokens or hosting secrets in the browser.** Use an appropriate OAuth/GitHub App flow and a minimal trusted service when secure token exchange or write operations require one.
-- Server-side authorization must check Admin versus Editor, regardless of hidden UI controls.
+- **Never place repository write tokens or hosting secrets in dashboard JavaScript.** Use a secure local authorization flow or a narrowly scoped broker only if the target provider requires it.
+- The MVP is single-user/local. If remote multi-user access is introduced later, authorization must be enforced at the trusted write boundary.
 - Validate file type, size, names and content inputs; escape rendered content and avoid arbitrary HTML injection.
 - Keep draft versions, publish status, and rollback paths. Do not claim publication until deployment reports success.
 - Handle concurrent edits, upload failures, and build failures explicitly.

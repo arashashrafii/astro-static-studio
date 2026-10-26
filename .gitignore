@@ -1,0 +1,15 @@
+node_modules/
+**/dist/
+**/.astro/
+**/build/
+.tmp/
+apps/admin/dev-dist/
+content/content.json.tmp
+content/backups/
+content/media-originals/
+content/.studio-site.json
+content/cloudflare-publishing.json
+apps/.dist.staging-*
+apps/.dist.backup-*
+apps/api/node_modules/.cache/wrangler/
+.DS_Store

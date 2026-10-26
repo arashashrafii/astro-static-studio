@@ -1,7 +1,7 @@
 # MVP Scope
 
 ## Goal
-Prove that a non-technical artist can manage and publish a simple portfolio with **one Astro template** and a **mobile-first React/TypeScript PWA**. Begin with Sara Rahanjam's site as a reference; do not build a universal site builder yet.
+Prove that a non-technical owner can manage a simple portfolio with **one Astro template** and a local React/TypeScript dashboard. Studio runs on the owner's device without a Studio-operated server or database. Sara Rahanjam is the sample output; do not build a universal site builder yet.
 
 ## Content Editor features
 - See a simple dashboard with Projects, Articles, Pages, Media, and Publish.
@@ -13,22 +13,23 @@ Prove that a non-technical artist can manage and publish a simple portfolio with
 - Save drafts and preview before publication.
 - Publish with one simple action, then see an accurate result or retry instructions.
 
-## Admin features
-- Select from approved page types/layout presets; create a simple page by filling its predefined fields.
-- Configure site title, navigation, contact links, and selected supported template.
-- Set up a supported publishing destination and editor permissions.
-- Manage technical settings in a separate advanced area.
+## Site setup and publishing
+- Select supported page/layout presets and configure site title and contact links.
+- Build and preview the site locally.
+- Choose one supported publishing destination and authorize it; credentials must not enter browser bundles.
+- The local single-owner workflow does not require account sign-in or Admin/Editor roles.
 
 ## First-release limits
 - **One site installation, one sample theme, one publishing path** in the proof of concept.
 - No drag-and-drop designer, arbitrary custom HTML editor, or automatic theme import.
-- No separate native app binaries.
-- No guaranteed offline editing or publish-without-internet.
+- Android is the first packaged target; iOS is deferred until Android is validated.
+- Full local Astro builds on Android are a feasibility gate; the existing renderer experiment does not prove this capability.
+- Desktop run uses Node.js/npm and does not require a separate installer.
 - Do not introduce a database or backend until a real requirement justifies one.
 - Avoid a broad plugin ecosystem, e-commerce, or complex user-management screens.
 
 ## Acceptance criteria
-1. Responsive CMS works with basic keyboard accessibility and touch controls on Android, iPhone, and Windows browsers.
+1. Responsive CMS works with basic keyboard accessibility and touch controls on Android and desktop browsers.
 2. Editor can add one project with three images, preview, and publish it without Git or terminal knowledge.
 3. JPEG and PNG conversion includes a visible before/after file-size and quality check. Images display correctly with appropriate alt text.
 4. Editor can update About and Contact without changing source code.
@@ -36,14 +37,14 @@ Prove that a non-technical artist can manage and publish a simple portfolio with
 6. Build produces static output; navigation, project URLs, responsive images, and galleries work after deployment.
 7. CMS shows an actionable failure message when the build or deploy fails, and prior published content is not silently lost.
 8. No publish credentials or long-lived tokens appear in browser bundles or Git history.
-9. Editor cannot change restricted Admin settings through either UI or backend actions.
+9. The local single-owner workflow has no role boundary; if remote multi-user access is added later, permissions must be enforced at the write boundary.
 10. Use at least one real non-technical tester before calling the MVP usable.
 
-## Cross-platform note
-A PWA is a website, not three native builds. Home-screen installation is browser-dependent. On iOS, users typically use the browser's Share / Add to Home Screen action; on Windows, Chromium-based browsers can install web apps. Test actual browser combinations.
+## Platform note
+Desktop setup requires Node.js/npm. Android is the first native package target. iOS is a later phase. Do not claim full mobile Astro builds until verified on a real Android device.
 
 ## Excluded from MVP
-Cloudflare/ArvanCloud publisher adapters beyond the initial target; curated Astro theme gallery; visual page builder; native packages using Capacitor or Tauri; collaborative editing.
+Multiple publisher adapters; curated Astro theme gallery; visual page builder; iOS before Android proof; collaborative editing.
 
 ## Prototype order
 First local content/preview, then secure publishing, then test the complete mobile editing flow.

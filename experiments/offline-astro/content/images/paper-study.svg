@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="title">
+  <title id="title">A cream vessel beside folded ochre paper</title>
+  <rect width="720" height="480" fill="#e6d9c8"/>
+  <path d="M430 82 660 182 524 418 350 300Z" fill="#bd7941"/>
+  <path d="M430 82 524 418 350 300Z" fill="#d99455"/>
+  <ellipse cx="212" cy="378" rx="126" ry="25" fill="#c7b39b"/>
+  <path d="M154 198c0-45 26-80 58-80s58 35 58 80l30 149c8 39-21 69-88 69s-96-30-88-69z" fill="#f5eee2"/>
+  <ellipse cx="212" cy="198" rx="58" ry="18" fill="#ded0bd"/>
+  <ellipse cx="212" cy="198" rx="39" ry="9" fill="#8d7761"/>
+</svg>
