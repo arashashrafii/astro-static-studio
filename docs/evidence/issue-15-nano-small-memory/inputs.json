@@ -1,0 +1,35 @@
+{
+  "changes": "Only Rolldown CJS loader initial pages changed from 16384 to 1024; maximum 65536 and shared true unchanged. No engine or wasm binary changes.",
+  "wasmImportedMemory": {
+    "module": "env",
+    "name": "memory",
+    "flags": 3,
+    "initialPages": 1001,
+    "maximumPages": 65536
+  },
+  "astroVersion": "7.4.4",
+  "astroNodeEngine": ">=22.23.4",
+  "guestNode": "25.4.0",
+  "inputs": [
+    {
+      "path": ".tmp/issue-15-nano/fixture.tar.gz",
+      "bytes": 17967333,
+      "sha256": "13413e44d9455b73accba45f3f7a923e8daaaa38cbe36c5a59eb0c7beaa9a292"
+    },
+    {
+      "path": ".tmp/issue-15-nano-small-memory/fixture.tar.gz",
+      "bytes": 17967161,
+      "sha256": "857281b636e3aa2430032d4475a9dbd7c9424ef7f932ee8533a84fa109f60624"
+    },
+    {
+      "path": ".tmp/issue-15-nano/nano.min.wasm",
+      "bytes": 2458248,
+      "sha256": "64d8e4d9a3299a06c40a725f732f5e7033a3f03ac4218d4b43090b0f93608932"
+    },
+    {
+      "path": ".tmp/issue-15-nano/node-full",
+      "bytes": 90059416,
+      "sha256": "c1ea44df1775f02cf6956e1493728b7523acbdfdf1ce37294fcc9d01a09a7155"
+    }
+  ]
+}

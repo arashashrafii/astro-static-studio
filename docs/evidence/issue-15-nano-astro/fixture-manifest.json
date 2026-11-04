@@ -1,0 +1,938 @@
+{
+  "fixtureSource": ".tmp/issue-8-full-build-chrome156/fixture-astro7.json",
+  "lockSource": ".tmp/issue-8-latest/lock",
+  "packagePreparation": "host npm ci --ignore-scripts --omit=optional; npm install --no-save --ignore-scripts --force --omit=optional @astrojs/compiler-binding-wasm32-wasi@0.5.2",
+  "files": {
+    "astro.config.mjs": {
+      "bytes": 36,
+      "sha256": "b686e1369db1ab8fd19cee36ff8f5cd64c6a5bd8b795c80c9db9a60042ca0ca4"
+    },
+    "package-lock.json": {
+      "bytes": 130049,
+      "sha256": "438bee7ed7104796435a9eaae15ba908f230014880406099c9cbb654035b08ef"
+    },
+    "package.json": {
+      "bytes": 277,
+      "sha256": "72a05c50e60a3d2d65632a08ecf913cd86cce937f724e1b8a9b92885bf2405df"
+    },
+    "public/badge.svg": {
+      "bytes": 100,
+      "sha256": "b152851b3acb83d88e41a1ce0814d76829db5ce96361ac46437564e7b1995100"
+    },
+    "src/components/Card.astro": {
+      "bytes": 117,
+      "sha256": "4159446b734d9c4390f0d621009a8813e3c11f9da83039c1f21ccfc963e5ef6f"
+    },
+    "src/data.json": {
+      "bytes": 47,
+      "sha256": "0207dd5f5fad9866ef85fa522b1b81d4434c56697f8abcf6718efa38987d0826"
+    },
+    "src/global.css": {
+      "bytes": 94,
+      "sha256": "5bce09cc6278067af6b1090c6a2a195390cf912345876c5f32fb086662dadb86"
+    },
+    "src/layouts/Layout.astro": {
+      "bytes": 230,
+      "sha256": "2fa6fab573eb099c24827508e8a6af3c5c96c611ab74a853e6d8cfe67364efde"
+    },
+    "src/pages/about.astro": {
+      "bytes": 131,
+      "sha256": "15678f320c8d2ab8040fbbaaa64e6aacb9104fb585c6d818518d0296ca891854"
+    },
+    "src/pages/index.astro": {
+      "bytes": 322,
+      "sha256": "df98c268534d8b5efe572324c6d9e1f1360a45d7849bfa78d70437266dd71d3e"
+    }
+  },
+  "packages": {
+    "node_modules/yargs-parser/package.json": {
+      "name": "yargs-parser",
+      "version": "22.0.0"
+    },
+    "node_modules/defu/package.json": {
+      "name": "defu",
+      "version": "6.1.7"
+    },
+    "node_modules/fast-string-truncated-width/package.json": {
+      "name": "fast-string-truncated-width",
+      "version": "3.0.3"
+    },
+    "node_modules/regex-recursion/package.json": {
+      "name": "regex-recursion",
+      "version": "6.0.2"
+    },
+    "node_modules/hast-util-whitespace/package.json": {
+      "name": "hast-util-whitespace",
+      "version": "3.0.0"
+    },
+    "node_modules/radix3/package.json": {
+      "name": "radix3",
+      "version": "1.1.2"
+    },
+    "node_modules/ci-info/package.json": {
+      "name": "ci-info",
+      "version": "4.4.0"
+    },
+    "node_modules/is-plain-obj/package.json": {
+      "name": "is-plain-obj",
+      "version": "4.1.0"
+    },
+    "node_modules/verkit/package.json": {
+      "name": "verkit",
+      "version": "0.5.0"
+    },
+    "node_modules/package-manager-detector/package.json": {
+      "name": "package-manager-detector",
+      "version": "1.9.0"
+    },
+    "node_modules/picocolors/package.json": {
+      "name": "picocolors",
+      "version": "1.1.1"
+    },
+    "node_modules/svgo/package.json": {
+      "name": "svgo",
+      "version": "4.1.0"
+    },
+    "node_modules/unist-util-position/package.json": {
+      "name": "unist-util-position",
+      "version": "5.0.0"
+    },
+    "node_modules/mrmime/package.json": {
+      "name": "mrmime",
+      "version": "2.0.1"
+    },
+    "node_modules/get-tsconfig/package.json": {
+      "name": "get-tsconfig",
+      "version": "5.0.0-beta.6"
+    },
+    "node_modules/micromark-util-character/package.json": {
+      "name": "micromark-util-character",
+      "version": "2.1.1"
+    },
+    "node_modules/fast-string-width/package.json": {
+      "name": "fast-string-width",
+      "version": "3.0.2"
+    },
+    "node_modules/tinyglobby/package.json": {
+      "name": "tinyglobby",
+      "version": "0.2.17"
+    },
+    "node_modules/magicast/package.json": {
+      "name": "magicast",
+      "version": "0.5.5"
+    },
+    "node_modules/satteri/package.json": {
+      "name": "satteri",
+      "version": "0.10.5"
+    },
+    "node_modules/detect-libc/package.json": {
+      "name": "detect-libc",
+      "version": "2.1.2"
+    },
+    "node_modules/clsx/package.json": {
+      "name": "clsx",
+      "version": "2.1.1"
+    },
+    "node_modules/bail/package.json": {
+      "name": "bail",
+      "version": "2.0.2"
+    },
+    "node_modules/p-queue/package.json": {
+      "name": "p-queue",
+      "version": "9.3.5"
+    },
+    "node_modules/source-map-js/package.json": {
+      "name": "source-map-js",
+      "version": "1.2.2"
+    },
+    "node_modules/trim-lines/package.json": {
+      "name": "trim-lines",
+      "version": "3.0.1"
+    },
+    "node_modules/ccount/package.json": {
+      "name": "ccount",
+      "version": "2.0.1"
+    },
+    "node_modules/flattie/package.json": {
+      "name": "flattie",
+      "version": "1.1.1"
+    },
+    "node_modules/mdn-data/package.json": {
+      "name": "mdn-data",
+      "version": "2.27.1"
+    },
+    "node_modules/commander/package.json": {
+      "name": "commander",
+      "version": "11.1.0"
+    },
+    "node_modules/dequal/package.json": {
+      "name": "dequal",
+      "version": "2.0.3"
+    },
+    "node_modules/regex-utilities/package.json": {
+      "name": "regex-utilities",
+      "version": "2.3.0"
+    },
+    "node_modules/fnv1a-64/package.json": {
+      "name": "fnv1a-64",
+      "version": "0.1.2"
+    },
+    "node_modules/character-entities-legacy/package.json": {
+      "name": "character-entities-legacy",
+      "version": "3.0.0"
+    },
+    "node_modules/css-what/package.json": {
+      "name": "css-what",
+      "version": "7.0.0"
+    },
+    "node_modules/micromark-util-types/package.json": {
+      "name": "micromark-util-types",
+      "version": "2.0.3"
+    },
+    "node_modules/dset/package.json": {
+      "name": "dset",
+      "version": "3.1.4"
+    },
+    "node_modules/is-docker/package.json": {
+      "name": "is-docker",
+      "version": "4.0.0"
+    },
+    "node_modules/obug/package.json": {
+      "name": "obug",
+      "version": "3.0.0"
+    },
+    "node_modules/sax/package.json": {
+      "name": "sax",
+      "version": "1.6.1"
+    },
+    "node_modules/lru-cache/package.json": {
+      "name": "lru-cache",
+      "version": "11.5.3"
+    },
+    "node_modules/unist-util-is/package.json": {
+      "name": "unist-util-is",
+      "version": "6.0.1"
+    },
+    "node_modules/mdast-util-to-hast/package.json": {
+      "name": "mdast-util-to-hast",
+      "version": "13.2.1"
+    },
+    "node_modules/aria-query/package.json": {
+      "name": "aria-query",
+      "version": "5.3.2"
+    },
+    "node_modules/destr/package.json": {
+      "name": "destr",
+      "version": "2.0.5"
+    },
+    "node_modules/tslib/package.json": {
+      "name": "tslib",
+      "version": "2.8.1"
+    },
+    "node_modules/fdir/package.json": {
+      "name": "fdir",
+      "version": "6.5.0"
+    },
+    "node_modules/cookie/package.json": {
+      "name": "cookie",
+      "version": "2.0.1"
+    },
+    "node_modules/ufo/package.json": {
+      "name": "ufo",
+      "version": "1.6.4"
+    },
+    "node_modules/smol-toml/package.json": {
+      "name": "smol-toml",
+      "version": "1.9.1"
+    },
+    "node_modules/ofetch/package.json": {
+      "name": "ofetch",
+      "version": "1.5.1"
+    },
+    "node_modules/yocto-queue/package.json": {
+      "name": "yocto-queue",
+      "version": "1.2.2"
+    },
+    "node_modules/tinyclip/package.json": {
+      "name": "tinyclip",
+      "version": "1.0.3"
+    },
+    "node_modules/html-escaper/package.json": {
+      "name": "html-escaper",
+      "version": "3.0.3"
+    },
+    "node_modules/readdirp/package.json": {
+      "name": "readdirp",
+      "version": "5.1.1"
+    },
+    "node_modules/anymatch/package.json": {
+      "name": "anymatch",
+      "version": "3.1.3"
+    },
+    "node_modules/vfile/package.json": {
+      "name": "vfile",
+      "version": "6.0.3"
+    },
+    "node_modules/zwitch/package.json": {
+      "name": "zwitch",
+      "version": "2.0.4"
+    },
+    "node_modules/domelementtype/package.json": {
+      "name": "domelementtype",
+      "version": "2.3.0"
+    },
+    "node_modules/neotraverse/package.json": {
+      "name": "neotraverse",
+      "version": "1.0.1"
+    },
+    "node_modules/nanoid/package.json": {
+      "name": "nanoid",
+      "version": "3.3.20"
+    },
+    "node_modules/iron-webcrypto/package.json": {
+      "name": "iron-webcrypto",
+      "version": "1.2.1"
+    },
+    "node_modules/micromark-util-encode/package.json": {
+      "name": "micromark-util-encode",
+      "version": "2.0.1"
+    },
+    "node_modules/fast-wrap-ansi/package.json": {
+      "name": "fast-wrap-ansi",
+      "version": "0.2.2"
+    },
+    "node_modules/postcss/package.json": {
+      "name": "postcss",
+      "version": "8.5.32"
+    },
+    "node_modules/domutils/package.json": {
+      "name": "domutils",
+      "version": "3.2.2"
+    },
+    "node_modules/devalue/package.json": {
+      "name": "devalue",
+      "version": "6.0.3"
+    },
+    "node_modules/csso/package.json": {
+      "name": "csso",
+      "version": "5.0.5"
+    },
+    "node_modules/entities/package.json": {
+      "name": "entities",
+      "version": "4.5.0"
+    },
+    "node_modules/common-ancestor-path/package.json": {
+      "name": "common-ancestor-path",
+      "version": "2.0.0"
+    },
+    "node_modules/http-cache-semantics/package.json": {
+      "name": "http-cache-semantics",
+      "version": "4.3.0"
+    },
+    "node_modules/fontkitten/package.json": {
+      "name": "fontkitten",
+      "version": "1.0.3"
+    },
+    "node_modules/jsonc-parser/package.json": {
+      "name": "jsonc-parser",
+      "version": "3.3.1"
+    },
+    "node_modules/xxhash-wasm/package.json": {
+      "name": "xxhash-wasm",
+      "version": "1.1.0"
+    },
+    "node_modules/p-limit/package.json": {
+      "name": "p-limit",
+      "version": "7.3.3"
+    },
+    "node_modules/shiki/package.json": {
+      "name": "shiki",
+      "version": "4.5.0"
+    },
+    "node_modules/normalize-path/package.json": {
+      "name": "normalize-path",
+      "version": "3.0.0"
+    },
+    "node_modules/retext-smartypants/package.json": {
+      "name": "retext-smartypants",
+      "version": "6.2.0"
+    },
+    "node_modules/vite/package.json": {
+      "name": "vite",
+      "version": "8.3.5"
+    },
+    "node_modules/eventemitter3/package.json": {
+      "name": "eventemitter3",
+      "version": "5.0.4"
+    },
+    "node_modules/node-mock-http/package.json": {
+      "name": "node-mock-http",
+      "version": "1.0.5"
+    },
+    "node_modules/am-i-vibing/package.json": {
+      "name": "am-i-vibing",
+      "version": "0.5.0"
+    },
+    "node_modules/boolbase/package.json": {
+      "name": "boolbase",
+      "version": "1.0.0"
+    },
+    "node_modules/nth-check/package.json": {
+      "name": "nth-check",
+      "version": "2.1.1"
+    },
+    "node_modules/axobject-query/package.json": {
+      "name": "axobject-query",
+      "version": "4.1.0"
+    },
+    "node_modules/yaml/package.json": {
+      "name": "yaml",
+      "version": "2.9.1"
+    },
+    "node_modules/unist-util-visit/package.json": {
+      "name": "unist-util-visit",
+      "version": "5.2.0"
+    },
+    "node_modules/lightningcss/package.json": {
+      "name": "lightningcss",
+      "version": "1.33.0"
+    },
+    "node_modules/vitefu/package.json": {
+      "name": "vitefu",
+      "version": "1.1.3"
+    },
+    "node_modules/resolve-pkg-maps/package.json": {
+      "name": "resolve-pkg-maps",
+      "version": "1.0.0"
+    },
+    "node_modules/p-timeout/package.json": {
+      "name": "p-timeout",
+      "version": "7.0.2"
+    },
+    "node_modules/tiny-inflate/package.json": {
+      "name": "tiny-inflate",
+      "version": "1.0.3"
+    },
+    "node_modules/undici/package.json": {
+      "name": "undici",
+      "version": "8.12.3"
+    },
+    "node_modules/picomatch/package.json": {
+      "name": "picomatch",
+      "version": "4.0.7"
+    },
+    "node_modules/node-fetch-native/package.json": {
+      "name": "node-fetch-native",
+      "version": "1.6.7"
+    },
+    "node_modules/unifont/package.json": {
+      "name": "unifont",
+      "version": "1.0.3"
+    },
+    "node_modules/ultrahtml/package.json": {
+      "name": "ultrahtml",
+      "version": "1.7.0"
+    },
+    "node_modules/micromark-util-sanitize-uri/package.json": {
+      "name": "micromark-util-sanitize-uri",
+      "version": "2.0.1"
+    },
+    "node_modules/devlop/package.json": {
+      "name": "devlop",
+      "version": "1.1.0"
+    },
+    "node_modules/uncrypto/package.json": {
+      "name": "uncrypto",
+      "version": "0.1.3"
+    },
+    "node_modules/css-tree/package.json": {
+      "name": "css-tree",
+      "version": "3.2.1"
+    },
+    "node_modules/cookie-es/package.json": {
+      "name": "cookie-es",
+      "version": "1.2.3"
+    },
+    "node_modules/prismjs/package.json": {
+      "name": "prismjs",
+      "version": "1.30.0"
+    },
+    "node_modules/vfile-message/package.json": {
+      "name": "vfile-message",
+      "version": "4.0.3"
+    },
+    "node_modules/process-ancestry/package.json": {
+      "name": "process-ancestry",
+      "version": "0.1.0"
+    },
+    "node_modules/piccolore/package.json": {
+      "name": "piccolore",
+      "version": "0.1.3"
+    },
+    "node_modules/github-slugger/package.json": {
+      "name": "github-slugger",
+      "version": "2.0.0"
+    },
+    "node_modules/std-env/package.json": {
+      "name": "std-env",
+      "version": "4.3.0"
+    },
+    "node_modules/fontace/package.json": {
+      "name": "fontace",
+      "version": "0.4.1"
+    },
+    "node_modules/micromark-util-symbol/package.json": {
+      "name": "micromark-util-symbol",
+      "version": "2.0.1"
+    },
+    "node_modules/comma-separated-tokens/package.json": {
+      "name": "comma-separated-tokens",
+      "version": "2.0.3"
+    },
+    "node_modules/regex/package.json": {
+      "name": "regex",
+      "version": "6.1.0"
+    },
+    "node_modules/stringify-entities/package.json": {
+      "name": "stringify-entities",
+      "version": "4.0.4"
+    },
+    "node_modules/oniguruma-parser/package.json": {
+      "name": "oniguruma-parser",
+      "version": "0.12.2"
+    },
+    "node_modules/extend/package.json": {
+      "name": "extend",
+      "version": "3.0.2"
+    },
+    "node_modules/h3/package.json": {
+      "name": "h3",
+      "version": "1.15.11"
+    },
+    "node_modules/nlcst-to-string/package.json": {
+      "name": "nlcst-to-string",
+      "version": "4.0.0"
+    },
+    "node_modules/rolldown/package.json": {
+      "name": "rolldown",
+      "version": "1.2.15"
+    },
+    "node_modules/domhandler/package.json": {
+      "name": "domhandler",
+      "version": "5.0.3"
+    },
+    "node_modules/zod/package.json": {
+      "name": "zod",
+      "version": "4.6.7"
+    },
+    "node_modules/chokidar/package.json": {
+      "name": "chokidar",
+      "version": "5.0.0"
+    },
+    "node_modules/unist-util-visit-parents/package.json": {
+      "name": "unist-util-visit-parents",
+      "version": "6.1.0"
+    },
+    "node_modules/hast-util-to-html/package.json": {
+      "name": "hast-util-to-html",
+      "version": "9.0.5"
+    },
+    "node_modules/diff/package.json": {
+      "name": "diff",
+      "version": "9.0.0"
+    },
+    "node_modules/oniguruma-to-es/package.json": {
+      "name": "oniguruma-to-es",
+      "version": "4.3.6"
+    },
+    "node_modules/unified/package.json": {
+      "name": "unified",
+      "version": "11.0.5"
+    },
+    "node_modules/css-select/package.json": {
+      "name": "css-select",
+      "version": "6.0.0"
+    },
+    "node_modules/property-information/package.json": {
+      "name": "property-information",
+      "version": "7.2.0"
+    },
+    "node_modules/space-separated-tokens/package.json": {
+      "name": "space-separated-tokens",
+      "version": "2.0.2"
+    },
+    "node_modules/magic-string/package.json": {
+      "name": "magic-string",
+      "version": "1.4.5"
+    },
+    "node_modules/sisteransi/package.json": {
+      "name": "sisteransi",
+      "version": "1.0.5"
+    },
+    "node_modules/html-void-elements/package.json": {
+      "name": "html-void-elements",
+      "version": "3.0.0"
+    },
+    "node_modules/astro/package.json": {
+      "name": "astro",
+      "version": "7.4.4"
+    },
+    "node_modules/es-module-lexer/package.json": {
+      "name": "es-module-lexer",
+      "version": "3.0.4"
+    },
+    "node_modules/unstorage/package.json": {
+      "name": "unstorage",
+      "version": "1.17.6"
+    },
+    "node_modules/crossws/package.json": {
+      "name": "crossws",
+      "version": "0.3.5"
+    },
+    "node_modules/unist-util-stringify-position/package.json": {
+      "name": "unist-util-stringify-position",
+      "version": "4.0.0"
+    },
+    "node_modules/tinyexec/package.json": {
+      "name": "tinyexec",
+      "version": "1.3.1"
+    },
+    "node_modules/dom-serializer/package.json": {
+      "name": "dom-serializer",
+      "version": "2.0.0"
+    },
+    "node_modules/tinyps/package.json": {
+      "name": "tinyps",
+      "version": "0.5.1"
+    },
+    "node_modules/trough/package.json": {
+      "name": "trough",
+      "version": "2.2.0"
+    },
+    "node_modules/character-entities-html4/package.json": {
+      "name": "character-entities-html4",
+      "version": "2.1.0"
+    },
+    "node_modules/@oslojs/encoding/package.json": {
+      "name": "@oslojs/encoding",
+      "version": "1.1.0"
+    },
+    "node_modules/@oxc-project/types/package.json": {
+      "name": "@oxc-project/types",
+      "version": "0.155.0"
+    },
+    "node_modules/@babel/helper-validator-identifier/package.json": {
+      "name": "@babel/helper-validator-identifier",
+      "version": "7.29.7"
+    },
+    "node_modules/@babel/types/package.json": {
+      "name": "@babel/types",
+      "version": "7.29.11"
+    },
+    "node_modules/@babel/helper-string-parser/package.json": {
+      "name": "@babel/helper-string-parser",
+      "version": "7.29.11"
+    },
+    "node_modules/@babel/parser/package.json": {
+      "name": "@babel/parser",
+      "version": "7.29.11"
+    },
+    "node_modules/css-what/dist/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/css-what/dist/commonjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/@jridgewell/sourcemap-codec/package.json": {
+      "name": "@jridgewell/sourcemap-codec",
+      "version": "1.6.0"
+    },
+    "node_modules/lru-cache/dist/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/lru-cache/dist/commonjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/tslib/modules/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/@rolldown/pluginutils/package.json": {
+      "name": "@rolldown/pluginutils",
+      "version": "1.0.1"
+    },
+    "node_modules/@rolldown/binding-wasm32-wasi/package.json": {
+      "name": "@rolldown/binding-wasm32-wasi",
+      "version": "1.2.15"
+    },
+    "node_modules/@types/nlcst/package.json": {
+      "name": "@types/nlcst",
+      "version": "2.0.3"
+    },
+    "node_modules/@types/estree/package.json": {
+      "name": "@types/estree",
+      "version": "1.0.10"
+    },
+    "node_modules/@types/estree-jsx/package.json": {
+      "name": "@types/estree-jsx",
+      "version": "1.0.5"
+    },
+    "node_modules/@types/hast/package.json": {
+      "name": "@types/hast",
+      "version": "3.0.5"
+    },
+    "node_modules/@types/unist/package.json": {
+      "name": "@types/unist",
+      "version": "3.0.3"
+    },
+    "node_modules/@types/mdast/package.json": {
+      "name": "@types/mdast",
+      "version": "4.0.4"
+    },
+    "node_modules/html-escaper/test/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/html-escaper/cjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/@shikijs/core/package.json": {
+      "name": "@shikijs/core",
+      "version": "4.5.0"
+    },
+    "node_modules/@shikijs/types/package.json": {
+      "name": "@shikijs/types",
+      "version": "4.5.0"
+    },
+    "node_modules/@shikijs/engine-oniguruma/package.json": {
+      "name": "@shikijs/engine-oniguruma",
+      "version": "4.5.0"
+    },
+    "node_modules/@shikijs/primitive/package.json": {
+      "name": "@shikijs/primitive",
+      "version": "4.5.0"
+    },
+    "node_modules/@shikijs/vscode-textmate/package.json": {
+      "name": "@shikijs/vscode-textmate",
+      "version": "10.1.0"
+    },
+    "node_modules/@shikijs/langs/package.json": {
+      "name": "@shikijs/langs",
+      "version": "4.5.0"
+    },
+    "node_modules/@shikijs/engine-javascript/package.json": {
+      "name": "@shikijs/engine-javascript",
+      "version": "4.5.0"
+    },
+    "node_modules/@shikijs/themes/package.json": {
+      "name": "@shikijs/themes",
+      "version": "4.5.0"
+    },
+    "node_modules/anymatch/node_modules/picomatch/package.json": {
+      "name": "picomatch",
+      "version": "2.3.2"
+    },
+    "node_modules/@napi-rs/wasm-runtime/package.json": {
+      "name": "@napi-rs/wasm-runtime",
+      "version": "1.2.6"
+    },
+    "node_modules/domelementtype/lib/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/@capsizecss/unpack/package.json": {
+      "name": "@capsizecss/unpack",
+      "version": "4.0.1"
+    },
+    "node_modules/nanoid/url-alphabet/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/nanoid/non-secure/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/nanoid/async/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/domutils/lib/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/@emnapi/core/package.json": {
+      "name": "@emnapi/core",
+      "version": "2.0.0-beta.2"
+    },
+    "node_modules/@emnapi/runtime/package.json": {
+      "name": "@emnapi/runtime",
+      "version": "2.0.0-beta.2"
+    },
+    "node_modules/@emnapi/wasi-threads/package.json": {
+      "name": "@emnapi/wasi-threads",
+      "version": "2.2.0"
+    },
+    "node_modules/csso/node_modules/mdn-data/package.json": {
+      "name": "mdn-data",
+      "version": "2.0.28"
+    },
+    "node_modules/csso/node_modules/css-tree/package.json": {
+      "name": "css-tree",
+      "version": "2.2.1"
+    },
+    "node_modules/entities/lib/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/common-ancestor-path/dist/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/common-ancestor-path/dist/commonjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/@astrojs/prism/package.json": {
+      "name": "@astrojs/prism",
+      "version": "4.1.2"
+    },
+    "node_modules/@astrojs/telemetry/package.json": {
+      "name": "@astrojs/telemetry",
+      "version": "3.4.2"
+    },
+    "node_modules/@astrojs/markdown-satteri/package.json": {
+      "name": "@astrojs/markdown-satteri",
+      "version": "0.4.6"
+    },
+    "node_modules/@astrojs/compiler-rs/package.json": {
+      "name": "@astrojs/compiler-rs",
+      "version": "0.5.2"
+    },
+    "node_modules/@astrojs/internal-helpers/package.json": {
+      "name": "@astrojs/internal-helpers",
+      "version": "0.13.0"
+    },
+    "node_modules/@astrojs/compiler-binding-wasm32-wasi/package.json": {
+      "name": "@astrojs/compiler-binding-wasm32-wasi",
+      "version": "0.5.2"
+    },
+    "node_modules/@astrojs/compiler-binding/package.json": {
+      "name": "@astrojs/compiler-binding",
+      "version": "0.5.2"
+    },
+    "node_modules/@ungap/structured-clone/package.json": {
+      "name": "@ungap/structured-clone",
+      "version": "1.4.0"
+    },
+    "node_modules/@ungap/structured-clone/cjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/nth-check/lib/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/yaml/browser/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/@clack/core/package.json": {
+      "name": "@clack/core",
+      "version": "1.5.1"
+    },
+    "node_modules/@clack/prompts/package.json": {
+      "name": "@clack/prompts",
+      "version": "1.8.1"
+    },
+    "node_modules/regex/dist/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/regex/dist/cjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/domhandler/lib/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/locales/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/mini/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/v3/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/v4/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/v4-mini/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/v4/locales/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/v4/core/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/v4/mini/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/zod/v4/classic/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/diff/libesm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/diff/libcjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/oniguruma-to-es/dist/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/oniguruma-to-es/dist/cjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/css-select/dist/esm/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/css-select/dist/commonjs/package.json": {
+      "name": null,
+      "version": null
+    },
+    "node_modules/@tybys/wasm-util/package.json": {
+      "name": "@tybys/wasm-util",
+      "version": "0.10.4"
+    },
+    "node_modules/dom-serializer/lib/esm/package.json": {
+      "name": null,
+      "version": null
+    }
+  },
+  "archive": {
+    "bytes": 17967333,
+    "sha256": "13413e44d9455b73accba45f3f7a923e8daaaa38cbe36c5a59eb0c7beaa9a292"
+  },
+  "dependencyFileCount": 9324
+}

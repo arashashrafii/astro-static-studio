@@ -1,0 +1,138 @@
+{
+  "windowStart": "2026-10-29T09:33:18.083Z",
+  "windowEnd": "2026-10-29T09:41:06.494Z",
+  "builds": [
+    {
+      "number": 1,
+      "marker": "LATEST-ASTRO-BUILD-1",
+      "elapsedMs": 67579
+    },
+    {
+      "number": 2,
+      "marker": "LATEST-ASTRO-BUILD-2",
+      "elapsedMs": 43654
+    },
+    {
+      "number": 3,
+      "marker": "LATEST-ASTRO-BUILD-3",
+      "elapsedMs": 39814
+    },
+    {
+      "number": 4,
+      "marker": "LATEST-ASTRO-BUILD-4",
+      "elapsedMs": 39212
+    },
+    {
+      "number": 5,
+      "marker": "LATEST-ASTRO-BUILD-5",
+      "elapsedMs": 42945
+    },
+    {
+      "number": 6,
+      "marker": "LATEST-ASTRO-BUILD-6",
+      "elapsedMs": 39948
+    },
+    {
+      "number": 7,
+      "marker": "LATEST-ASTRO-BUILD-7",
+      "elapsedMs": 41096
+    },
+    {
+      "number": 8,
+      "marker": "LATEST-ASTRO-BUILD-8",
+      "elapsedMs": 43464
+    },
+    {
+      "number": 9,
+      "marker": "LATEST-ASTRO-BUILD-9",
+      "elapsedMs": 40978
+    },
+    {
+      "number": 10,
+      "marker": "LATEST-ASTRO-BUILD-10",
+      "elapsedMs": 40578
+    }
+  ],
+  "medianBuildMs": 41037.0,
+  "validMemorySamples": 231,
+  "failedMemorySamples": 3,
+  "sampledPeakPssKiB": 1069189,
+  "sampledPeakPssMiB": 1044.1298828125,
+  "peakSample": {
+    "timestamp": "2026-10-29T09:38:07.757395+00:00",
+    "duration_seconds": 0.955,
+    "device": "emulator-5556",
+    "process_count": 8,
+    "pss_kb": 1069189,
+    "swap_pss_kb": 49556,
+    "processes": [
+      {
+        "pid": 6732,
+        "name": "com.android.chrome",
+        "pss_kb": 131004,
+        "swap_pss_kb": 30656
+      },
+      {
+        "pid": 6787,
+        "name": "com.android.chrome_zygote",
+        "pss_kb": 4386,
+        "swap_pss_kb": 2160
+      },
+      {
+        "pid": 6824,
+        "name": "com.android.chrome:privileged_process0",
+        "pss_kb": 46956,
+        "swap_pss_kb": 14792
+      },
+      {
+        "pid": 13702,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:74",
+        "pss_kb": 54711,
+        "swap_pss_kb": 386
+      },
+      {
+        "pid": 16459,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:80",
+        "pss_kb": 35200,
+        "swap_pss_kb": 386
+      },
+      {
+        "pid": 16491,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:81",
+        "pss_kb": 58488,
+        "swap_pss_kb": 390
+      },
+      {
+        "pid": 16521,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:82",
+        "pss_kb": 709193,
+        "swap_pss_kb": 391
+      },
+      {
+        "pid": 16558,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:83",
+        "pss_kb": 29251,
+        "swap_pss_kb": 395
+      }
+    ]
+  },
+  "maxSampleSeconds": 2.424,
+  "medianStartIntervalSeconds": 2.000092,
+  "maxStartIntervalSeconds": 2.424744,
+  "maxSwapPssKiB": 50473,
+  "fixtureSha256": "9d9f3823f48e36c86ac78696fb7776c05fde945ba45723e721a11295a8015eb8",
+  "zipSha256": "6118df860f5dc48dd6daca7519b6c94afa7265b698c64f3ff936ede6994f7a27",
+  "consoleErrors": [
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream",
+    "Failed to execute 'close' on 'ReadableStreamDefaultController': Cannot close an errored readable stream"
+  ],
+  "outputDrainTimeouts": 10
+}

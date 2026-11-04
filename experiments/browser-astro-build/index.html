@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Browser Astro build spike</title>
+<style>[hidden]{display:none!important}body{font:18px system-ui;max-width:850px;margin:auto;padding:20px}textarea{box-sizing:border-box;width:100%;height:300px;font:16px monospace}button,a{display:inline-block;padding:14px;margin:8px 0}iframe{width:100%;min-height:200px;border:1px solid}pre{white-space:pre-wrap;overflow-wrap:anywhere}</style>
+<h1>Browser Astro build spike</h1><p>One trusted Astro page compiled on this device. Experimental subset, not the Astro CLI. No uploaded projects, packages, styles, scripts or integrations.</p>
+<label for="source">src/pages/index.astro (trusted code only)</label><textarea id="source" spellcheck="false">---
+const title: string = 'Built on this device';
+---
+<html lang="en"><head><meta charset="utf-8"/><title>{title}</title></head><body><h1>{title}</h1><p>Edit the title and build again.</p></body></html></textarea>
+<button id="build">Build HTML on this device</button> <a id="download" hidden download="index.html">Download index.html</a>
+<p id="status" role="status" aria-live="polite">Ready. No build has run.</p><iframe title="Generated HTML preview" sandbox=""></iframe><pre id="report"></pre>
+<script type="module" src="./app.mjs"></script></html>

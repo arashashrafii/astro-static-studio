@@ -1,0 +1,39 @@
+{
+  "source": "User-submitted report and HTML attachment; execution not independently observed",
+  "date": "2026-10-28 Asia/Tehran",
+  "environmentClassification": "Physical phone, confirmed by owner; About phone screenshot inspected",
+  "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36",
+  "durationMs": 31508,
+  "outputBytes": 199,
+  "deviceMemoryGiB": 4,
+  "browserHeap": {
+    "used": 10000000,
+    "limit": 1070000000
+  },
+  "note": "Heap values exclude some worker/WASM memory; they are not peak process memory.",
+  "attachment": {
+    "file": "issue-8-user-submitted-index.html",
+    "actualBytes": 199,
+    "matchesReportedOutputBytes": true,
+    "sha256": "4fb15094016a161c5d2fbed1f9f48da860db95aff1e41e9016388896ce41ff30",
+    "title": "Built HTML on this device"
+  },
+  "unverified": [
+    "cold versus warm build",
+    "repeated stability",
+    "offline operation",
+    "peak memory",
+    "full Astro CLI/Vite build"
+  ],
+  "device": {
+    "name": "HUAWEI Mate 10 lite",
+    "model": "RNE-L21",
+    "androidVersion": "8.0.0",
+    "emuiVersion": "8.0.0",
+    "cpu": "HiSilicon Kirin 659",
+    "ramGB": 4.0,
+    "evidence": "Owner confirmation and About phone screenshot; personal identifiers omitted"
+  },
+  "userAgentNote": "Reported UA says Android10/K, but owner screenshot shows Android8.0.0. Device OS is recorded from screenshot; UA is retained verbatim, not used to infer OS.",
+  "status": "Partially Verified: owner-observed limited one-page build/export on physical Android phone; not full Astro CLI build"
+}

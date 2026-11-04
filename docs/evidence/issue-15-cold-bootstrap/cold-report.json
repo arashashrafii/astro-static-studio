@@ -1,0 +1,396 @@
+{
+  "startedAt": "2026-10-31T09:04:40.686Z",
+  "events": [
+    {
+      "at": "2026-10-31T09:05:52.887Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "78B581613A66E567430ED8CD7A0758BB",
+      "url": "http://127.0.0.1:4175/",
+      "type": "Document",
+      "frame": "5D1E7A13D3917838AF6C9681633D6A7D"
+    },
+    {
+      "at": "2026-10-31T09:05:54.361Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "78B581613A66E567430ED8CD7A0758BB",
+      "url": "http://127.0.0.1:4175/",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/html"
+      }
+    },
+    {
+      "at": "2026-10-31T09:05:55.575Z",
+      "phase": "online",
+      "kind": "frame-navigation",
+      "url": "http://127.0.0.1:4175/"
+    },
+    {
+      "at": "2026-10-31T09:05:56.149Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "2915.2",
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "type": "Script",
+      "frame": "5D1E7A13D3917838AF6C9681633D6A7D"
+    },
+    {
+      "at": "2026-10-31T09:05:56.621Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "2915.2",
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/javascript"
+      }
+    },
+    {
+      "at": "2026-10-31T09:05:57.963Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "2915.4",
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "type": "Script",
+      "frame": "5D1E7A13D3917838AF6C9681633D6A7D"
+    },
+    {
+      "at": "2026-10-31T09:05:58.175Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "2915.4",
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/javascript"
+      }
+    },
+    {
+      "at": "2026-10-31T09:05:58.393Z",
+      "phase": "online",
+      "kind": "frameStoppedLoading",
+      "frame": "5D1E7A13D3917838AF6C9681633D6A7D"
+    },
+    {
+      "at": "2026-10-31T09:05:58.804Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "2915.5",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "type": "Fetch",
+      "frame": "5D1E7A13D3917838AF6C9681633D6A7D"
+    },
+    {
+      "at": "2026-10-31T09:05:59.810Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "2915.5",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "cache-control": "public, max-age=300",
+        "etag": "W/\"17aa4eee523b07f9d940c510bcdc66f6\"",
+        "content-type": "application/json",
+        "last-modified": "Thu, 29 Oct 2026 18:38:34 GMT",
+        "vary": "accept-encoding, accept"
+      }
+    },
+    {
+      "at": "2026-10-31T09:06:05.672Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "2915.6",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "type": "Fetch",
+      "frame": "5D1E7A13D3917838AF6C9681633D6A7D"
+    },
+    {
+      "at": "2026-10-31T09:06:05.687Z",
+      "phase": "online",
+      "kind": "requestfailed",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "error": "net::ERR_NETWORK_CHANGED"
+    },
+    {
+      "at": "2026-10-31T09:06:05.689Z",
+      "phase": "online",
+      "kind": "console-error",
+      "text": "Failed to load resource: net::ERR_NETWORK_CHANGED"
+    },
+    {
+      "at": "2026-10-31T09:06:05.700Z",
+      "phase": "online",
+      "kind": "loadingFailed",
+      "id": "2915.6",
+      "error": "net::ERR_NETWORK_CHANGED",
+      "canceled": false,
+      "type": "Fetch"
+    },
+    {
+      "at": "2026-10-31T09:06:41.467Z",
+      "phase": "cold-offline",
+      "kind": "request",
+      "id": "AAD4D1FA7731DB4FB3DAF8C48A1CE742",
+      "url": "http://127.0.0.1:4175/",
+      "type": "Document",
+      "frame": "AF79439B12029FADCF5B20549FE4ACD0"
+    },
+    {
+      "at": "2026-10-31T09:06:43.484Z",
+      "phase": "cold-offline",
+      "kind": "response",
+      "id": "AAD4D1FA7731DB4FB3DAF8C48A1CE742",
+      "url": "http://127.0.0.1:4175/",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/html"
+      }
+    },
+    {
+      "at": "2026-10-31T09:06:49.713Z",
+      "phase": "cold-offline",
+      "kind": "frame-navigation",
+      "url": "http://127.0.0.1:4175/"
+    },
+    {
+      "at": "2026-10-31T09:06:50.226Z",
+      "phase": "cold-offline",
+      "kind": "request",
+      "id": "4164.2",
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "type": "Script",
+      "frame": "AF79439B12029FADCF5B20549FE4ACD0"
+    },
+    {
+      "at": "2026-10-31T09:06:50.837Z",
+      "phase": "cold-offline",
+      "kind": "response",
+      "id": "4164.2",
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/javascript"
+      }
+    },
+    {
+      "at": "2026-10-31T09:06:51.424Z",
+      "phase": "cold-offline",
+      "kind": "request",
+      "id": "4164.4",
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "type": "Script",
+      "frame": "AF79439B12029FADCF5B20549FE4ACD0"
+    },
+    {
+      "at": "2026-10-31T09:06:52.166Z",
+      "phase": "cold-offline",
+      "kind": "response",
+      "id": "4164.4",
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/javascript"
+      }
+    },
+    {
+      "at": "2026-10-31T09:06:52.479Z",
+      "phase": "cold-offline",
+      "kind": "frameStoppedLoading",
+      "frame": "AF79439B12029FADCF5B20549FE4ACD0"
+    },
+    {
+      "at": "2026-10-31T09:06:53.090Z",
+      "phase": "cold-offline",
+      "kind": "request",
+      "id": "4164.5",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "type": "Fetch",
+      "frame": "AF79439B12029FADCF5B20549FE4ACD0"
+    },
+    {
+      "at": "2026-10-31T09:06:53.225Z",
+      "phase": "cold-offline",
+      "kind": "requestfailed",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "error": "net::ERR_INTERNET_DISCONNECTED"
+    },
+    {
+      "at": "2026-10-31T09:06:53.238Z",
+      "phase": "cold-offline",
+      "kind": "console-error",
+      "text": "Failed to load resource: net::ERR_INTERNET_DISCONNECTED"
+    },
+    {
+      "at": "2026-10-31T09:06:53.242Z",
+      "phase": "cold-offline",
+      "kind": "loadingFailed",
+      "id": "4164.5",
+      "error": "net::ERR_INTERNET_DISCONNECTED",
+      "canceled": false,
+      "type": "Fetch"
+    },
+    {
+      "at": "2026-10-31T09:06:58.581Z",
+      "phase": "cold-offline",
+      "kind": "request",
+      "id": "907C77E91E4C99D989E9742474ADE8C3",
+      "url": "https://stackblitz.com/headless?coep=REDACTED&version=REDACTED",
+      "type": "Document",
+      "frame": "4D894161679B255DF0390BE2E792B852"
+    },
+    {
+      "at": "2026-10-31T09:06:58.658Z",
+      "phase": "cold-offline",
+      "kind": "requestfailed",
+      "url": "https://stackblitz.com/headless?coep=REDACTED&version=REDACTED",
+      "error": "net::ERR_INTERNET_DISCONNECTED"
+    },
+    {
+      "at": "2026-10-31T09:06:58.697Z",
+      "phase": "cold-offline",
+      "kind": "loadingFailed",
+      "id": "907C77E91E4C99D989E9742474ADE8C3",
+      "error": "net::ERR_INTERNET_DISCONNECTED",
+      "canceled": false,
+      "type": "Document"
+    },
+    {
+      "at": "2026-10-31T09:06:58.700Z",
+      "phase": "cold-offline",
+      "kind": "target",
+      "type": "iframe",
+      "url": ""
+    },
+    {
+      "at": "2026-10-31T09:07:08.537Z",
+      "phase": "cold-offline",
+      "kind": "frame-navigation",
+      "url": "chrome-error://chromewebdata/"
+    },
+    {
+      "at": "2026-10-31T09:07:25.553Z",
+      "phase": "cold-offline",
+      "kind": "target",
+      "type": "page",
+      "url": ""
+    }
+  ],
+  "limitations": [
+    "CDP attached to page; worker network may be outside page target. No missing event establishes absence.",
+    "Host loopback static shell remains available through ADB reverse; not a PWA offline launch."
+  ],
+  "wifi": "1",
+  "data": "1",
+  "debugApp": "com.android.chrome",
+  "waitDebugger": "0",
+  "debugFlag": "chrome --disable-fre --no-first-run --no-default-browser-check\n",
+  "anrBefore": "",
+  "devtoolsSockets": [],
+  "onlineControl": {
+    "ok": true,
+    "status": 200,
+    "online": true
+  },
+  "online": {
+    "status": "failed",
+    "stages": [
+      {
+        "name": "runtime boot",
+        "passed": true,
+        "elapsedMs": 18790,
+        "value": {
+          "_runtimeInfo": {
+            "path": "/bin:/usr/bin:/usr/local/bin",
+            "cwd": "/home/eh8vy3h86kzq3ys8e4lh7vo4aiqakj-anbf"
+          },
+          "fs": {
+            "_watchers": {}
+          },
+          "_tornDown": true
+        }
+      },
+      {
+        "name": "mount source",
+        "passed": true,
+        "elapsedMs": 54
+      },
+      {
+        "name": "initial filesystem read",
+        "passed": false,
+        "elapsedMs": 15037,
+        "error": "Error: initial filesystem read timed out"
+      }
+    ],
+    "logs": [],
+    "mode": "warm",
+    "currentStage": "initial filesystem read",
+    "error": "Error: initial filesystem read timed out",
+    "finishedAt": "2026-10-31T09:01:20.285Z"
+  },
+  "disconnectControls": [
+    {
+      "control": {
+        "ok": false,
+        "error": "TypeError: Failed to fetch",
+        "online": false
+      },
+      "routes": ""
+    }
+  ],
+  "offlineControl": {
+    "ok": false,
+    "error": "TypeError: Failed to fetch",
+    "online": false
+  },
+  "routes": "",
+  "coldControl": {
+    "ok": false,
+    "error": "TypeError: Failed to fetch",
+    "online": false
+  },
+  "cold": {
+    "status": "failed",
+    "stages": [
+      {
+        "name": "runtime boot",
+        "passed": false,
+        "elapsedMs": 90048,
+        "error": "Error: runtime boot timed out"
+      }
+    ],
+    "logs": [],
+    "mode": "cold",
+    "currentStage": "runtime boot",
+    "error": "Error: runtime boot timed out",
+    "finishedAt": "2026-10-31T09:08:28.148Z"
+  },
+  "frames": [
+    "http://127.0.0.1:4175/",
+    "chrome-error://chromewebdata/"
+  ],
+  "originRegistrations": [],
+  "anrAfter": "--------- beginning of events\n10-31 12:35:30.164   515  1484 I am_anr  : [0,725,com.android.systemui,550026765,executing service com.android.systemui/.keyguard.KeyguardService]\n",
+  "finishedAt": "2026-10-31T09:08:29.600Z"
+}

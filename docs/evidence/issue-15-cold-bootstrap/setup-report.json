@@ -1,0 +1,15 @@
+{
+  "startedAt": "2026-10-31T08:56:24.276Z",
+  "events": [],
+  "limitations": [
+    "CDP attached to page; worker network may be outside page target. No missing event establishes absence.",
+    "Host loopback static shell remains available through ADB reverse; not a PWA offline launch."
+  ],
+  "wifi": "1",
+  "data": "1",
+  "debugFlag": "chrome --disable-fre --no-first-run --no-default-browser-check\n",
+  "anrBefore": "",
+  "driverError": "Error: CDP unavailable\n    at connect (file:///home/arash/projects/astro-static-studio/.tmp/issue-15-cold-bootstrap/run.mjs:13:161)\n    at async file:///home/arash/projects/astro-static-studio/.tmp/issue-15-cold-bootstrap/run.mjs:21:267",
+  "anrAfter": "--------- beginning of events\n10-31 12:27:12.199   515  1508 I am_anr  : [0,729,com.android.systemui,550026765,executing service com.android.systemui/.SystemUIService]\n",
+  "finishedAt": "2026-10-31T08:58:23.628Z"
+}

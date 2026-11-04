@@ -1,0 +1,82 @@
+{
+  "kind": "Desktop Chromium; not Android",
+  "ramMiB": 1800,
+  "mode": "diagnostic",
+  "startedAt": "2026-10-29T19:15:26.329Z",
+  "requests": [
+    "http://127.0.0.1:4176/",
+    "http://127.0.0.1:4176/runners/riscv/host/nanovm.mjs",
+    "http://127.0.0.1:4176/runners/riscv/host/memfs.mjs",
+    "http://127.0.0.1:4176/kernel/index.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/memfs.mjs",
+    "http://127.0.0.1:4176/kernel/kernel.mjs",
+    "http://127.0.0.1:4176/kernel/net/fetch-bridge.mjs",
+    "http://127.0.0.1:4176/kernel/net/ports.mjs",
+    "http://127.0.0.1:4176/kernel/services/registry.mjs",
+    "http://127.0.0.1:4176/kernel/persist/cas-store.mjs",
+    "http://127.0.0.1:4176/kernel/persist/node-modules.mjs",
+    "http://127.0.0.1:4176/kernel/applets/runner.mjs",
+    "http://127.0.0.1:4176/kernel/applets/native.mjs",
+    "http://127.0.0.1:4176/kernel/services/index.mjs",
+    "http://127.0.0.1:4176/kernel/services/type-strip.mjs",
+    "http://127.0.0.1:4176/kernel/bus/client.mjs",
+    "http://127.0.0.1:4176/kernel/bus/sab-channel.mjs",
+    "http://127.0.0.1:4176/kernel/errno.mjs",
+    "http://127.0.0.1:4176/kernel/bus/opcodes.mjs",
+    "http://127.0.0.1:4176/kernel/bus/hub.mjs",
+    "http://127.0.0.1:4176/kernel/bus/port-channel.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/vfs.mjs",
+    "http://127.0.0.1:4176/kernel/proc/table.mjs",
+    "http://127.0.0.1:4176/kernel/proc/pipes.mjs",
+    "http://127.0.0.1:4176/kernel/proc/signals.mjs",
+    "http://127.0.0.1:4176/kernel/proc/router.mjs",
+    "http://127.0.0.1:4176/kernel/caps/caps.mjs",
+    "http://127.0.0.1:4176/kernel/caps/profiles.mjs",
+    "http://127.0.0.1:4176/kernel/services/zlib.mjs",
+    "http://127.0.0.1:4176/kernel/services/duckdb.mjs",
+    "http://127.0.0.1:4176/kernel/services/rspack.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/watch.mjs",
+    "http://127.0.0.1:4176/nano.min.wasm",
+    "http://127.0.0.1:4176/node-full",
+    "http://127.0.0.1:4176/fixture.tar.gz",
+    "blob:http://127.0.0.1:4176/cd416c49-137a-4c92-8a45-beac22d6a0b5"
+  ],
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pageErrors": [],
+  "offlineBeforeVmCreation": true,
+  "result": {
+    "status": "failed",
+    "phase": "verify",
+    "logs": [
+      "{\"options\":{\"initial\":1,\"maximum\":2},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n",
+      "{\"options\":{\"initial\":1,\"maximum\":2,\"shared\":true},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n",
+      "{\"options\":{\"initial\":1,\"maximum\":65536,\"shared\":true},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n",
+      "{\"options\":{\"initial\":4000,\"maximum\":65536,\"shared\":true},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n",
+      "{\"options\":{\"initial\":16384,\"maximum\":65536,\"shared\":true},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n",
+      "ROLLDOWN_WASI_PATH file:///fixture/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs\n",
+      "BINDING_ERROR RangeError: WebAssembly.Memory(): could not allocate memory\n    at Object.<anonymous> (/fixture/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs:626:24)\n    at Module._compile (node:internal/modules/cjs/loader:1803:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1934:10)\n    at Module.load (node:internal/modules/cjs/loader:1524:32)\n    at Module._load (node:internal/modules/cjs/loader:1326:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:338:3)\n    at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:241:7)\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n",
+      "(node:1) ExperimentalWarning: WASI is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    ],
+    "bootMs": 1743,
+    "mountMs": 570,
+    "execution": {
+      "exitCode": 1,
+      "stdout": "{\"options\":{\"initial\":1,\"maximum\":2},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n{\"options\":{\"initial\":1,\"maximum\":2,\"shared\":true},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n{\"options\":{\"initial\":1,\"maximum\":65536,\"shared\":true},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n{\"options\":{\"initial\":4000,\"maximum\":65536,\"shared\":true},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\n{\"options\":{\"initial\":16384,\"maximum\":65536,\"shared\":true},\"ok\":false,\"error\":\"RangeError: WebAssembly.Memory(): could not allocate memory\"}\nROLLDOWN_WASI_PATH file:///fixture/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs\nBINDING_ERROR RangeError: WebAssembly.Memory(): could not allocate memory\n    at Object.<anonymous> (/fixture/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs:626:24)\n    at Module._compile (node:internal/modules/cjs/loader:1803:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1934:10)\n    at Module.load (node:internal/modules/cjs/loader:1524:32)\n    at Module._load (node:internal/modules/cjs/loader:1326:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:338:3)\n    at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:241:7)\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n(node:1) ExperimentalWarning: WASI is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    "buildMs": 18946,
+    "html": {
+      "index.html": null,
+      "about/index.html": null
+    },
+    "badge": null,
+    "outputFiles": [],
+    "passed": false
+  },
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "finishedAt": "2026-10-29T19:15:48.866Z"
+}

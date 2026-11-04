@@ -1,0 +1,133 @@
+{
+  "issue": 13,
+  "startedAt": "2026-10-27T21:41:32.199Z",
+  "baselineCommit": "8754bb9e9b5162796a93cc634113ce9c5ec0d0bd",
+  "environment": {
+    "node": "v24.13.0",
+    "npm": "11.16.0",
+    "platform": "linux",
+    "arch": "x64",
+    "kernel": "7.0.0-38-generic"
+  },
+  "fixture": "/home/arash/projects/astro-static-studio/.tmp/issue-13-BUk8Or/fixture",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5186,
+      "log": "typecheck.log"
+    },
+    {
+      "name": "build-output-tests",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/build-output.test.ts"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1373,
+      "log": "build-output-tests.log"
+    },
+    {
+      "name": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 6009,
+      "log": "tests.log"
+    },
+    {
+      "name": "baseline-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 10711,
+      "log": "baseline-build.log"
+    },
+    {
+      "name": "changed-content-build",
+      "command": [
+        "npm",
+        "run",
+        "build:site"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 3607,
+      "log": "changed-content-build.log"
+    },
+    {
+      "name": "injected-failure-build",
+      "command": [
+        "npm",
+        "run",
+        "build:site"
+      ],
+      "exitCode": 1,
+      "elapsedMs": 3513,
+      "log": "injected-failure-build.log"
+    },
+    {
+      "name": "recovery-build",
+      "command": [
+        "npm",
+        "run",
+        "build:site"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 3965,
+      "log": "recovery-build.log"
+    }
+  ],
+  "status": "passed",
+  "lockfileSha256": "b183ddc8a0fb56fa73d4bdd28ee66a3afb2ef1ef906b5877a3530732fe3b14df",
+  "versions": {
+    "node_modules/@astrojs/compiler-rs": "0.5.2",
+    "node_modules/astro": "7.4.2",
+    "node_modules/tsx": "4.23.15",
+    "node_modules/typescript": "5.9.3",
+    "node_modules/vite": "8.3.5"
+  },
+  "fixtureContentSha256": "69d8c5e39691e86281f876753dbed6d1c4079ccff52f25e59b45311abede42cc",
+  "baselineOutput": {
+    "fileCount": 263,
+    "htmlCount": 24,
+    "totalBytes": 34469860,
+    "manifestSha256": "3582b6c0fe410767726b88e9204fc959779829453abe7c0acf1ea86e305065b6"
+  },
+  "marker": {
+    "input": "Issue 13 desktop build — به‌روز <check> & verified",
+    "escapedOutputVerified": true,
+    "indexSha256": "d95025ee4886afe79304f1b29964a1c0f9ad012736917659f8a3587927917d75"
+  },
+  "updatedOutput": {
+    "fileCount": 263,
+    "htmlCount": 24,
+    "totalBytes": 34474004,
+    "manifestSha256": "d16423f1bf770768bd95792039367478b134c9dab029d10cba04629c8c532b7a"
+  },
+  "failure": {
+    "nonzeroExit": true,
+    "allOutputBytesPreserved": true,
+    "stagingAndBackupCleaned": true,
+    "preservedManifestSha256": "d16423f1bf770768bd95792039367478b134c9dab029d10cba04629c8c532b7a"
+  },
+  "originalSourcesUnchanged": true,
+  "finishedAt": "2026-10-27T21:42:08.938Z",
+  "evidenceDirectory": ".tmp/issue-13-BUk8Or/",
+  "scope": "Committed desktop fixture, existing installed dependencies; no Android, publication or UI usability verification."
+}

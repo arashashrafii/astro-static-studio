@@ -1,6 +1,38 @@
 # Implementation Roadmap
 
-**Status:** Desktop local editing/build, setup/recovery and Cloudflare QA preview publishing exist. Milestone 1 non-technical usability validation is still open; M2 preview publishing is complete with owner-confirmed reachability. The template-first/collection-driven content redesign is **proposed, not implemented**. Native mobile builds remain later work.
+## Owner planning update — 2026-11-01
+
+Use [the current Persian execution plan](PROJECT_PLAN_2026-11-01.fa.md) and its
+linked [dashboard scenario](ISSUE_5_OWNER_TEST.fa.md) as the current sequence.
+The tester agent reproduced and verified the backup fix: two valid downloads
+(46.7 MB / 238 media, then 48.6 MB / 241 media) succeeded. The trial project,
+three images, alt text, ordering, edits and local preview were verified. CUA's
+documented filechooser API completed upload; native OS picker visibility was not
+tested. Publish-control identification remains blocked while Cloudflare is
+disconnected, and no connection or publication was attempted. The local services
+are running for owner review. #8 is
+closed research with partial/negative evidence, #15 is
+still unresolved, #16 has no approved architecture, and #14 is deferred by owner.
+The older six-phase notes below are historical planning context where they conflict
+with the current plan or owner decisions; they do not authorize implementation.
+
+## Staged-development planning update — 2026-10-28
+
+The owner requested an evidence-first six-phase sequence. The ordered issue map is
+in [STAGED_DEVELOPMENT](STAGED_DEVELOPMENT.md) and [tracking issue #28](https://github.com/arashashrafii/astro-static-studio/issues/28).
+It reuses completed desktop work and existing open issues. The earlier milestone
+sections below remain historical/product context, not authorization to skip the new gates.
+Issue #13's desktop evidence is now verified; see [DESKTOP_BUILD_BASELINE](DESKTOP_BUILD_BASELINE.md).
+The active feasibility issue is #8. Android emulator experiments built the actual
+Studio template and exported verified static output; ten warm offline builds also
+passed. Cold offline runtime startup failed a bounded probe, and physical-phone
+acceptance and offline/PWA operation remain unverified. See
+[ISSUE_8_STUDIO_TEMPLATE](ISSUE_8_STUDIO_TEMPLATE.md) and
+[ISSUE_8_OFFLINE](ISSUE_8_OFFLINE.md). Build architecture
+selection (#16), generic Collection schema (#18), and experience/permission separation
+(#25) require explicit owner approval before their corresponding product changes.
+
+**Status:** Desktop local editing/build, setup/recovery and Cloudflare QA preview publishing exist. Milestone 1 non-technical usability validation was accepted by the owner and issue #5 is closed. M2 preview publishing is complete with owner-confirmed reachability. Content V2 is the owner-selected target, with migration, dashboard and renderer work present in the uncommitted local workspace; issue #19 remains open for migration/restore and browser acceptance evidence. Native mobile builds remain later work.
 
 ## Goal
 Deliver a simple, mobile-first CMS for Astro websites. Customers can edit projects, text and pictures, then publish a static site without using Git or a terminal.
@@ -52,7 +84,7 @@ This repository now contains an adapted copy of the Sara editor, local API, cont
 
 ## Proposed content/UX evolution — AFTER desktop usability validation
 
-Design reference: [CONTENT_MODEL.md](CONTENT_MODEL.md). These are not completed roadmap items and do not modify the current Content v1 contract.
+Design reference: [CONTENT_MODEL.md](CONTENT_MODEL.md). This older roadmap section records proposals; it does not override the owner-selected V2 target or establish issue completion. The committed baseline remains V1, local V2 work is uncommitted, and issue #19 remains open.
 
 1. **Evidence first:** finish [#5](https://github.com/arashashrafii/astro-static-studio/issues/5) with a non-technical owner on the current desktop workflow. Preserve the working publish and backup behavior.
 2. **Template-first setup:** keep the bundled approved template as the initial free choice; later test a second adapted free template before exposing selection. Add site language and whole-site RTL/LTR controls only when the chosen theme passes direction/accessibility tests.
@@ -75,4 +107,4 @@ This is a **workflow of roles**, not a requirement for three paid or constantly 
 Every implementation issue states: objective, current code/links, scope and exclusions, acceptance criteria, tests/checks, security risks, dependencies and a clear definition of done. Make small, reviewable changes; report actual results, never invented completion.
 
 ## Next task
-Complete issue [#5 desktop workflow usability validation](https://github.com/arashashrafii/astro-static-studio/issues/5): run the task-based session and record blockers. Use those findings before implementing the proposed template/collection/page UX in [CONTENT_MODEL.md](CONTENT_MODEL.md).
+Issue #5 was closed on 2026-11-04 by owner acceptance of the desktop and responsive mobile-web workflow. The selected next technical issue is #15: diagnose the cold offline WebContainer startup, then use its evidence for #16. Issue #14 is deferred until Android results; #17 and #10 remain gated by #16/#17. See the [staged issue map](STAGED_DEVELOPMENT.md) and tracking [issue #28](https://github.com/arashashrafii/astro-static-studio/issues/28). The Persian plan dated 2026-11-01 is a historical snapshot, not the current issue order.

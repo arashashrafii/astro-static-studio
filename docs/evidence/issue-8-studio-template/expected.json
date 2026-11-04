@@ -1,0 +1,89 @@
+{
+  "routes": [
+    "index.html",
+    "projects/index.html",
+    "about/index.html",
+    "contact/index.html",
+    "portfolio/stranger/index.html",
+    "portfolio/fossil/index.html",
+    "portfolio/plate/index.html",
+    "portfolio/livid-violets/index.html",
+    "portfolio/border/index.html",
+    "portfolio/boom/index.html",
+    "portfolio/silent-poultry/index.html",
+    "portfolio/at-the-border-of-blue-and-gray-sky/index.html",
+    "portfolio/mania/index.html",
+    "portfolio/dark-chocolate/index.html",
+    "portfolio/carrousels/index.html",
+    "portfolio/takhti/index.html",
+    "portfolio/blue-sky/index.html",
+    "portfolio/grenade/index.html",
+    "portfolio/urban-biennial/index.html",
+    "portfolio/symposium/index.html",
+    "portfolio/the-horses/index.html",
+    "portfolio/are-there-any-seats-for-me/index.html",
+    "portfolio/my-silence/index.html",
+    "portfolio/woman-i/index.html"
+  ],
+  "siteName": "Sara Rahanjam",
+  "sourceFiles": {
+    "apps/site/src/layouts/Layout.astro": {
+      "sha256": "caf2011e68e879dc3109879aaad7993262b80035e1819606c5fb751f7f7ada32",
+      "matchesRepository": true
+    },
+    "apps/site/src/components/Projects.astro": {
+      "sha256": "4449b19c06f35ebf82bfe0eacfaf330e4278d3b4b53eb3425840845eed3f44f5",
+      "matchesRepository": true
+    },
+    "apps/site/src/pages/index.astro": {
+      "sha256": "21118b16b0aa4cca901a95579cf7c31e8f5b1a15fa54839afa7a8852788b4e52",
+      "matchesRepository": true
+    },
+    "apps/site/src/pages/projects.astro": {
+      "sha256": "f52eaa596525a6f5f15aab0736cab30641247a438d52355234192c7fb92272d9",
+      "matchesRepository": true
+    },
+    "apps/site/src/pages/[...slug].astro": {
+      "sha256": "2c95077e47de1d1125ab7d2af518403a99dd2f527014bf6783796377317daee5",
+      "matchesRepository": true
+    },
+    "apps/site/src/lib/content.ts": {
+      "sha256": "5a25aaa64679b1221953c5ca5f9b527e5e30adac271712172ea943e8172fe42a",
+      "matchesRepository": true
+    },
+    "packages/theme/package.json": {
+      "sha256": "1f1e023164f74a72c1a21dbf8bf614ae34a75f8582ce75a09bf6e94d04f5c885",
+      "matchesRepository": true
+    },
+    "packages/theme/src/index.ts": {
+      "sha256": "e17f0c34967046c4b5c1b7221ecba9558856cc4075c3fdbee5e23b95b9bd3dc7",
+      "matchesRepository": true
+    },
+    "packages/contracts/package.json": {
+      "sha256": "422086e56d91bd974235d7ada7ed03fe8bdd2956f9e8c79921eb45ce9eb15251",
+      "matchesRepository": true
+    },
+    "packages/contracts/src/index.ts": {
+      "sha256": "14debbc8509378e98b77dad142f92141beb93e8452242f97caa6f3c3ef147ccd",
+      "matchesRepository": true
+    },
+    "apps/site/package.json": {
+      "sha256": "dc3f2096e50a81061740f53d4739337f1c2c6293c227af8eed560edabe73e3b4",
+      "matchesRepository": false
+    },
+    "apps/site/astro.config.mjs": {
+      "sha256": "eda7db67c6526c93a3ef88557e1f4550e2984bf49b46f7b1674cf2f1d7f9f90f",
+      "matchesRepository": true
+    },
+    "content/content.json": {
+      "sha256": "69d8c5e39691e86281f876753dbed6d1c4079ccff52f25e59b45311abede42cc",
+      "matchesRepository": true
+    },
+    "package.json": {
+      "sha256": "1cd80985ca06b40ef37b43d4c6e9252101a4fc7cdaa6ac73239d57d64551bbd2",
+      "matchesRepository": false
+    }
+  },
+  "assetCount": 239,
+  "assetBytes": 34316008
+}

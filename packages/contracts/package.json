@@ -1,1 +1,1 @@
-{"name":"@astro-static-studio/contracts","version":"0.1.0","type":"module","exports":"./src/index.ts","dependencies":{"zod":"^4.1.0"}}
+{"name":"@astro-static-studio/contracts","version":"0.1.0","type":"module","exports":{".":"./src/index.ts","./content-v2":"./src/content-v2.ts","./migration":"./src/content-migration.ts"},"dependencies":{"zod":"^4.1.0"}}

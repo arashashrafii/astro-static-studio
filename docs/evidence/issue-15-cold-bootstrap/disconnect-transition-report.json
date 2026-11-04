@@ -1,0 +1,199 @@
+{
+  "startedAt": "2026-10-31T09:01:51.920Z",
+  "events": [
+    {
+      "at": "2026-10-31T09:03:28.947Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "2D8B3A272EC6C6388E3549DC55962235",
+      "url": "http://127.0.0.1:4175/",
+      "type": "Document",
+      "frame": "851DA0FF74DF74DC853C2FFD85B845F9"
+    },
+    {
+      "at": "2026-10-31T09:03:30.134Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "2D8B3A272EC6C6388E3549DC55962235",
+      "url": "http://127.0.0.1:4175/",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/html"
+      }
+    },
+    {
+      "at": "2026-10-31T09:03:37.336Z",
+      "phase": "online",
+      "kind": "frame-navigation",
+      "url": "http://127.0.0.1:4175/"
+    },
+    {
+      "at": "2026-10-31T09:03:37.502Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "3378.2",
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "type": "Script",
+      "frame": "851DA0FF74DF74DC853C2FFD85B845F9"
+    },
+    {
+      "at": "2026-10-31T09:03:38.326Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "3378.2",
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/javascript"
+      }
+    },
+    {
+      "at": "2026-10-31T09:03:38.332Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "3378.4",
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "type": "Script",
+      "frame": "851DA0FF74DF74DC853C2FFD85B845F9"
+    },
+    {
+      "at": "2026-10-31T09:03:39.208Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "3378.4",
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/javascript"
+      }
+    },
+    {
+      "at": "2026-10-31T09:03:39.778Z",
+      "phase": "online",
+      "kind": "frameStoppedLoading",
+      "frame": "851DA0FF74DF74DC853C2FFD85B845F9"
+    },
+    {
+      "at": "2026-10-31T09:03:41.152Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "3378.5",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "type": "Fetch",
+      "frame": "851DA0FF74DF74DC853C2FFD85B845F9"
+    },
+    {
+      "at": "2026-10-31T09:03:43.250Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "3378.5",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "cache-control": "public, max-age=300",
+        "etag": "W/\"17aa4eee523b07f9d940c510bcdc66f6\"",
+        "content-type": "application/json",
+        "last-modified": "Thu, 29 Oct 2026 18:38:34 GMT",
+        "vary": "accept-encoding, accept"
+      }
+    },
+    {
+      "at": "2026-10-31T09:03:49.888Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "3378.6",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "type": "Fetch",
+      "frame": "851DA0FF74DF74DC853C2FFD85B845F9"
+    },
+    {
+      "at": "2026-10-31T09:03:50.436Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "3378.6",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "cache-control": "public, max-age=300",
+        "etag": "W/\"17aa4eee523b07f9d940c510bcdc66f6\"",
+        "content-type": "application/json",
+        "last-modified": "Thu, 29 Oct 2026 18:38:34 GMT",
+        "vary": "accept-encoding, accept"
+      }
+    }
+  ],
+  "limitations": [
+    "CDP attached to page; worker network may be outside page target. No missing event establishes absence.",
+    "Host loopback static shell remains available through ADB reverse; not a PWA offline launch."
+  ],
+  "wifi": "1",
+  "data": "1",
+  "debugApp": "com.android.chrome",
+  "waitDebugger": "0",
+  "debugFlag": "chrome --disable-fre --no-first-run --no-default-browser-check\n",
+  "anrBefore": "",
+  "devtoolsSockets": [],
+  "onlineControl": {
+    "ok": true,
+    "status": 200,
+    "online": true
+  },
+  "online": {
+    "status": "failed",
+    "stages": [
+      {
+        "name": "runtime boot",
+        "passed": true,
+        "elapsedMs": 18790,
+        "value": {
+          "_runtimeInfo": {
+            "path": "/bin:/usr/bin:/usr/local/bin",
+            "cwd": "/home/eh8vy3h86kzq3ys8e4lh7vo4aiqakj-anbf"
+          },
+          "fs": {
+            "_watchers": {}
+          },
+          "_tornDown": true
+        }
+      },
+      {
+        "name": "mount source",
+        "passed": true,
+        "elapsedMs": 54
+      },
+      {
+        "name": "initial filesystem read",
+        "passed": false,
+        "elapsedMs": 15037,
+        "error": "Error: initial filesystem read timed out"
+      }
+    ],
+    "logs": [],
+    "mode": "warm",
+    "currentStage": "initial filesystem read",
+    "error": "Error: initial filesystem read timed out",
+    "finishedAt": "2026-10-31T09:01:20.285Z"
+  },
+  "offlineControl": {
+    "ok": true,
+    "status": 200,
+    "online": true
+  },
+  "routes": "10.0.2.0/24 dev wlan0 proto kernel scope link src 10.0.2.16 \n",
+  "driverError": "Error: Disconnect failed\n    at file:///home/arash/projects/astro-static-studio/.tmp/issue-15-cold-bootstrap/cold-run.mjs:22:241\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)",
+  "anrAfter": "--------- beginning of events\n10-31 12:32:40.161   513  1652 I am_anr  : [0,727,com.android.systemui,550026765,executing service com.android.systemui/.SystemUIService]\n",
+  "finishedAt": "2026-10-31T09:03:56.017Z"
+}

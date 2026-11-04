@@ -1,0 +1,297 @@
+{
+  "startedAt": "2026-10-31T08:59:05.113Z",
+  "events": [
+    {
+      "at": "2026-10-31T09:00:26.755Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "A51B13E88A5B19E93CB5AC478EEDE962",
+      "url": "http://127.0.0.1:4175/",
+      "type": "Document",
+      "frame": "BA88F1325E5C426FF6B06350FE96BDF3"
+    },
+    {
+      "at": "2026-10-31T09:00:27.119Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "A51B13E88A5B19E93CB5AC478EEDE962",
+      "url": "http://127.0.0.1:4175/",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/html"
+      }
+    },
+    {
+      "at": "2026-10-31T09:00:32.778Z",
+      "phase": "online",
+      "kind": "frame-navigation",
+      "url": "http://127.0.0.1:4175/"
+    },
+    {
+      "at": "2026-10-31T09:00:33.395Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "3335.2",
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "type": "Script",
+      "frame": "BA88F1325E5C426FF6B06350FE96BDF3"
+    },
+    {
+      "at": "2026-10-31T09:00:33.414Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "3335.2",
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/javascript"
+      }
+    },
+    {
+      "at": "2026-10-31T09:00:33.465Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "3335.4",
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "type": "Script",
+      "frame": "BA88F1325E5C426FF6B06350FE96BDF3"
+    },
+    {
+      "at": "2026-10-31T09:00:33.473Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "3335.4",
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/javascript"
+      }
+    },
+    {
+      "at": "2026-10-31T09:00:33.629Z",
+      "phase": "online",
+      "kind": "frameStoppedLoading",
+      "frame": "BA88F1325E5C426FF6B06350FE96BDF3"
+    },
+    {
+      "at": "2026-10-31T09:00:33.832Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "3335.5",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "type": "Fetch",
+      "frame": "BA88F1325E5C426FF6B06350FE96BDF3"
+    },
+    {
+      "at": "2026-10-31T09:00:34.914Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "3335.5",
+      "url": "https://registry.npmjs.org/astro?diagnostic=REDACTED",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "cache-control": "public, max-age=300",
+        "etag": "W/\"17aa4eee523b07f9d940c510bcdc66f6\"",
+        "content-type": "application/json",
+        "last-modified": "Thu, 29 Oct 2026 18:38:34 GMT",
+        "vary": "accept-encoding, accept"
+      }
+    },
+    {
+      "at": "2026-10-31T09:00:46.830Z",
+      "phase": "online",
+      "kind": "request",
+      "id": "F7C4B7548870FCD00B947526ACE75354",
+      "url": "https://stackblitz.com/headless?coep=REDACTED&version=REDACTED",
+      "type": "Document",
+      "frame": "52100459CA243EEB6D8ECD045B116F33"
+    },
+    {
+      "at": "2026-10-31T09:00:47.988Z",
+      "phase": "online",
+      "kind": "response",
+      "id": "F7C4B7548870FCD00B947526ACE75354",
+      "url": "https://stackblitz.com/headless?coep=REDACTED&version=REDACTED",
+      "status": 200,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "headers": {
+        "cache-control": "max-age=0, private, must-revalidate",
+        "content-type": "text/html; charset=utf-8",
+        "etag": "W/\"d49db26e9b81a942a3bf43d0b3ab7117\"",
+        "vary": "Accept-Encoding"
+      }
+    },
+    {
+      "at": "2026-10-31T09:00:47.989Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "iframe",
+      "url": ""
+    },
+    {
+      "at": "2026-10-31T09:00:50.241Z",
+      "phase": "online",
+      "kind": "frame-navigation",
+      "url": "https://stackblitz.com/headless?coep=REDACTED&version=REDACTED"
+    },
+    {
+      "at": "2026-10-31T09:00:52.317Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "worker",
+      "url": ""
+    },
+    {
+      "at": "2026-10-31T09:00:52.389Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "iframe",
+      "url": ""
+    },
+    {
+      "at": "2026-10-31T09:00:52.517Z",
+      "phase": "online",
+      "kind": "worker",
+      "url": "blob:https://stackblitz.com/8bc594dc-d041-4595-8a37-2907dbd62bc5"
+    },
+    {
+      "at": "2026-10-31T09:00:57.463Z",
+      "phase": "online",
+      "kind": "frame-navigation",
+      "url": "https://eh8vy3h86kzq3ys8e4lh7vo4aiqakj-anbf.w-corp-staticblitz.com/iframe.f8d6b2be.html"
+    },
+    {
+      "at": "2026-10-31T09:01:00.941Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "worker",
+      "url": ""
+    },
+    {
+      "at": "2026-10-31T09:01:01.103Z",
+      "phase": "online",
+      "kind": "worker",
+      "url": "https://eh8vy3h86kzq3ys8e4lh7vo4aiqakj-anbf.w-corp-staticblitz.com/filesystem-worker.f8d6b2be.js"
+    },
+    {
+      "at": "2026-10-31T09:01:05.165Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "worker",
+      "url": ""
+    },
+    {
+      "at": "2026-10-31T09:01:05.207Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "worker",
+      "url": ""
+    },
+    {
+      "at": "2026-10-31T09:01:05.226Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "worker",
+      "url": ""
+    },
+    {
+      "at": "2026-10-31T09:01:05.255Z",
+      "phase": "online",
+      "kind": "worker",
+      "url": "blob:https://eh8vy3h86kzq3ys8e4lh7vo4aiqakj-anbf.w-corp-staticblitz.com/f4e115d9-7498-456c-aa2f-bc32b432e36b"
+    },
+    {
+      "at": "2026-10-31T09:01:05.312Z",
+      "phase": "online",
+      "kind": "worker",
+      "url": "blob:https://eh8vy3h86kzq3ys8e4lh7vo4aiqakj-anbf.w-corp-staticblitz.com/bd6c89f8-b2e8-477c-9705-9934408577db"
+    },
+    {
+      "at": "2026-10-31T09:01:05.316Z",
+      "phase": "online",
+      "kind": "worker",
+      "url": "blob:https://eh8vy3h86kzq3ys8e4lh7vo4aiqakj-anbf.w-corp-staticblitz.com/f01f4029-9852-4483-bbaf-24badc4833c2"
+    },
+    {
+      "at": "2026-10-31T09:01:05.413Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "shared_worker",
+      "url": "https://stackblitz.com/.localservice@preview.shared_worker.f8d6b2be.js"
+    },
+    {
+      "at": "2026-10-31T09:01:10.714Z",
+      "phase": "online",
+      "kind": "target",
+      "type": "page",
+      "url": ""
+    }
+  ],
+  "limitations": [
+    "CDP attached to page; worker network may be outside page target. No missing event establishes absence.",
+    "Host loopback static shell remains available through ADB reverse; not a PWA offline launch."
+  ],
+  "wifi": "1",
+  "data": "1",
+  "debugApp": "com.android.chrome",
+  "waitDebugger": "0",
+  "debugFlag": "chrome --disable-fre --no-first-run --no-default-browser-check\n",
+  "anrBefore": "",
+  "devtoolsSockets": [],
+  "onlineControl": {
+    "ok": true,
+    "status": 200,
+    "online": true
+  },
+  "online": {
+    "status": "failed",
+    "stages": [
+      {
+        "name": "runtime boot",
+        "passed": true,
+        "elapsedMs": 18790,
+        "value": {
+          "_runtimeInfo": {
+            "path": "/bin:/usr/bin:/usr/local/bin",
+            "cwd": "/home/eh8vy3h86kzq3ys8e4lh7vo4aiqakj-anbf"
+          },
+          "fs": {
+            "_watchers": {}
+          },
+          "_tornDown": true
+        }
+      },
+      {
+        "name": "mount source",
+        "passed": true,
+        "elapsedMs": 54
+      },
+      {
+        "name": "initial filesystem read",
+        "passed": false,
+        "elapsedMs": 15037,
+        "error": "Error: initial filesystem read timed out"
+      }
+    ],
+    "logs": [],
+    "mode": "warm",
+    "currentStage": "initial filesystem read",
+    "error": "Error: initial filesystem read timed out",
+    "finishedAt": "2026-10-31T09:01:20.285Z"
+  },
+  "driverError": "Error: Online boot failed\n    at file:///home/arash/projects/astro-static-studio/.tmp/issue-15-cold-bootstrap/run.mjs:21:838",
+  "anrAfter": "--------- beginning of events\n10-31 12:29:52.810   518  1589 I am_anr  : [0,730,com.android.systemui,550026765,executing service com.android.systemui/.keyguard.KeyguardService]\n10-31 12:30:29.830   518  3296 I am_anr  : [0,730,com.android.systemui,550026765,Input dispatching timed out (6ca5a78 NavigationBar0 (server) is not responding. Waited 5057ms for MotionEvent)]\n10-31 12:30:52.519   518  3296 I am_anr  : [0,1165,com.google.android.apps.nexuslauncher,885767749,Input dispatching timed out ([Gesture Monitor] swipe-up (server) is not responding. Waited 5726ms for MotionEvent)]\n",
+  "finishedAt": "2026-10-31T09:01:21.819Z"
+}

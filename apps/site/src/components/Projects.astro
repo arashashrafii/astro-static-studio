@@ -1,9 +1,10 @@
 ---
+import {entryExcerptFromContent} from '@astro-static-studio/contracts';
 const {entries}=Astro.props;
 const categories=[...new Set(entries.flatMap((entry:any)=>entry.categories??[]))];
 ---
 {categories.length>0&&<nav class="category-filters" aria-label="Project categories"><button type="button" class="active" data-project-filter="all">All</button>{categories.map((category:string)=><button type="button" data-project-filter={category}>{category}</button>)}</nav>}
-<div class="grid" id="project-grid">{entries.map((e:any)=>{const image=e.components.find((c:any)=>c.type==='gallery')?.images[0];return <a class="card" data-project-categories={(e.categories??[]).join('|')} href={`/portfolio/${e.slug}/`}>{image?<img loading="lazy" decoding="async" src={image.src} alt={image.alt}/>:<div class="placeholder">{e.title}</div>}<h2>{e.title}</h2>{e.categories?.length&&<p class="category-list">{e.categories.join(' / ')}</p>}<p class="muted">{e.summary}</p>{e.releaseDate&&<small>{e.releaseDate}</small>}</a>})}</div>
+<div class="grid" id="project-grid">{entries.map((e:any)=>{const image=e.components.find((c:any)=>c.type==='gallery')?.images[0];return <a class="card" data-project-categories={(e.categories??[]).join('|')} href={`/portfolio/${e.slug}/`}>{image?<img loading="lazy" decoding="async" src={image.src} alt={image.alt}/>:<div class="placeholder">{e.title}</div>}<h2>{e.title}</h2>{e.categories?.length&&<p class="category-list">{e.categories.join(' / ')}</p>}<p class="muted">{entryExcerptFromContent(e.components,e.summary)}</p>{e.releaseDate&&<small>{e.releaseDate}</small>}</a>})}</div>
 <script>
 const filters=document.querySelectorAll<HTMLButtonElement>('[data-project-filter]');
 const cards=document.querySelectorAll<HTMLElement>('[data-project-categories]');

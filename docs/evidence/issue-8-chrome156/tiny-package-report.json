@@ -1,0 +1,349 @@
+{
+  "startedAt": "2026-10-29T06:45:55.272Z",
+  "kind": "Android emulator only",
+  "requests": [
+    {
+      "url": "http://127.0.0.1:4175/",
+      "method": "GET",
+      "type": "document"
+    },
+    {
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://stackblitz.com/headless",
+      "method": "GET",
+      "type": "document"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/webcontainer.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://c.staticblitz.com/assets/vite/headless-siO4QJGT.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/fetch.worker.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://c.staticblitz.com/assets/vite/semver-Zyv2pDaP.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/iframe.50ccefb0.html",
+      "method": "GET",
+      "type": "document"
+    },
+    {
+      "url": "blob:https://stackblitz.com/d3fec16f-f0d4-48e8-b548-5f3eb46295b9",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/full_bin_index.50ccefb0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/fetch.worker.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/iframe.main.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/filesystem-worker.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/fs_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/internal_bindings_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/df9489e3-d4a9-495e-b276-c4593e54a465",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/8f710bca-cd8a-47f5-b73b-b7a01bf52c8c",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/c2eecf4b-638b-4ad8-85af-056e1547a768",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://stackblitz.com/.localservice@preview.shared_worker.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/0445c44c-1686-4c1b-aa42-427d596bab53",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/18341208-bd59-48b0-921f-dbd9427975f0",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/4c2851a3-1f59-4538-b71f-17763db3fd42",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/62b54dca-ab97-4b12-a3d5-0b22f3e02ab1",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/r/l",
+      "method": "POST",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/r/l/p/076307cd911c24b2336793189fda74e96d7d219a.json",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://nr.staticblitz.com/is-number",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://nr.staticblitz.com/is-number",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/polyfills",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/is-number@7.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/29740fe6-8f94-49df-9a5d-6f74cb436e63",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "blob:https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/6767bc8f-3ab8-455e-9772-6036c1ba45c5",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://52augabxa8o4wbo364c25nfokiwzt8-1jmt.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    }
+  ],
+  "failedRequests": [
+    {
+      "url": "https://t.staticblitz.com/w/v17/r/l",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "report": {
+    "status": "passed",
+    "capabilities": {
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "secureContext": true,
+      "crossOriginIsolated": true,
+      "sharedArrayBuffer": "function",
+      "sharedWorker": "function"
+    },
+    "stages": [
+      {
+        "name": "runtime boot",
+        "elapsedMs": 8169,
+        "passed": true
+      },
+      {
+        "name": "node --version",
+        "elapsedMs": 6046,
+        "passed": true
+      },
+      {
+        "name": "npm install is-number@7.0.0 --no-audit --no-fund --progress=false",
+        "elapsedMs": 6862,
+        "passed": true
+      },
+      {
+        "name": "node -e const assert=require('node:assert/strict');const isNumber=require('is-number');assert.equal(isNumber(42),true);assert.equal(isNumber('no'),false);assert.equal(require('is-number/package.json').version,'7.0.0');console.log('is-number checks passed')",
+        "elapsedMs": 2245,
+        "passed": true
+      }
+    ],
+    "logs": [
+      "v22.22.3\r\n",
+      "Exit code: 0",
+      "\r\nadded 1 package in 4s\r\n",
+      "Exit code: 0",
+      "is-number checks passed\r\n",
+      "Exit code: 0"
+    ],
+    "currentStage": "node -e const assert=require('node:assert/strict');const isNumber=require('is-number');assert.equal(isNumber(42),true);assert.equal(isNumber('no'),false);assert.equal(require('is-number/package.json').version,'7.0.0');console.log('is-number checks passed')",
+    "runtimeBooted": true,
+    "finishedAt": "2026-10-29T06:46:20.042Z"
+  },
+  "finishedAt": "2026-10-29T06:46:21.126Z"
+}

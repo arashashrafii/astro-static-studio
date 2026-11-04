@@ -65,10 +65,11 @@ A change is done only when the acceptance criteria are met, supported test/build
 ## Communication
 Use clear, short English (roughly B1–B2 readability). Separate verified facts, proposals, and open questions. Be precise and avoid repeating the user's instructions.
 
-## Current v1 versus future content model
+## Content versions and current workspace
 
-- **Current source of truth:** `packages/contracts/src/index.ts` defines Content v1: only page/project entries and text/gallery components in `content/content.json`. The existing site uses a direct JSON import, not Astro Content Collections.
-- **Future proposal:** `docs/CONTENT_MODEL.md` specifies a template-first, Pages + typed Collections experience with per-collection categories and collection-view blocks. It is **not** an instruction to silently rewrite the schema or UI.
+- **Committed baseline:** `packages/contracts/src/index.ts` defines Content v1. The current uncommitted workspace also contains a V2 schema, migration, dashboard and renderer; its local `content/content.json` is V2. Inspect the actual checkout and content version before making changes; do not treat uncommitted work as a released baseline.
+- **Migration status:** the local V2 implementation has focused automated coverage, but issue #19 remains open and browser migration/CRUD acceptance is not established. V1 backup recovery and versioned migration remain required. The site imports JSON directly, not Astro Content Collections.
+- **Future scope:** `docs/CONTENT_MODEL.md` combines V2 design with proposals; validate each feature against code and tests, and do not silently rewrite schemas or UI.
 - Before implementing it, preserve the working loopback API, backups, Cloudflare publish protections, existing sample data, IDs, URLs and asset paths. Prepare a versioned, tested migration with rollback, and follow issue #5 usability evidence.
 - Reuse Astro build-time Content Layer loaders and pagination only after confirming they serve the specific migration; never confuse static route pagination with local dashboard API paging.
 - Default to one supported template and preset forms/blocks. RTL/LTR must be supported and tested by each approved theme; it is not achieved by a `dir` attribute alone.

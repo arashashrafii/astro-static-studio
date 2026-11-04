@@ -1,5 +1,7 @@
 # MVP Scope
 
+**Version status:** The committed baseline is V1. The current uncommitted workspace includes a V2 migration, dashboard and renderer; its local content is V2. V2 focused tests pass, while browser migration/CRUD acceptance remains open under issue #19. Later V1-only descriptions are historical baseline or acceptance context, not a complete description of the workspace.
+
 ## Goal
 Prove that a non-technical owner can manage a simple portfolio with **one Astro template** and a local React/TypeScript dashboard. Studio runs on the owner's device without a Studio-operated server or database. Sara Rahanjam is the sample output; do not build a universal site builder yet.
 
@@ -7,7 +9,7 @@ Prove that a non-technical owner can manage a simple portfolio with **one Astro 
 - See a simple dashboard with Projects, Articles, Pages, Media, and Publish.
 - Add, edit, reorder, and remove portfolio projects.
 - Edit project title, description, category, and gallery images.
-- Add and edit simple articles and their pictures (**proposed next content-model phase; current v1 supports only page/project entries**).
+- Manage articles and their pictures as Content V2 collection items (the active dashboard supports V1 backups and V2 Pages/Collections).
 - Edit content in predefined Home, About, and Contact sections. Contact may use email/phone links; no server-side form is required for this example.
 - Upload JPEG or PNG photos from a phone or desktop, inspect image quality, convert suitable output to WebP, and use meaningful alt text. Preserve source files or an export path when needed for artwork fidelity.
 - Save drafts and preview before publication.

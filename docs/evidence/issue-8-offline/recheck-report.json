@@ -1,0 +1,496 @@
+{
+  "startedAt": "2026-10-29T18:40:09.215Z",
+  "kind": "Android emulator only",
+  "requests": [
+    {
+      "at": "2026-10-29T18:40:09.699Z",
+      "offline": false,
+      "url": "http://127.0.0.1:4175/",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:10.555Z",
+      "offline": false,
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:10.562Z",
+      "offline": false,
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:10.833Z",
+      "offline": false,
+      "url": "https://registry.npmjs.org/astro",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:12.367Z",
+      "offline": false,
+      "url": "https://stackblitz.com/headless",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:13.658Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/webcontainer.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:13.711Z",
+      "offline": false,
+      "url": "https://c.staticblitz.com/assets/vite/headless-siO4QJGT.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:13.719Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/fetch.worker.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:13.723Z",
+      "offline": false,
+      "url": "https://c.staticblitz.com/assets/vite/semver-Zyv2pDaP.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:13.801Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/iframe.50ccefb0.html",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:13.821Z",
+      "offline": false,
+      "url": "blob:https://stackblitz.com/dc6631a2-390b-4e89-bc5b-be3eac4cf3f7",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:13.861Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/full_bin_index.50ccefb0",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:13.909Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/fetch.worker.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.000Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/iframe.main.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.165Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/filesystem-worker.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.170Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/fs_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.237Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/internal_bindings_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.376Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.401Z",
+      "offline": false,
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/4cdb4a57-9ce0-41ea-9e21-ff133c75d436",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.408Z",
+      "offline": false,
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/0ed03fe3-7078-4838-86a7-94bcb4b4206d",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.412Z",
+      "offline": false,
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/a915b92f-3505-4362-b990-b26f91d8e31c",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.432Z",
+      "offline": false,
+      "url": "https://stackblitz.com/.localservice@preview.shared_worker.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.473Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.585Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:14.596Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:16.183Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:16.239Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:16.254Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:16.726Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:16.795Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:16.817Z",
+      "offline": false,
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/ef81875c-2c68-4442-a817-e3f61e252e2c",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:16.906Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:17.670Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:17.753Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:17.844Z",
+      "offline": false,
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/07380e6e-be40-4041-b140-4691a1014f68",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:17.910Z",
+      "offline": false,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:18.099Z",
+      "offline": false,
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:19.207Z",
+      "offline": true,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:20.343Z",
+      "offline": true,
+      "url": "https://registry.npmjs.org/astro",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:20.641Z",
+      "offline": true,
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/fefae250-81c4-4eb6-9517-d23eedc03a42",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:20.780Z",
+      "offline": true,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:22.163Z",
+      "offline": true,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:22.306Z",
+      "offline": true,
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/25f5095d-4ad1-48f1-be90-55b4c221641f",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:22.328Z",
+      "offline": true,
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:22.370Z",
+      "offline": true,
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:22.837Z",
+      "offline": true,
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:33.488Z",
+      "offline": true,
+      "url": "http://127.0.0.1:4175/",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:33.840Z",
+      "offline": true,
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:33.934Z",
+      "offline": true,
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:34.303Z",
+      "offline": true,
+      "url": "https://registry.npmjs.org/astro",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:40:34.722Z",
+      "offline": true,
+      "url": "https://stackblitz.com/headless",
+      "method": "GET"
+    },
+    {
+      "at": "2026-10-29T18:42:04.784Z",
+      "offline": true,
+      "url": "http://127.0.0.1:4175/",
+      "method": "GET"
+    }
+  ],
+  "errors": [],
+  "originalWifi": "1",
+  "originalData": "1",
+  "anrBefore": "--------- beginning of events\n10-29 16:34:39.685   518  1318 I am_anr  : [0,718,com.android.systemui,550026765,executing service com.android.systemui/.SystemUIService]\n10-29 16:34:58.081   518  2299 I am_anr  : [0,1185,com.google.android.as,818527813,No response to onStartJob]\n",
+  "onlineControl": {
+    "online": true,
+    "fetchSucceeded": true,
+    "status": 200
+  },
+  "onlineReport": {
+    "status": "awaiting_disconnect",
+    "stages": [
+      {
+        "name": "runtime boot",
+        "passed": true,
+        "elapsedMs": 2142,
+        "value": {
+          "_runtimeInfo": {
+            "path": "/bin:/usr/bin:/usr/local/bin",
+            "cwd": "/home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq"
+          },
+          "fs": {
+            "_watchers": {}
+          },
+          "_tornDown": false
+        }
+      },
+      {
+        "name": "mount source",
+        "passed": true,
+        "elapsedMs": 23
+      },
+      {
+        "name": "initial filesystem read",
+        "passed": true,
+        "elapsedMs": 2358,
+        "value": "ONLINE"
+      },
+      {
+        "name": "initial node version",
+        "passed": true,
+        "elapsedMs": 1348,
+        "value": {
+          "spawnReturned": true,
+          "exit": 0,
+          "text": "v22.22.3\r\n"
+        }
+      }
+    ],
+    "logs": [],
+    "mode": "warm",
+    "currentStage": "initial node version",
+    "initialNode": {
+      "spawnReturned": true,
+      "exit": 0,
+      "text": "v22.22.3\r\n"
+    }
+  },
+  "disconnectedAt": "2026-10-29T18:40:18.336Z",
+  "offlineControl": {
+    "online": false,
+    "fetchSucceeded": false,
+    "error": "TypeError: Failed to fetch"
+  },
+  "routesAfterDisconnect": "",
+  "wifiAfterDisconnect": "0\n",
+  "dataAfterDisconnect": "0\n",
+  "warmReport": {
+    "status": "passed",
+    "stages": [
+      {
+        "name": "runtime boot",
+        "passed": true,
+        "elapsedMs": 2142,
+        "value": {
+          "_runtimeInfo": {
+            "path": "/bin:/usr/bin:/usr/local/bin",
+            "cwd": "/home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq"
+          },
+          "fs": {
+            "_watchers": {}
+          },
+          "_tornDown": true
+        }
+      },
+      {
+        "name": "mount source",
+        "passed": true,
+        "elapsedMs": 23
+      },
+      {
+        "name": "initial filesystem read",
+        "passed": true,
+        "elapsedMs": 2358,
+        "value": "ONLINE"
+      },
+      {
+        "name": "initial node version",
+        "passed": true,
+        "elapsedMs": 1348,
+        "value": {
+          "spawnReturned": true,
+          "exit": 0,
+          "text": "v22.22.3\r\n"
+        }
+      },
+      {
+        "name": "offline filesystem read",
+        "passed": true,
+        "elapsedMs": 4,
+        "value": "ONLINE"
+      },
+      {
+        "name": "offline filesystem write",
+        "passed": true,
+        "elapsedMs": 17
+      },
+      {
+        "name": "verify offline filesystem write",
+        "passed": true,
+        "elapsedMs": 20,
+        "value": "OFFLINE"
+      },
+      {
+        "name": "offline new node process",
+        "passed": true,
+        "elapsedMs": 2253,
+        "value": {
+          "spawnReturned": true,
+          "exit": 0,
+          "text": "v22.22.3\r\n"
+        }
+      }
+    ],
+    "logs": [],
+    "mode": "warm",
+    "currentStage": "offline new node process",
+    "initialNode": {
+      "spawnReturned": true,
+      "exit": 0,
+      "text": "v22.22.3\r\n"
+    },
+    "offlineNode": {
+      "spawnReturned": true,
+      "exit": 0,
+      "text": "v22.22.3\r\n"
+    },
+    "finishedAt": "2026-10-29T18:40:22.518Z"
+  },
+  "anrAfterWarm": "--------- beginning of events\n10-29 16:34:39.685   518  1318 I am_anr  : [0,718,com.android.systemui,550026765,executing service com.android.systemui/.SystemUIService]\n10-29 16:34:58.081   518  2299 I am_anr  : [0,1185,com.google.android.as,818527813,No response to onStartJob]\n",
+  "coldControl": {
+    "online": false,
+    "fetchSucceeded": false,
+    "error": "TypeError: Failed to fetch"
+  },
+  "mainOriginServiceWorkers": [],
+  "coldReport": {
+    "status": "failed",
+    "stages": [
+      {
+        "name": "runtime boot",
+        "passed": false,
+        "elapsedMs": 90003,
+        "error": "Error: runtime boot timed out"
+      }
+    ],
+    "logs": [],
+    "mode": "cold",
+    "currentStage": "runtime boot",
+    "error": "Error: runtime boot timed out",
+    "finishedAt": "2026-10-29T18:42:04.310Z"
+  },
+  "noServerOfflineReload": {
+    "navigated": false,
+    "error": "Error: page.goto: net::ERR_EMPTY_RESPONSE at http://127.0.0.1:4175/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4175/\", waiting until \"load\"\u001b[22m\n"
+  },
+  "anrAfter": "--------- beginning of events\n10-29 16:34:39.685   518  1318 I am_anr  : [0,718,com.android.systemui,550026765,executing service com.android.systemui/.SystemUIService]\n10-29 16:34:58.081   518  2299 I am_anr  : [0,1185,com.google.android.as,818527813,No response to onStartJob]\n",
+  "finishedAt": "2026-10-29T18:42:05.324Z"
+}

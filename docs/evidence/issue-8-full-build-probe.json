@@ -1,0 +1,105 @@
+{
+  "issue": 8,
+  "date": "2026-10-28 Asia/Tehran",
+  "result": "Unresolved: full Astro build not reached",
+  "environment": "Android14 API34 x86_64; Chrome113.0.5672.136; existing studio-issue8-api34 emulator",
+  "webcontainerApi": "1.6.4",
+  "fixtureAstro": "5.18.2",
+  "fixtureFiles": [
+    "package.json",
+    "astro.config.mjs",
+    "src/data.json",
+    "src/global.css",
+    "src/layouts/Layout.astro",
+    "src/components/Card.astro",
+    "src/pages/index.astro",
+    "src/pages/about.astro",
+    "public/badge.svg"
+  ],
+  "fixtureWithLockSha256": "e6f07565e29d4e3a12450f19840f23337bba3fa4db1832392da191abed69165f",
+  "sharedWorkerObservedType": "undefined",
+  "astroBuildExecuted": false,
+  "distProduced": false,
+  "runs": [
+    {
+      "lockfileMounted": false,
+      "startedAt": "2026-10-28T19:28:44.519Z",
+      "finishedAt": "2026-10-28T19:33:36.757Z",
+      "capabilities": {
+        "userAgent": "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
+        "secureContext": true,
+        "crossOriginIsolated": true,
+        "sharedArrayBuffer": "function"
+      },
+      "stages": [
+        {
+          "name": "runtime boot",
+          "elapsedMs": 10322,
+          "passed": true
+        },
+        {
+          "name": "node --version",
+          "elapsedMs": 6846,
+          "passed": true
+        },
+        {
+          "name": "npm install --no-audit --no-fund",
+          "elapsedMs": 241117,
+          "passed": false,
+          "error": "npm install --no-audit --no-fund exceeded 240000ms"
+        }
+      ],
+      "error": "npm install --no-audit --no-fund exceeded 240000ms",
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Could not establish a connection to shared worker. It's either not supported or failed too many times. Refreshing this page might help."
+      ],
+      "failedRequests": [
+        {
+          "url": "https://t.staticblitz.com/w/v17/r/l/p/954f7ac3dc1a4b6bafaee2048a9000b108b82f55.json",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "driverError": "page.screenshot: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\n    at /home/arash/projects/astro-static-studio/.tmp/issue-8-full-build/run.mjs:20:13",
+      "nodeReportedVersion": "v22.22.3"
+    },
+    {
+      "lockfileMounted": true,
+      "startedAt": "2026-10-28T19:34:45.913Z",
+      "finishedAt": "2026-10-28T19:36:58.809Z",
+      "capabilities": {
+        "userAgent": "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
+        "secureContext": true,
+        "crossOriginIsolated": true,
+        "sharedArrayBuffer": "function"
+      },
+      "stages": [
+        {
+          "name": "runtime boot",
+          "elapsedMs": 6102,
+          "passed": true
+        },
+        {
+          "name": "node --version",
+          "elapsedMs": 4290,
+          "passed": true
+        },
+        {
+          "name": "npm install --no-audit --no-fund --progress=false",
+          "elapsedMs": 120004,
+          "passed": false,
+          "error": "npm install --no-audit --no-fund --progress=false exceeded 120000ms"
+        }
+      ],
+      "error": "npm install --no-audit --no-fund --progress=false exceeded 120000ms",
+      "consoleErrors": [
+        "Could not establish a connection to shared worker. It's either not supported or failed too many times. Refreshing this page might help."
+      ],
+      "failedRequests": [],
+      "driverError": null,
+      "nodeReportedVersion": "v22.22.3"
+    }
+  ],
+  "rawArtifacts": ".tmp/issue-8-full-build/",
+  "nextEvidenceStep": "Resolve dependency-install blockage in the browser before retrying the same fixture; do not infer general impossibility or approve architecture."
+}

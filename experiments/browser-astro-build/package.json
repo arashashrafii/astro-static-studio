@@ -1,0 +1,8 @@
+{
+  "name": "browser-astro-build-spike",
+  "private": true,
+  "type": "module",
+  "scripts": { "prepare:assets": "node prepare.mjs", "build": "npm run prepare:assets", "test": "node --test", "serve": "node serve.mjs" },
+  "dependencies": { "@astrojs/compiler": "2.13.1", "astro": "5.18.2", "esbuild-wasm": "0.25.12" },
+  "devDependencies": { "esbuild": "0.25.12", "playwright": "1.56.1" }
+}

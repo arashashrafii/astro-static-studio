@@ -1,0 +1,35 @@
+async function command(name, args, timeout) {
+  return stage([name, ...args].join(' '), async () => {
+    const process = await wc.spawn(name, args, {
+      env: { ASTRO_TELEMETRY_DISABLED: '1', NAPI_RS_FORCE_WASI: 'true' },
+    });
+    let sinkOpen = true;
+    const output = process.output
+      .pipeTo(new WritableStream({
+        write(chunk) {
+          if (sinkOpen) log(chunk);
+        },
+        close() { sinkOpen = false; },
+        abort() { sinkOpen = false; },
+      }))
+      .catch((error) => {
+        sinkOpen = false;
+        log(`Output stream ended with an error: ${error}`);
+      });
+
+    const code = await process.exit;
+    log(`Exit code received: ${code}`);
+    let drained = false;
+    await Promise.race([
+      output.then(() => { drained = true; }),
+      new Promise((resolve) => setTimeout(resolve, 2000)),
+    ]);
+    if (!drained) {
+      report.outputDrainTimeouts = (report.outputDrainTimeouts ?? 0) + 1;
+      // WebContainer owns this stream; leave its reader alone after the bounded wait.
+    }
+    log(`Exit code: ${code}`);
+    if (code !== 0) throw Error(`${name} exited ${code}`);
+    return code;
+  }, timeout);
+}

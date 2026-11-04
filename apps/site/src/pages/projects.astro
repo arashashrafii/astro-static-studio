@@ -1,7 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Projects from '../components/Projects.astro';
+import V2CollectionListing from '../components/V2CollectionListing.astro';
 import { content } from '../lib/content';
+import { projectsIndexView } from '../lib/projects-route';
 const data=await content();
+const view=projectsIndexView(data);
+const totalPages=view.kind==='collection'&&view.collection?.loading==='pagination'?Math.max(1,Math.ceil(view.items.filter(item=>item.published).length/view.collection.pageSize)):1;
 ---
-<Layout data={data} title="Projects"><span class="eyebrow">{data.site.name} · PORTFOLIO</span><h1>Projects</h1>{data.entries.some(e=>e.kind==='project'&&e.published)?<Projects entries={data.entries.filter(e=>e.kind==='project'&&e.published)}/>:<p>هنوز پروژه‌ای منتشر نشده است.</p>}</Layout>
+<Layout data={data} title={view.kind==='collection'?view.collection?.name??'Projects':'Projects'}><span class="eyebrow">{data.site.name} · PORTFOLIO</span><h1>{view.kind==='collection'?view.collection?.name??'Projects':'Projects'}</h1>{view.kind==='legacy'?(view.entries.length?<Projects entries={view.entries}/>:<p>هنوز پروژه‌ای منتشر نشده است.</p>):view.collection?<V2CollectionListing collection={view.collection} items={view.items} page={1} totalPages={totalPages}/>:<p>هنوز پروژه‌ای منتشر نشده است.</p>}</Layout>

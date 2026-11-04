@@ -1,3 +1,9 @@
 import data from '../../../../content/content.json';
 import { ContentSchema } from '@astro-static-studio/contracts';
-export async function content(){return ContentSchema.parse(data);}
+import { ContentV2Schema } from '@astro-static-studio/contracts/content-v2';
+export async function content(){
+ const version=(data as {version?:unknown}).version;
+ if(version===1)return ContentSchema.parse(data);
+ if(version===2)return ContentV2Schema.parse(data);
+ throw new Error(`Unsupported content version: ${String(version)}`);
+}

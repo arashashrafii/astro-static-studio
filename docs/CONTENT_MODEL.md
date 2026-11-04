@@ -1,7 +1,9 @@
 # Content model and simple dashboard — proposed design
 
-**Status: product/architecture proposal, 2026-10-26. NOT IMPLEMENTED.**
-This document records the agreed direction for Astro Static Studio and compares it with the actual desktop baseline. It is not a replacement for the active `ContentSchema` v1 in `packages/contracts/src/index.ts`. Nothing in this document approves a destructive migration.
+**Version status:** Content V2 is the owner's selected target and its schema, migration, dashboard and rendering code exist in the uncommitted local working tree. The last committed baseline is Content V1. Focused automated migration and contract checks have been reported as passing; browser migration/CRUD acceptance remains open under issue #19. Historical statements below about an earlier prototype or a future-only model do not describe all current workspace code.
+
+**Status: owner-selected target model; local migration work in progress, 2026-11-04.**
+The owner selected this model for the target: Pages remain separate; generic Collections are primary; Projects is a starter preset. The Content V2 contract, migration service, V2 backups, static routes and V2 dashboard exist in the local working tree but are not committed or released. The committed baseline remains V1. In the local V2-capable app, existing V1 content remains V1 until the dashboard migration gate is confirmed; the gate writes a full pre-migration backup before atomically replacing the content file. Issue #19 remains open for migration, recovery and browser acceptance evidence.
 
 ## 1. Verified starting point (commit fdb3701)
 
@@ -17,52 +19,80 @@ This document records the agreed direction for Astro Static Studio and compares 
 1. **Choose a free, approved template.** Initially offer the existing adapted Atelier template; a gallery of arbitrary Astro themes is out of scope.
 2. **Set up the site.** Name, logo/contact, language and RTL/LTR where the template supports that direction. Show a live preview and plain-language labels.
 3. **Edit pages.** Home/About/Contact are Pages; a new Page can add and reorder a few supported blocks.
-4. **Manage collections.** Add a collection by picking a familiar preset: Articles, Projects, Photos or People. See its items immediately and optionally create categories.
-5. **Place a collection on a page.** Add a "Show collection" block and pick the collection plus a supported presentation (cards/list/gallery). The same collection can appear on several pages with different limits/filters.
+4. **Manage collections.** Choose one of two clear forms: **Image gallery** (one image per item, optional title/date/tags) or **Content** (project, news or article with a title and detail page; cover, date, text, tags and an attached gallery as needed).
+5. Each collection owns one list page and one item detail route. Set one list layout and loading choice in the collection settings. Keep the same layout throughout this initial static product; do not expose per-page layout overrides.
 6. **Preview, save draft, publish.** Keep a clear distinction between saved changes, a locally generated build and a confirmed remote deployment.
 
-The owner should not see "schema", "Content Loader", "frontmatter", "Git" or "Astro" in everyday forms. Show creation forms for the chosen preset, not a generic field builder. A page designer based on ordered predefined blocks is enough: no freehand drag-and-drop or user-defined HTML/CSS for the first release.
+The owner should not see "schema", "Content Loader", "frontmatter", "Git" or "Astro" in everyday forms. Presets seed a short guided form; do not expose a generic field builder. A page designer based on ordered predefined blocks is enough: no freehand drag-and-drop or user-defined HTML/CSS for the first release.
 
 ## 3. Domain model and language
 
 - **Page:** one named URL with ordered view blocks; e.g. Home, About, Contact or Articles.
-- **CollectionDefinition:** a named repeatable content source with a fixed type preset, stable ID and slug; e.g. "Articles" (article), "Winter gallery" (photo) or "Artists" (person).
-- **CollectionEntry:** one record with stable ID, collection ID, publication state and preset-specific fields (title/body/cover/date for article; image/alt/caption for photo; name/bio/portrait for person; title/description/media for project). Use a guided, short form per type.
+- **CollectionDefinition:** a named repeatable source with stable ID, list slug, detail route prefix, `kind` (`gallery` or `content`), one list layout and one loading mode. Existing V2 collections default to `content`, grid and show-more when these additive fields are absent.
+- **CollectionItem:** one record with stable ID, collection ID, internal slug, publication state, and field values. Content items require a title; gallery items require an image but may omit a display title. Gallery title/date/tags are optional. Content items use title and rich text, with optional cover, date, tags and attached gallery. Cover may reference an image from that same item's gallery. Do not expose a generic field builder.
 - **Category:** belongs to **one collection**; stable ID/slug, display name, one level deep for v2 MVP. An entry may reference more than one category in the same collection. Do not duplicate media/files or model categories as physical folders.
-- **PageBlock:** a presentation object such as rich text, image, or `collectionView`; it does not own or duplicate the collection's entries. A collection display references collection ID, optional category filter, view preset, sort, limit and optional paging.
+- **PageBlock:** a presentation object such as rich text, a standalone image, a gallery, or `collectionView`; it does not own or duplicate the collection's entries. Standalone image blocks allow upload, size, and logical alignment. Existing `collectionView` blocks retain their stored settings for compatibility, while list pages use the collection's single layout and loading setting.
+- **Rich text:** a restricted structured document of paragraph/heading blocks, bold/italic marks, small/normal/large responsive size presets, logical alignment (start/center/end), and processed-media image nodes. Selected images can be inline, floated at either text edge, or block-aligned; old images without placement keep the existing output. It is not HTML. Toolbar left/right choices map to `start`/`end` using the selected site direction.
+- **V1 representation ceiling:** a rich document can represent the current maximum of 30 text components × 50,000 characters and 30 galleries × 100 images in one v1 entry. Formatting attributes are required in serialized structured nodes so schema validation never depends on discarded nested defaults.
+- **Description:** new items default to an automatic plain-text excerpt from a selected Text field; an explicit manual value overrides it. Existing v1 summaries map to manual descriptions and are never silently replaced. Automatic excerpts omit image alt text, collapse whitespace and truncate at 1,000 Unicode code points, preferring a nearby word boundary where available. A detail page must not repeat an automatic excerpt immediately above the same body.
+- **Excerpt source:** a Collection selects the Text field that supplies automatic descriptions; presets choose this automatically. This avoids guessing when a Collection has more than one Text field. A manual Description overrides only that item.
+- **Project starter fields:** preconfigure separate Category fields for existing categories and tags, a Gallery field for gallery controls, a rich Text field for ordered project details, and a plain Text field for release date. These are generic field types. The cover references the first existing gallery image; content fields reuse media URLs without copying image files. The local migration implements and has focused tests for preserving V1 text/gallery interleaving and gallery order; issue #19 remains open for its remaining acceptance evidence.
+- **Paths and filters:** page and collection-list paths cannot use reserved root names (`admin`, `api`, `media`) or collide with each other. Collection detail paths are `<routeBase>/<itemSlug>`. A category filter names its Category field as well as category IDs, so tags and categories stay distinct.
 - **Theme:** maps supported page blocks/view presets to actual Astro components. Unknown block types must fail clearly (not silently disappear).
 
-**Collection is data; `collectionView` is a page component.** Article cards and photo grids can share structural UI components, but their entry forms and presentation details differ. A Page can exist with no Collection, and a Collection can exist before it is displayed.
+**Collection is data; `collectionView` is a page component.** For the current simple dashboard, each collection has one canonical list page and one detail route per item. Page blocks may link to that list but do not introduce separate layout settings. Gallery items open their image detail view with previous/next navigation; content items open text-rich details.
 
-### Small illustrative data shapes (not committed schema)
+The route `/?review=collections` remains a review-only UI mock. The default dashboard now uses the live API and V2 content after migration; the mock is not the live Collections editor.
+
+### Approved v2 contract shape
 
 ```json
 {
-  "site": { "language": "fa", "direction": "rtl", "themeId": "atelier" },
+  "version": 2,
+  "site": { "name": "Example site", "tagline": "", "email": "", "phone": "", "language": "en", "direction": "ltr" },
   "collections": [
-    { "id": "articles", "name": "Articles", "type": "article",
-      "categories": [{ "id": "it", "name": "IT", "slug": "it" }] }
+    { "id": "00000000-0000-4000-8000-000000000001", "slug": "projects",
+      "routeBase": "portfolio", "name": "Projects", "kind": "content", "listLayout": "grid",
+      "loading": "show-more", "pageSize": 12, "presetId": "project",
+      "excerptSourceFieldId": "00000000-0000-4000-8000-000000000007",
+      "fields": [
+        { "id": "00000000-0000-4000-8000-000000000002", "type": "category",
+          "label": "Category", "categories": [] },
+        { "id": "00000000-0000-4000-8000-000000000003", "type": "category",
+          "label": "Tags", "categories": [] },
+        { "id": "00000000-0000-4000-8000-000000000006", "type": "gallery",
+          "label": "Gallery", "maxItems": 20 },
+        { "id": "00000000-0000-4000-8000-000000000007", "type": "text",
+          "label": "Project details", "format": "rich" },
+        { "id": "00000000-0000-4000-8000-000000000008", "type": "text",
+          "label": "Release date", "format": "plain" }
+      ] }
   ],
-  "entries": [
-    { "id": "intro", "collectionId": "articles", "slug": "intro",
-      "categoryIds": ["it"], "fields": { "title": "Introduction", "body": "..." } }
+  "items": [
+    { "id": "00000000-0000-4000-8000-000000000004",
+      "collectionId": "00000000-0000-4000-8000-000000000001", "slug": "intro",
+      "title": "Introduction", "published": false,
+      "description": { "source": "auto" }, "values": {} }
   ],
   "pages": [
-    { "slug": "articles", "blocks": [
-      { "type": "collectionView", "collectionId": "articles",
-        "view": "cards", "categoryId": null, "pageSize": 12 }
-    ] }
+    { "id": "00000000-0000-4000-8000-000000000005", "slug": "home",
+      "title": "Home", "published": true, "description": { "source": "manual", "value": "" },
+      "blocks": [
+        { "type": "collectionView", "collectionId": "00000000-0000-4000-8000-000000000001",
+          "view": "grid", "categoryFieldId": "00000000-0000-4000-8000-000000000002",
+          "categoryIds": [], "sort": "manual", "limit": 12 }
+      ] }
   ]
 }
 ```
 
-This is an **illustration**, not an API or persistence contract. Before implementation define schema version, strict validation, IDs, allowable block properties, URL collisions, publish flags and media constraints. Never let arbitrary rich text inject unsanitized HTML.
+The matching Zod contract is in `packages/contracts/src/content-v2.ts`. The API accepts V1 and V2, the static renderer supports both until migration, and backups include media referenced by pages and collection items. The migration is deterministic, preserves ordered text/gallery blocks and writes a V1 recovery backup before the atomic V2 replacement. When a valid V1 browser draft exists, the gate previews its V2 mapping and stores/read-back validates the new local draft before requesting any persistent migration; the API then writes a separate full draft backup and maps it into the V2 browser draft slot. The original V1 draft remains untouched. Missing referenced draft media or browser storage failure blocks migration. Rich text is rendered from validated nodes as fixed tags, never as arbitrary HTML. Browser verification of migration and CRUD is still required before closing issue #19.
 
 ## 4. Recommended Astro implementation
 
 Astro **Content Collections** and **Content Layer loaders** are useful but do not automatically provide Studio's dashboard or user-generated field schemas.
 
-- Keep Studio's domain model independent of theme code and use a small preset registry for types and display views.
+- Keep Studio's domain model independent of theme code. Presets seed a generic Collection’s allowed field definitions and display choices; they do not create distinct project/article/photo/person storage types.
 - Prefer **one file per large collection entry** when migration is justified: Astro's `glob()` loader reads JSON/Markdown files. For suitable smaller JSON arrays/definitions, `file()` can load named data with unique IDs.
 - For a user-created, runtime-named collection, **do not generate a new TypeScript collection declaration on every edit**. A fixed Astro collection/loader for general entries plus collection metadata and app-side preset validation is one viable simple route. It trades some Astro per-collection static typing for runtime flexibility.
 - Use `getCollection()` / `getEntry()` in Astro build-time code, then theme-aware blocks and `getStaticPaths()` for static routes. Keep the existing static hosting model. Do not add SSR merely to display public lists.
@@ -80,15 +110,11 @@ Astro references:
 
 ## 5. Incremental migration and release safety
 
-1. Complete the current desktop non-technical usability issue #5. Do not replace the working dashboard based on assumptions alone.
-2. Prototype the page/collection UX with one theme and a small set of preset fields/blocks. Validate it with a real novice using desktop and, once supported, a real mobile device.
-3. Define a **Content v2** migration with backup first and a backward-compatibility/rollback story. Preserve v1 page and project IDs, slugs, order, published flags, categories, WebP URLs and alt text. Add migration tests and a restore round-trip; do not silently discard unsupported blocks.
-4. Replace v1 single-file storage incrementally only as needed; add backend list paging/search. Avoid introducing a remote database or SaaS backend for the local MVP.
-5. Integrate an approved template view/preset adapter, then static public list and category pagination. Test duplicate/reserved URL handling, empty collections and unsupported views.
-6. Add a minimal safe rich-text editor (bold, links, lists, images) with portable structured output and accessible touch controls. Preserve media/source quality and backups.
-7. Validate RTL/LTR and template switching with real snapshots, build checks and content-survival tests. Production publish requires explicit owner confirmation and verification.
-
-**Current implementation remains authoritative until each slice lands with code, tests and revised `CONTRACTS.md`.**
+1. Preserve the V1 sample and user data until the owner/tester runs the migration gate. The gate automatically creates a complete local V1 backup and exposes it for download/recovery. When an unsaved V1 draft exists, it also backs up the draft and its media separately, maps it into a dirty V2 browser draft, and leaves the original V1 draft key untouched.
+2. Verify migration, Pages/Collections/item CRUD, V1 and V2 backup restore, public legacy routes, collection views, RTL/LTR, and keyboard/touch behavior in a browser at desktop and mobile sizes.
+3. Keep V1 backup restore supported. Reject unknown content versions and malformed routes/fields before writing; never silently drop unsupported blocks.
+4. Add dashboard/API paging only when the current 500-entry limit is raised; do not add a remote database or SaaS backend for the local MVP.
+5. Production publication still requires explicit owner confirmation and verification.
 
 ## 6. Product exclusions for the first redesign
 

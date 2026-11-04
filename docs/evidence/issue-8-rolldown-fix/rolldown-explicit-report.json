@@ -1,0 +1,1343 @@
+{
+  "startedAt": "2026-10-29T09:26:18.172Z",
+  "kind": "Android emulator only",
+  "requests": [
+    {
+      "url": "http://127.0.0.1:4175/",
+      "method": "GET",
+      "type": "document"
+    },
+    {
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:4175/create-zip.mjs",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:4175/",
+      "method": "GET",
+      "type": "document"
+    },
+    {
+      "url": "https://stackblitz.com/headless",
+      "method": "GET",
+      "type": "document"
+    },
+    {
+      "url": "http://127.0.0.1:4175/app.mjs",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/webcontainer.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://c.staticblitz.com/assets/vite/headless-siO4QJGT.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/fetch.worker.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://c.staticblitz.com/assets/vite/semver-Zyv2pDaP.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:4175/webcontainer.mjs",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:4175/create-zip.mjs",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/iframe.50ccefb0.html",
+      "method": "GET",
+      "type": "document"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/full_bin_index.50ccefb0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "blob:https://stackblitz.com/b755ed56-8213-4e87-9bba-7ad4f6c8ca80",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/fetch.worker.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/iframe.main.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/filesystem-worker.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/fs_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/internal_bindings_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/c0cf951c-2d9f-4fc3-8b0f-133bb986b36f",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/308acdb4-23ec-4ed0-9eb6-4e7bb11d8e42",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/c2f79d8d-b871-43ed-a5a4-459e24cffff7",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://stackblitz.com/.localservice@preview.shared_worker.50ccefb0.js",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:4175/fixture.json",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/ca667861-ac60-47ff-b1d7-ede8a0ad0e91",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/32f7eaf3-cdf0-4c27-b9dd-763e22078803",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/26978740-5027-46bb-9563-1220e1b34ad9",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/b19c9275-a266-47b6-9dca-e0134abbd7cb",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/polyfills",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/zwitch@2.0.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/zod@4.6.7",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/yocto-queue@1.2.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/yargs-parser@22.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/yaml@2.9.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/xxhash-wasm@1.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/vitefu@1.1.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/vite@8.3.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/vfile-message@4.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/vfile@6.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/verkit@0.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/unstorage@1.17.6",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/unist-util-visit-parents@6.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/unist-util-visit@5.2.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/unist-util-stringify-position@4.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/unist-util-position@5.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/unist-util-is@6.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/unifont@1.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/unified@11.0.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/undici@8.12.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/uncrypto@0.1.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/ultrahtml@1.7.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/ufo@1.6.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/tslib@2.8.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/trough@2.2.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/trim-lines@3.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/tinyps@0.5.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/tinyglobby@0.2.17",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/tinyexec@1.3.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/tinyclip@1.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/tiny-inflate@1.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/svgo@4.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/stringify-entities@4.0.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/std-env@4.3.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/space-separated-tokens@2.0.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/source-map-js@1.2.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/smol-toml@1.9.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/sisteransi@1.0.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/shiki@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@webassembly/sharp@0.31.3-blitz.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/semver@7.8.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/sax@1.6.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/satteri@0.10.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/rolldown@1.2.15",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/retext-smartypants@6.2.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/resolve-pkg-maps@1.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/regex-utilities@2.3.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/regex-recursion@6.0.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/regex@6.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/readdirp@5.1.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/radix3@1.1.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/property-information@7.2.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/process-ancestry@0.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/prismjs@1.30.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/postcss@8.5.32",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/picomatch@4.0.7",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/picocolors@1.1.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/piccolore@0.1.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/package-manager-detector@1.9.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/p-timeout@7.0.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/p-queue@9.3.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/p-limit@7.3.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/oniguruma-to-es@4.3.6",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/oniguruma-parser@0.12.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/ofetch@1.5.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/obug@3.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/nth-check@2.1.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/normalize-path@3.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/node-mock-http@1.0.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/node-fetch-native@1.6.7",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/nlcst-to-string@4.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/neotraverse@1.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/nanoid@3.3.20",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/mrmime@2.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/micromark-util-types@2.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/micromark-util-symbol@2.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/micromark-util-sanitize-uri@2.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/micromark-util-encode@2.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/micromark-util-character@2.1.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/mdn-data@2.27.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/mdast-util-to-hast@13.2.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/magicast@0.5.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/magic-string@1.4.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/lru-cache@11.5.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/lightningcss-wasm@1.33.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/jsonc-parser@3.3.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/is-plain-obj@4.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/is-docker@4.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/iron-webcrypto@1.2.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/http-cache-semantics@4.3.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/html-void-elements@3.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/html-escaper@3.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/hast-util-whitespace@3.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/hast-util-to-html@9.0.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/h3@1.15.11",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/github-slugger@2.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/get-tsconfig@5.0.0-beta.6",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/fontkitten@1.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/fontace@0.4.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/fnv1a-64@0.1.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/flattie@1.1.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/fdir@6.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/fast-wrap-ansi@0.2.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/fast-string-width@3.0.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/fast-string-truncated-width@3.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/extend@3.0.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/eventemitter3@5.0.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/es-module-lexer@3.0.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/entities@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/dset@3.1.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/domutils@3.2.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/domhandler@5.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/domelementtype@2.3.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/dom-serializer@2.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/diff@9.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/devlop@1.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/devalue@6.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/detect-libc@2.1.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/destr@2.0.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/dequal@2.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/defu@6.1.7",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/csso@5.0.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/mdn-data@2.0.28",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/css-tree@2.2.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/css-what@7.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/css-tree@3.2.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/css-select@6.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/crossws@0.3.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/cookie-es@1.2.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/cookie@2.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/common-ancestor-path@2.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/commander@11.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/comma-separated-tokens@2.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/clsx@2.1.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/ci-info@4.4.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/chokidar@5.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/character-entities-legacy@3.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/character-entities-html4@2.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/ccount@2.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/boolbase@1.0.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/bail@2.0.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/axobject-query@4.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/astro@7.4.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/aria-query@5.3.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/anymatch@3.1.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/picomatch@2.3.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/am-i-vibing@0.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@ungap/structured-clone@1.4.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@types/unist@3.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@types/nlcst@2.0.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@types/mdast@4.0.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@types/hast@3.0.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@types/estree-jsx@1.0.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@types/estree@1.0.10",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@tybys/wasm-util@0.10.4",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@shikijs/vscode-textmate@10.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@shikijs/types@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@shikijs/themes@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@shikijs/primitive@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@shikijs/langs@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@shikijs/engine-oniguruma@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@shikijs/engine-javascript@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@shikijs/core@4.5.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@rolldown/pluginutils@1.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@rolldown/binding-wasm32-wasi@1.2.15",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/wasi-threads@2.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/runtime@2.0.0-alpha.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/core@2.0.0-alpha.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@oxc-project/types@0.155.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@oslojs/encoding@1.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@napi-rs/wasm-runtime@1.2.6",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@jridgewell/sourcemap-codec@1.6.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@img/sharp-wasm32@0.35.5",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@img/colour@1.1.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/wasi-threads@1.2.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/runtime@1.11.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/core@1.11.3",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@clack/prompts@1.8.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@clack/core@1.5.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@capsizecss/unpack@4.0.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/wasi-threads@1.2.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/runtime@1.11.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@emnapi/core@1.11.1",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@babel/types@7.29.11",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@babel/parser@7.29.11",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@babel/helper-validator-identifier@7.29.7",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@babel/helper-string-parser@7.29.11",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@astrojs/telemetry@3.4.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@astrojs/prism@4.1.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@astrojs/markdown-satteri@0.4.6",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@astrojs/internal-helpers@0.13.0",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@astrojs/compiler-rs@0.5.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://t.staticblitz.com/w/v17/h/e/@astrojs/compiler-binding@0.5.2",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/a076be62-8595-4659-aed6-c83cb6acb4cf",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/5776cb0e-126d-423a-88ee-33095a935364",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "blob:https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/c1805e5b-6b8a-4200-94ae-4eaddc3fe3b4",
+      "method": "GET",
+      "type": "script"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/builtins.86d5388e.js",
+      "method": "GET",
+      "type": "other"
+    },
+    {
+      "url": "https://w-corp-staticblitz.com/storage_slab_bg.50ccefb0.wasm",
+      "method": "GET",
+      "type": "fetch"
+    }
+  ],
+  "failedRequests": [],
+  "consoleErrors": [],
+  "report": {
+    "status": "failed",
+    "capabilities": {
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "secureContext": true,
+      "crossOriginIsolated": true,
+      "sharedArrayBuffer": "function"
+    },
+    "stages": [
+      {
+        "name": "runtime boot",
+        "elapsedMs": 7446,
+        "passed": true
+      },
+      {
+        "name": "node --version",
+        "elapsedMs": 6495,
+        "passed": true
+      },
+      {
+        "name": "npm ci --no-audit --no-fund --progress=false --force --loglevel=http --ignore-scripts --fetch-timeout=30000 --fetch-retries=0",
+        "elapsedMs": 11303,
+        "passed": true
+      },
+      {
+        "name": "node --input-type=module -e process.env.NAPI_RS_FORCE_WASI='true';const hold=setInterval(()=>{},1000);for(const name of ['@rolldown/binding-wasm32-wasi','rolldown']){console.log('IMPORT_START',name);let t;try{await Promise.race([import(name),new Promise((_,r)=>t=setTimeout(()=>r(Error('IMPORT_TIMEOUT '+name)),15000))]);console.log('IMPORT_OK',name)}catch(e){console.error(JSON.stringify({message:e.message,stack:e.stack,cause:String(e.cause),causeStack:e.cause?.stack,keys:Object.getOwnPropertyNames(e)}));process.exitCode=1;break}finally{clearTimeout(t)}}clearInterval(hold)",
+        "elapsedMs": 3934,
+        "passed": false,
+        "error": "node exited 1"
+      }
+    ],
+    "logs": [
+      "v22.22.3\r\n",
+      "Exit code: 0",
+      "npm warn using --force Recommended protections disabled.\r\n",
+      "\r\nadded 190 packages in 9s\r\n",
+      "Exit code: 0",
+      "IMPORT_START @rolldown/binding-wasm32-wasi\r\n",
+      "{\"message\":\"this.bridge.setLastError is not a function\",\"stack\":\"TypeError: this.bridge.setLastError is not a function\\n    at NodeEnv.clearLastError (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@rolldown/binding-wasm32-wasi/node_modules/@emnapi/runtime/dist/emnapi.js:798:21)\\n    at NodeEnv.callIntoModule (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@rolldown/binding-wasm32-wasi/node_modules/@emnapi/runtime/dist/emnapi.js:807:14)\\n    at Object.init (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@emnapi/core/dist/emnapi-core.cjs.js#cjs:149:35)\\n    at emnapiInit (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@emnapi/core/dist/emnapi-core.cjs.js#cjs:7612:24)\\n    at eval (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@emnapi/core/dist/emnapi-core.cjs.js#cjs:7637:16)\\n    at loadSyncCallback (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@emnapi/core/dist/emnapi-core.cjs.js#cjs:7655:12)\\n    at loadNapiModuleImpl (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@emnapi/core/dist/emnapi-core.cjs.js#cjs:7573:12)\\n    at instantiateNapiModuleSync (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@emnapi/core/dist/emnapi-core.cjs.js#cjs:7673:12)\\n    at Object.eval (file:///home/rbxddjize8239muvnu6tklbbpbwr7b-jwbq/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs#cjs:2187:7)\\n    at Object._0x38163c (https://rbxddjize8239muvnu6tklbbpbwr7b-jwbq.w-corp-staticblitz.com/blitz.50ccefb0.js:31:843714)\",\"cause\":\"undefined\",\"keys\":[\"stack\",\"message\"]}\r\n",
+      "(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n",
+      "Exit code: 1",
+      "Error: node exited 1\n    at http://127.0.0.1:4175/app.mjs:15:339\n    at async stage (http://127.0.0.1:4175/app.mjs:6:139)\n    at async document.querySelector.onclick (http://127.0.0.1:4175/app.mjs:18:3)"
+    ],
+    "currentStage": "node --input-type=module -e process.env.NAPI_RS_FORCE_WASI='true';const hold=setInterval(()=>{},1000);for(const name of ['@rolldown/binding-wasm32-wasi','rolldown']){console.log('IMPORT_START',name);let t;try{await Promise.race([import(name),new Promise((_,r)=>t=setTimeout(()=>r(Error('IMPORT_TIMEOUT '+name)),15000))]);console.log('IMPORT_OK',name)}catch(e){console.error(JSON.stringify({message:e.message,stack:e.stack,cause:String(e.cause),causeStack:e.cause?.stack,keys:Object.getOwnPropertyNames(e)}));process.exitCode=1;break}finally{clearTimeout(t)}}clearInterval(hold)",
+    "runtimeBooted": true,
+    "error": "node exited 1",
+    "finishedAt": "2026-10-29T09:26:48.031Z"
+  },
+  "screenshotError": "page.screenshot: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n",
+  "finishedAt": "2026-10-29T09:26:58.735Z"
+}

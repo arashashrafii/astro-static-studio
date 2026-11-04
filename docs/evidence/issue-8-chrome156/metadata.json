@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-29",
+  "kind": "Android emulator only",
+  "avd": "studio-issue8-api34",
+  "android": "14/API34 x86_64",
+  "chromeBefore": "113.0.5672.136",
+  "chromeAfter": "156.0.8078.47",
+  "guestRamMiB": 2560,
+  "cores": 2,
+  "googlePlayServicesEnabled": true,
+  "offlineTested": false,
+  "peakMemoryMeasured": false,
+  "nativeAndroidZipDownloadTested": false,
+  "hostRole": "Static harness server and CDP controller only; no host Astro build",
+  "fixtureSha256": "e6f07565e29d4e3a12450f19840f23337bba3fa4db1832392da191abed69165f",
+  "zipSha256": "03521a59124bdf5d6035307d6d9795a1c0e971e875a0f08f4bc841c7b08621a1"
+}

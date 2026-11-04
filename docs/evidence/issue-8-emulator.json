@@ -1,0 +1,71 @@
+{
+  "issue": 8,
+  "status": "Partially Verified: browser subset on emulator only",
+  "startedAt": "2026-10-28T13:16:37.344Z",
+  "finishedAt": "2026-10-28T13:17:29.115Z",
+  "emulator": "37.2.12 build16428233",
+  "image": "Android34 GooglePlay x86_64 revision14",
+  "imageSha1": "01d32617fd1937e540faf8731d70cf50e35af854",
+  "guestRAMMiB": 2560,
+  "requestedRAMMiB": 2048,
+  "cores": 2,
+  "acceleration": "KVM",
+  "graphics": "SwiftShader",
+  "metadata": {
+    "ro.build.version.release": "14",
+    "ro.build.version.sdk": "34",
+    "ro.product.model": "sdk_gphone64_x86_64",
+    "ro.product.cpu.abi": "x86_64",
+    "ro.build.fingerprint": "google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.036.A4/12096271:user/release-keys"
+  },
+  "chrome": "113.0.5672.136",
+  "source": "Sites f9703c25f69ed69f7ed83240d9b3dc7c5048b59d; nine served assets byte-identical to deployed-source checkout",
+  "transport": "Static files served at127.0.0.1:4174 through adb reverse; no build endpoint",
+  "buildDurationsMs": [
+    2741,
+    2551,
+    2337,
+    2364,
+    2501,
+    2624,
+    2678,
+    2655,
+    2744,
+    2470
+  ],
+  "medianMs": 2587.5,
+  "buildsPassed": 10,
+  "outputBytesPerBuild": 229,
+  "negative": {
+    "status": "Failed: Style and script blocks are outside this spike. Use plain HTML for this test.",
+    "downloadHidden": true
+  },
+  "recovery": "Success: HTML compiled and rendered on this device.",
+  "download": {
+    "devicePath": "/sdcard/Download/index.html",
+    "bytes": 227,
+    "sha256": "ae06ef9b6bf8809021dc3a0e3e1230d8db4f4ad57bd40d7443ff1d6aa2156578",
+    "equalsBrowserGeneratedBlob": true,
+    "markerVerified": true
+  },
+  "chromeMainProcessSnapshotKiB": {
+    "pss": 90370,
+    "rss": 234708,
+    "notPeakOrWholeBrowser": true
+  },
+  "environmentAdjustments": [
+    "Google Play services disabled after dependency-died Chrome exits",
+    "first-run bypass flags in isolated AVD",
+    "notification prompt dismissed; default native download behavior restored for download check"
+  ],
+  "unverified": [
+    "physical phone",
+    "ARM64",
+    "full Astro CLI/Vite portfolio build",
+    "offline/PWA",
+    "peak memory",
+    "private hosted URL access inside emulator",
+    "native opening of downloaded HTML: direct file intent unsupported"
+  ],
+  "rawEvidenceDirectory": ".tmp/issue-8-emulator/"
+}

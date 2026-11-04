@@ -1,0 +1,78 @@
+{
+  "kind": "Desktop Chromium; not Android",
+  "ramMiB": 1800,
+  "mode": "diagnostic",
+  "disableTrap": true,
+  "startedAt": "2026-10-31T09:30:56.284Z",
+  "requests": [
+    "http://127.0.0.1:4176/",
+    "http://127.0.0.1:4176/runners/riscv/host/nanovm.mjs",
+    "http://127.0.0.1:4176/runners/riscv/host/memfs.mjs",
+    "http://127.0.0.1:4176/kernel/index.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/memfs.mjs",
+    "http://127.0.0.1:4176/kernel/kernel.mjs",
+    "http://127.0.0.1:4176/kernel/net/fetch-bridge.mjs",
+    "http://127.0.0.1:4176/kernel/net/ports.mjs",
+    "http://127.0.0.1:4176/kernel/services/registry.mjs",
+    "http://127.0.0.1:4176/kernel/persist/cas-store.mjs",
+    "http://127.0.0.1:4176/kernel/persist/node-modules.mjs",
+    "http://127.0.0.1:4176/kernel/applets/runner.mjs",
+    "http://127.0.0.1:4176/kernel/applets/native.mjs",
+    "http://127.0.0.1:4176/kernel/services/index.mjs",
+    "http://127.0.0.1:4176/kernel/services/type-strip.mjs",
+    "http://127.0.0.1:4176/kernel/bus/client.mjs",
+    "http://127.0.0.1:4176/kernel/bus/sab-channel.mjs",
+    "http://127.0.0.1:4176/kernel/errno.mjs",
+    "http://127.0.0.1:4176/kernel/bus/opcodes.mjs",
+    "http://127.0.0.1:4176/kernel/bus/hub.mjs",
+    "http://127.0.0.1:4176/kernel/bus/port-channel.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/vfs.mjs",
+    "http://127.0.0.1:4176/kernel/proc/table.mjs",
+    "http://127.0.0.1:4176/kernel/proc/pipes.mjs",
+    "http://127.0.0.1:4176/kernel/proc/signals.mjs",
+    "http://127.0.0.1:4176/kernel/proc/router.mjs",
+    "http://127.0.0.1:4176/kernel/caps/caps.mjs",
+    "http://127.0.0.1:4176/kernel/caps/profiles.mjs",
+    "http://127.0.0.1:4176/kernel/services/zlib.mjs",
+    "http://127.0.0.1:4176/kernel/services/duckdb.mjs",
+    "http://127.0.0.1:4176/kernel/services/rspack.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/watch.mjs",
+    "http://127.0.0.1:4176/nano.min.wasm",
+    "http://127.0.0.1:4176/node-full",
+    "http://127.0.0.1:4176/fixture.tar.gz",
+    "blob:http://127.0.0.1:4176/05acef61-01e9-4312-8218-b9c04c288927"
+  ],
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pageErrors": [],
+  "offlineBeforeVmCreation": true,
+  "result": {
+    "status": "failed",
+    "phase": "verify",
+    "logs": [
+      "ROLLDOWN_WASI_PATH file:///fixture/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs\n",
+      "BINDING_ERROR CompileError: WebAssembly.Module(): Compiling function #117 failed: Wasm SIMD unsupported @+58193\n    at loadSync (file:///fixture/node_modules/@emnapi/core/dist/emnapi-core.js:77:18)\n    at loadSyncCallback (file:///fixture/node_modules/@emnapi/core/dist/emnapi-core.js:7379:18)\n    at loadAddonModuleImpl (file:///fixture/node_modules/@emnapi/core/dist/emnapi-core.js:7282:12)\n    at instantiateNapiModuleSync (file:///fixture/node_modules/@emnapi/core/dist/emnapi-core.js:7448:12)\n    at Object.<anonymous> (/fixture/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs:2187:7)\n    at Module._compile (node:internal/modules/cjs/loader:1803:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1934:10)\n    at Module.load (node:internal/modules/cjs/loader:1524:32)\n    at Module._load (node:internal/modules/cjs/loader:1326:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n",
+      "(node:1) ExperimentalWarning: WASI is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    ],
+    "bootMs": 1896,
+    "mountMs": 603,
+    "execution": {
+      "exitCode": 1,
+      "stdout": "ROLLDOWN_WASI_PATH file:///fixture/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs\nBINDING_ERROR CompileError: WebAssembly.Module(): Compiling function #117 failed: Wasm SIMD unsupported @+58193\n    at loadSync (file:///fixture/node_modules/@emnapi/core/dist/emnapi-core.js:77:18)\n    at loadSyncCallback (file:///fixture/node_modules/@emnapi/core/dist/emnapi-core.js:7379:18)\n    at loadAddonModuleImpl (file:///fixture/node_modules/@emnapi/core/dist/emnapi-core.js:7282:12)\n    at instantiateNapiModuleSync (file:///fixture/node_modules/@emnapi/core/dist/emnapi-core.js:7448:12)\n    at Object.<anonymous> (/fixture/node_modules/@rolldown/binding-wasm32-wasi/rolldown-binding.wasi.cjs:2187:7)\n    at Module._compile (node:internal/modules/cjs/loader:1803:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1934:10)\n    at Module.load (node:internal/modules/cjs/loader:1524:32)\n    at Module._load (node:internal/modules/cjs/loader:1326:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n(node:1) ExperimentalWarning: WASI is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    "buildMs": 21292,
+    "html": {
+      "index.html": null,
+      "about/index.html": null
+    },
+    "badge": null,
+    "outputFiles": [],
+    "passed": false
+  },
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "finishedAt": "2026-10-31T09:31:21.832Z"
+}

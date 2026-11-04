@@ -1,0 +1,43 @@
+{
+  "guestRamMiB": 1024,
+  "sourceCommit": "b3fd06ac608b1adb0024f26ca108bae970c6bbaa",
+  "release": "v0.3.0",
+  "environment": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "kind": "Host Node harness; not browser or Android",
+  "checks": [
+    {
+      "name": "hello",
+      "exitCode": 0,
+      "stdout": "Hello from NanoVM!\nIt works! :)\n\u0000",
+      "stderr": "WASM: /home/arash/projects/astro-static-studio/.tmp/issue-15-nano/nano.min.wasm (2458248 bytes)\nELF:  /home/arash/projects/astro-static-studio/.tmp/issue-15-nano/userland-run-nano-b3fd06a/test/hello.elf (1472 bytes)\nVM created: ptr=1086410224  RAM base=12668336 size=1073741824 (1024 MB)\nvm_struct_size = 12680\nELF loaded \u2013 entry PC = 0x100b0\n--- execution start ---\n  [FAULT] PC=0x100e2 fault_pc=0x0\n--- execution end ---\nExit code 0  (~100000 insns)\n  [blockstats] coverage=100.0%  block_insns=15  baseline_insns=0  hits=3  builds=3\n  [cflow] baseline jalr=0  jal_fwd=0  branch_fwd=0  (these never enter a block today)\n",
+      "elapsedSeconds": 0.939,
+      "passed": true
+    },
+    {
+      "name": "node-version",
+      "exitCode": 0,
+      "stdout": "v25.4.0\n",
+      "stderr": "WASM: /home/arash/projects/astro-static-studio/.tmp/issue-15-nano/nano.min.wasm (2458248 bytes)\nELF:  /home/arash/projects/astro-static-studio/.tmp/issue-15-nano/node-full (90059416 bytes)\nVM created: ptr=1086410224  RAM base=12668336 size=1073741824 (1024 MB)\nvm_struct_size = 12680\nELF loaded \u2013 entry PC = 0x722d2\nargv[0..1] = [node, --version]  sp: 0x3fffebe0\nenvp[0..3] = [UV_THREADPOOL_SIZE=0, HOME=/root, PATH=/usr/local/bin:/usr/bin:/bin, TERM=xterm]\n--- execution start ---\n  [FAULT] PC=0x2211dd2 fault_pc=0x0\n--- execution end ---\nExit code 0  (~19500000 insns)\n  [blockstats] coverage=100.0%  block_insns=18598865  baseline_insns=0  hits=2111639  builds=8083\n  [cflow] baseline jalr=0  jal_fwd=0  branch_fwd=0  (these never enter a block today)\n",
+      "elapsedSeconds": 1.247,
+      "passed": true
+    },
+    {
+      "name": "node-eval",
+      "exitCode": 0,
+      "stdout": "NANO-NODE-OK v25.4.0 riscv64\n",
+      "stderr": "WASM: /home/arash/projects/astro-static-studio/.tmp/issue-15-nano/nano.min.wasm (2458248 bytes)\nELF:  /home/arash/projects/astro-static-studio/.tmp/issue-15-nano/node-full (90059416 bytes)\nVM created: ptr=1086410224  RAM base=12668336 size=1073741824 (1024 MB)\nvm_struct_size = 12680\nELF loaded \u2013 entry PC = 0x722d2\nargv[0..2] = [node, -e, console.log('NANO-NODE-OK',process.version,process.arch)]  sp: 0x3fffebe0\nenvp[0..3] = [UV_THREADPOOL_SIZE=0, HOME=/root, PATH=/usr/local/bin:/usr/bin:/bin, TERM=xterm]\n--- execution start ---\n  [SWITCH] 0\u21921 (futex_wait)\n  [SWITCH] 1\u21920 (epoll_wait)\n  [SWITCH] 0\u21922 (futex_wait)\n  [SWITCH] 2\u21920 (futex_wait)\n  [SWITCH] 0\u21923 (futex_wait)\n  [SWITCH] 3\u21920 (futex_wait)\n  [SWITCH] 0\u21924 (futex_wait)\n  [SWITCH] 4\u21920 (futex_wait)\n  [SWITCH] 0\u21925 (futex_wait)\n  [SWITCH] 5\u21920 (futex_wait)\n  [progress] ~379.7M insns  76 MIPS  blockcov=100.0%  syscalls=0  top=[]\n  [SWITCH] 0\u21921 (futex_wait)\n  [SWITCH] 1\u21922 (epoll_wait)\n  [SWITCH] 2\u21920 (futex_wait)\n  [SWITCH] 0\u21922 (futex_wait)\n  [SWITCH] 2\u21920 (futex_wait)\n  [SWITCH] 0\u21921 (futex_wait)\n  [SWITCH] 1\u21920 (exit)\n  [SWITCH] 0\u21922 (futex_wait)\n  [SWITCH] 2\u21920 (exit)\n  [SWITCH] 0\u21923 (futex_wait)\n  [SWITCH] 3\u21920 (exit)\n  [SWITCH] 0\u21924 (futex_wait)\n  [SWITCH] 4\u21920 (exit)\n  [SWITCH] 0\u21925 (futex_wait)\n  [SWITCH] 5\u21920 (exit)\n  [FAULT] PC=0x2211dd2 fault_pc=0x0\n--- execution end ---\nExit code 0  (~126200000 insns)\n  [blockstats] coverage=100.0%  block_insns=501489479  baseline_insns=647  hits=34310577  builds=854576\n  [cflow] baseline jalr=0  jal_fwd=0  branch_fwd=0  (these never enter a block today)\n",
+      "elapsedSeconds": 7.831,
+      "passed": true
+    }
+  ],
+  "nano.min.wasm": {
+    "bytes": 2458248,
+    "sha256": "64d8e4d9a3299a06c40a725f732f5e7033a3f03ac4218d4b43090b0f93608932"
+  },
+  "node-full": {
+    "bytes": 90059416,
+    "sha256": "c1ea44df1775f02cf6956e1493728b7523acbdfdf1ce37294fcc9d01a09a7155"
+  },
+  "maxChildRssKiB": 1216872,
+  "memoryNote": "Host child process maximum RSS; includes Node/WASM harness, not Android memory. Configured guest RAM recorded separately."
+}

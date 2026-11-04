@@ -1,0 +1,115 @@
+[
+  {
+    "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-riscv64-gnu/1.2.15",
+    "status": 404,
+    "body": "\"version not found: 1.2.15\""
+  },
+  {
+    "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-riscv64-musl/1.2.15",
+    "status": 404,
+    "body": "\"version not found: 1.2.15\""
+  },
+  {
+    "url": "https://registry.npmjs.org/%40astrojs%2Fcompiler-binding-linux-riscv64-gnu/0.5.2",
+    "status": 404,
+    "body": "\"Not Found\""
+  },
+  {
+    "url": "https://registry.npmjs.org/%40astrojs%2Fcompiler-binding-linux-riscv64-musl/0.5.2",
+    "status": 404,
+    "body": "\"Not Found\""
+  },
+  {
+    "url": "https://registry.npmjs.org/rolldown/1.2.15",
+    "status": 200,
+    "name": "rolldown",
+    "version": "1.2.15",
+    "napi": {
+      "wasm": {
+        "browser": {
+          "fs": true,
+          "asyncInit": true,
+          "errorEvent": true
+        },
+        "initialMemory": 16384
+      },
+      "targets": [
+        "aarch64-apple-darwin",
+        "aarch64-linux-android",
+        "aarch64-pc-windows-msvc",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "aarch64-unknown-linux-ohos",
+        "armv7-linux-androideabi",
+        "armv7-unknown-linux-gnueabihf",
+        "powerpc64le-unknown-linux-gnu",
+        "s390x-unknown-linux-gnu",
+        "wasm32-wasip1-threads",
+        "x86_64-apple-darwin",
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-freebsd",
+        "x86_64-unknown-linux-gnu",
+        "x86_64-unknown-linux-musl"
+      ],
+      "dtsHeader": "type MaybePromise<T> = T | Promise<T>\ntype Nullable<T> = T | null | undefined\ntype VoidNullable<T = void> = T | null | undefined | void\nexport type BindingStringOrRegex = string | RegExp\nexport type BindingResult<T> = { errors: BindingError[], isBindingErrors: boolean } | T\n\n",
+      "binaryName": "rolldown-binding",
+      "packageName": "@rolldown/binding"
+    },
+    "optionalDependencies": {
+      "@rolldown/binding-darwin-x64": "1.2.15",
+      "@rolldown/binding-freebsd-x64": "1.2.15",
+      "@rolldown/binding-darwin-arm64": "1.2.15",
+      "@rolldown/binding-android-arm64": "1.2.15",
+      "@rolldown/binding-linux-x64-gnu": "1.2.15",
+      "@rolldown/binding-linux-x64-musl": "1.2.15",
+      "@rolldown/binding-win32-x64-msvc": "1.2.15",
+      "@rolldown/binding-linux-arm64-gnu": "1.2.15",
+      "@rolldown/binding-linux-ppc64-gnu": "1.2.15",
+      "@rolldown/binding-linux-s390x-gnu": "1.2.15",
+      "@rolldown/binding-android-arm-eabi": "1.2.15",
+      "@rolldown/binding-linux-arm64-musl": "1.2.15",
+      "@rolldown/binding-win32-arm64-msvc": "1.2.15",
+      "@rolldown/binding-openharmony-arm64": "1.2.15",
+      "@rolldown/binding-linux-arm-gnueabihf": "1.2.15"
+    }
+  },
+  {
+    "url": "https://registry.npmjs.org/%40astrojs%2Fcompiler-binding/0.5.2",
+    "status": 200,
+    "name": "@astrojs/compiler-binding",
+    "version": "0.5.2",
+    "napi": {
+      "wasm": {
+        "browser": {
+          "fs": false
+        }
+      },
+      "targets": [
+        "aarch64-apple-darwin",
+        "aarch64-linux-android",
+        "aarch64-pc-windows-msvc",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "wasm32-wasip1-threads",
+        "x86_64-apple-darwin",
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu",
+        "x86_64-unknown-linux-musl"
+      ],
+      "binaryName": "astro",
+      "packageName": "@astrojs/compiler-binding"
+    },
+    "optionalDependencies": {
+      "@astrojs/compiler-binding-darwin-x64": "0.5.2",
+      "@astrojs/compiler-binding-wasm32-wasi": "0.5.2",
+      "@astrojs/compiler-binding-darwin-arm64": "0.5.2",
+      "@astrojs/compiler-binding-android-arm64": "0.5.2",
+      "@astrojs/compiler-binding-linux-x64-gnu": "0.5.2",
+      "@astrojs/compiler-binding-linux-x64-musl": "0.5.2",
+      "@astrojs/compiler-binding-win32-x64-msvc": "0.5.2",
+      "@astrojs/compiler-binding-linux-arm64-gnu": "0.5.2",
+      "@astrojs/compiler-binding-linux-arm64-musl": "0.5.2",
+      "@astrojs/compiler-binding-win32-arm64-msvc": "0.5.2"
+    }
+  }
+]

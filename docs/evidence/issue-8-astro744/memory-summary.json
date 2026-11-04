@@ -1,0 +1,34 @@
+{
+  "memory-attempt-3.jsonl": {
+    "valid": 51,
+    "errors": 1,
+    "maxPssKiB": 1072253,
+    "maxSwapPssKiB": 3775,
+    "maxProcesses": 8,
+    "maxDurationSeconds": 2.564
+  },
+  "memory-attempt-1.jsonl": {
+    "valid": 1361,
+    "errors": 800,
+    "maxPssKiB": 714332,
+    "maxSwapPssKiB": 86721,
+    "maxProcesses": 7,
+    "maxDurationSeconds": 2.759
+  },
+  "memory.jsonl": {
+    "valid": 1361,
+    "errors": 800,
+    "maxPssKiB": 714332,
+    "maxSwapPssKiB": 86721,
+    "maxProcesses": 7,
+    "maxDurationSeconds": 2.759
+  },
+  "memory-attempt-2.jsonl": {
+    "valid": 64,
+    "errors": 4,
+    "maxPssKiB": 1075335,
+    "maxSwapPssKiB": 3173,
+    "maxProcesses": 8,
+    "maxDurationSeconds": 7.435
+  }
+}

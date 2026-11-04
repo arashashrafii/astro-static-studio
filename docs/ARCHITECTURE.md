@@ -1,10 +1,10 @@
 # Architecture Proposal
 
-**Status: working desktop baseline, proposed future content model.** The local editor, file-backed API, Astro renderer, image conversion, safe local build path and first Cloudflare Pages Direct Upload adapter exist. A QA preview was uploaded and owner-confirmed accessible (see M2_VALIDATION). Production publishing, template selection, generic collections and phone-native full Astro builds remain open.
+**Status: committed desktop baseline is Content V1; local target is Content V2 and remains uncommitted.** The local editor, file-backed API, Astro renderer, image conversion, safe local build path and first Cloudflare Pages Direct Upload adapter exist in the project baseline. The current working tree contains the V2 Collections schema, migration, static list/detail routes and dashboard forms. These local changes are not a committed or released baseline; issue #19 remains open for migration and browser acceptance. A QA preview was uploaded and owner-confirmed accessible (see M2_VALIDATION). Production publishing, template selection and phone-native full Astro builds remain open.
 
 ## Boundaries
 1. **CMS UI:** A responsive React + TypeScript/Vite dashboard and PWA shell for one local owner. No Admin/Editor role split is currently implemented.
-2. **Content & media:** Currently Zod-validated `content/content.json` (v1) and WebP media plus retained source images. Per-entry JSON/Markdown is a proposal, not existing storage.
+2. **Content & media:** Zod-validated V1 and V2 use `content/content.json` and WebP media plus retained source images. V2 is the owner-selected target in the local working tree; V1 is the last committed format and remains the migration/backup input until V2 is reviewed, accepted and committed. Per-entry JSON/Markdown is a proposal, not existing storage.
 3. **Theme renderer:** Astro components/layouts render the records to HTML, CSS, and optional JavaScript at build time.
 4. **Build/publish runner:** Node.js on the owner's device builds content + theme into static assets. A provider adapter may upload them after the owner authorizes a destination.
 5. **Static host:** Serves the published assets. It is not responsible for CMS writes or build execution.
@@ -18,7 +18,7 @@ Start with a separate local installation/repository for each customer. Avoid a c
 ## Technical baseline
 - Public site: **Astro** with pre-rendered routes and components.
 - CMS: **React + TypeScript + Vite**, with a responsive PWA dashboard shell in `apps/admin`.
-- Content: current `ContentSchema` v1 is a single JSON document, with `page`/`project` entries and `text`/`gallery` components. Zod validation happens at the local API boundary; no Astro Content Layer loader is wired in yet.
+- Content: V1 and V2 are Studio JSON contract versions, not Astro Content Collections. V1 has `page`/`project` entries. The local V2 target separates pages, collection definitions and items. The current working tree validates both; the committed baseline remains V1. No Astro Content Layer loader is wired in yet.
 - Images: select JPEG/PNG on mobile/desktop, process to WebP before committing where supported, choose quality/dimensions, preserve clarity and alt text. Build-time resizing remains available for theme-specific image sizes.
 - Publishing: local Astro build plus a Cloudflare Pages Direct Upload adapter. The trusted local Node process manages credentials and upload; GitHub Actions or a hosted runner is not required.
 - First provider: owner-approved Cloudflare Pages Direct Upload via Wrangler. QA preview upload was verified against deployment metadata and owner-confirmed accessible; production deployment was not verified. See [PUBLISHING](PUBLISHING.md) and [M2_VALIDATION](M2_VALIDATION.md). Direct Upload projects cannot later switch to Git integration.
@@ -54,12 +54,12 @@ References:
 - [Astro documentation](https://docs.astro.build/)
 - [MDN: PWA installability](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable)
 
-## Proposed collection + page system (not implemented)
+## Collection + page system
 
 See [CONTENT_MODEL.md](CONTENT_MODEL.md) for the UX flow, storage contracts, data/renderer separation, category rules, paginated routes and incremental migration.
 
-- Keep **Collection definitions** (e.g. Articles/Photos/Artists), **entries**, **categories**, **Pages** and **Page blocks** as distinct domain concepts. A collection is not a visual component; a `collectionView` block renders its items on a page.
-- Use a small fixed set of content type presets and display presets. Do not expose raw Zod schemas or arbitrary Astro components in the dashboard.
+- Keep **Collection definitions** (e.g. Images or Content), **items**, **tags**, **Pages** and **Page blocks** as distinct domain concepts. Each collection has one canonical list layout plus detail routes; a `collectionView` block can link to its items without its own layout controls.
+- Use the two owner-approved collection kinds, Image gallery and Content, with their fixed forms and small set of list layouts. Do not expose raw Zod schemas or arbitrary Astro components in the dashboard.
 - Store content independently of theme; a supported theme maps block/view types to its own Astro components.
 - If/when per-entry file storage is introduced, prefer Astro Content Layer's `glob()`/`file()` loaders and `getCollection()` at **build time**. The current renderer imports the single JSON file directly; do not claim the Content Layer is already used.
 - Use `getStaticPaths()` and `paginate()` to generate category/index/detail routes where appropriate. This is **distinct** from efficient dashboard API paging. Statically generated pagination does not remove the cost of processing all entries at build time.

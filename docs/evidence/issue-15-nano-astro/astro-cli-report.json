@@ -1,0 +1,75 @@
+{
+  "kind": "Desktop Chromium; not Android",
+  "ramMiB": 1800,
+  "mode": "cli",
+  "startedAt": "2026-10-29T19:14:03.606Z",
+  "requests": [
+    "http://127.0.0.1:4176/",
+    "http://127.0.0.1:4176/runners/riscv/host/nanovm.mjs",
+    "http://127.0.0.1:4176/runners/riscv/host/memfs.mjs",
+    "http://127.0.0.1:4176/kernel/index.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/memfs.mjs",
+    "http://127.0.0.1:4176/kernel/kernel.mjs",
+    "http://127.0.0.1:4176/kernel/net/fetch-bridge.mjs",
+    "http://127.0.0.1:4176/kernel/net/ports.mjs",
+    "http://127.0.0.1:4176/kernel/services/registry.mjs",
+    "http://127.0.0.1:4176/kernel/persist/cas-store.mjs",
+    "http://127.0.0.1:4176/kernel/persist/node-modules.mjs",
+    "http://127.0.0.1:4176/kernel/applets/runner.mjs",
+    "http://127.0.0.1:4176/kernel/applets/native.mjs",
+    "http://127.0.0.1:4176/kernel/services/index.mjs",
+    "http://127.0.0.1:4176/kernel/services/type-strip.mjs",
+    "http://127.0.0.1:4176/kernel/bus/client.mjs",
+    "http://127.0.0.1:4176/kernel/bus/sab-channel.mjs",
+    "http://127.0.0.1:4176/kernel/errno.mjs",
+    "http://127.0.0.1:4176/kernel/bus/opcodes.mjs",
+    "http://127.0.0.1:4176/kernel/bus/hub.mjs",
+    "http://127.0.0.1:4176/kernel/bus/port-channel.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/vfs.mjs",
+    "http://127.0.0.1:4176/kernel/proc/table.mjs",
+    "http://127.0.0.1:4176/kernel/proc/pipes.mjs",
+    "http://127.0.0.1:4176/kernel/proc/signals.mjs",
+    "http://127.0.0.1:4176/kernel/proc/router.mjs",
+    "http://127.0.0.1:4176/kernel/caps/caps.mjs",
+    "http://127.0.0.1:4176/kernel/caps/profiles.mjs",
+    "http://127.0.0.1:4176/kernel/services/zlib.mjs",
+    "http://127.0.0.1:4176/kernel/services/duckdb.mjs",
+    "http://127.0.0.1:4176/kernel/services/rspack.mjs",
+    "http://127.0.0.1:4176/kernel/vfs/watch.mjs",
+    "http://127.0.0.1:4176/nano.min.wasm",
+    "http://127.0.0.1:4176/node-full",
+    "http://127.0.0.1:4176/fixture.tar.gz",
+    "blob:http://127.0.0.1:4176/6cf0e4bd-8dca-4ee8-88ee-557f079870b6"
+  ],
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pageErrors": [],
+  "offlineBeforeVmCreation": true,
+  "result": {
+    "status": "failed",
+    "phase": "verify",
+    "logs": [
+      "Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.\n    at file:///fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs:601:34\n    at file:///fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs:9:49\n    ... 4 lines matching cause stack trace ...\n    at async cli (file:///fixture/node_modules/astro/dist/cli/index.js:212:3) {\n  cause: Error: WebAssembly.Memory(): could not allocate memory\n      at file:///fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs:495:18\n      ... 8 lines matching cause stack trace ...\n      at async cli (file:///fixture/node_modules/astro/dist/cli/index.js:212:3) {\n    cause: Error: Cannot find module './rolldown-binding.wasi.cjs'\n    Require stack:\n    - /fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs\n        at file:///fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs:495:18\n        ... 8 lines matching cause stack trace ...\n        at async cli (file:///fixture/node_modules/astro/dist/cli/index.js:212:3) {\n      cause: [Error]\n    }\n  }\n}\n"
+    ],
+    "bootMs": 1781,
+    "mountMs": 565,
+    "execution": {
+      "exitCode": 1,
+      "stdout": "Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.\n    at file:///fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs:601:34\n    at file:///fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs:9:49\n    ... 4 lines matching cause stack trace ...\n    at async cli (file:///fixture/node_modules/astro/dist/cli/index.js:212:3) {\n  cause: Error: WebAssembly.Memory(): could not allocate memory\n      at file:///fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs:495:18\n      ... 8 lines matching cause stack trace ...\n      at async cli (file:///fixture/node_modules/astro/dist/cli/index.js:212:3) {\n    cause: Error: Cannot find module './rolldown-binding.wasi.cjs'\n    Require stack:\n    - /fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs\n        at file:///fixture/node_modules/rolldown/dist/shared/binding-BMtuZhvP.mjs:495:18\n        ... 8 lines matching cause stack trace ...\n        at async cli (file:///fixture/node_modules/astro/dist/cli/index.js:212:3) {\n      cause: [Error]\n    }\n  }\n}\n"
+    },
+    "buildMs": 48653,
+    "html": {
+      "index.html": null,
+      "about/index.html": null
+    },
+    "badge": null,
+    "outputFiles": [],
+    "passed": false
+  },
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "finishedAt": "2026-10-29T19:14:55.914Z"
+}

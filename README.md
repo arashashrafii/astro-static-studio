@@ -2,6 +2,8 @@
 
 A local-first content studio for managing an Astro static website. The application and sample site run from this repository; Sara Rahanjam is the included reference content/theme instance, not a separate product repository.
 
+**Content-version status:** The committed baseline uses V1. The current uncommitted workspace includes a V2 schema, migration, dashboard and renderer, and the local content file is V2. Focused automated tests pass; browser migration/CRUD acceptance remains open under issue #19. Older V1 descriptions below describe the committed baseline, not all current workspace changes. See [Content contracts](docs/CONTRACTS.md).
+
 ## Run locally
 
 Requirements: Node.js 22+ and npm.

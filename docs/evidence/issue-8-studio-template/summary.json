@@ -1,0 +1,75 @@
+{
+  "zipBytes": 34512512,
+  "zipSha256": "7061f6f8d444998a36b9eddaee033fbc919576f2b7a27e0ab96eb8976388078b",
+  "verifiedRoutes": 24,
+  "verifiedMedia": 239,
+  "consoleErrors": [],
+  "outputDrainWaits": 1,
+  "validSamples": 65,
+  "failedSamples": 1,
+  "peakPssKiB": 1498720,
+  "peakPssMiB": 1463.59375,
+  "peakSample": {
+    "timestamp": "2026-10-29T12:46:28.835394+00:00",
+    "duration_seconds": 1.534,
+    "device": "emulator-5556",
+    "process_count": 8,
+    "pss_kb": 1498720,
+    "swap_pss_kb": 429973,
+    "processes": [
+      {
+        "pid": 1659,
+        "name": "com.android.chrome_zygote",
+        "pss_kb": 2972,
+        "swap_pss_kb": 1986
+      },
+      {
+        "pid": 3133,
+        "name": "com.android.chrome",
+        "pss_kb": 121986,
+        "swap_pss_kb": 65446
+      },
+      {
+        "pid": 3677,
+        "name": "com.android.chrome:privileged_process0",
+        "pss_kb": 37822,
+        "swap_pss_kb": 23340
+      },
+      {
+        "pid": 4636,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:6",
+        "pss_kb": 52590,
+        "swap_pss_kb": 14289
+      },
+      {
+        "pid": 4710,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:7",
+        "pss_kb": 19830,
+        "swap_pss_kb": 10243
+      },
+      {
+        "pid": 10119,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:12",
+        "pss_kb": 57532,
+        "swap_pss_kb": 11742
+      },
+      {
+        "pid": 10173,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:13",
+        "pss_kb": 1172196,
+        "swap_pss_kb": 294300
+      },
+      {
+        "pid": 10202,
+        "name": "com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:14",
+        "pss_kb": 33792,
+        "swap_pss_kb": 8627
+      }
+    ]
+  },
+  "maxSampleSeconds": 2.23,
+  "sourceFixtureSha256": "c016fad80d43f7049a8509519ba2ced09156ff6e6674254444d708458a879c8b",
+  "baseCommit": "8754bb9e9b5162796a93cc634113ce9c5ec0d0bd",
+  "startedAt": "2026-10-29T12:44:46.377Z",
+  "finishedAt": "2026-10-29T12:46:58.543Z"
+}

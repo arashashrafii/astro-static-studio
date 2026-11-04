@@ -1,0 +1,18 @@
+{
+  "release": "v0.3.0",
+  "sourceCommit": "b3fd06ac608b1adb0024f26ca108bae970c6bbaa",
+  "files": {
+    "source.tar.gz": {
+      "bytes": 2295222,
+      "sha256": "9db5bda7991636e931196681464a00fee150526969c485532a723d612070876b"
+    },
+    "nano.min.wasm": {
+      "bytes": 2458248,
+      "sha256": "64d8e4d9a3299a06c40a725f732f5e7033a3f03ac4218d4b43090b0f93608932"
+    },
+    "node-full": {
+      "bytes": 90059416,
+      "sha256": "c1ea44df1775f02cf6956e1493728b7523acbdfdf1ce37294fcc9d01a09a7155"
+    }
+  }
+}

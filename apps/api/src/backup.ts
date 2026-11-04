@@ -4,6 +4,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import sharp from 'sharp';
 import { ContentSchema, type Content } from '@astro-static-studio/contracts';
+import { ContentV2Schema, type ContentV2 } from '../../../packages/contracts/src/content-v2.js';
 
 const FORMAT = 'astro-static-studio-backup';
 const VERSION = 1;
@@ -40,7 +41,7 @@ interface BackupOriginal {
 interface BackupDocument {
   format: typeof FORMAT;
   version: typeof VERSION;
-  content: Content;
+  content: Content | ContentV2;
   media: BackupMedia[];
 }
 
@@ -51,14 +52,46 @@ export interface RestoreResult {
   originalsAlreadyPresent: number;
 }
 
-function referencedMedia(content: Content): string[] {
+function referencedMedia(content: Content | ContentV2): string[] {
   const refs = new Set<string>();
-  for (const entry of content.entries) {
-    for (const component of entry.components) {
-      if (component.type !== 'gallery') continue;
-      for (const image of component.images) {
-        if (!MEDIA_SRC.test(image.src)) throw new Error(`Unsupported managed media path: ${image.src}`);
-        refs.add(image.src);
+  const add = (image: {src:string}) => {
+    if (!MEDIA_SRC.test(image.src)) throw new Error(`Unsupported managed media path: ${image.src}`);
+    refs.add(image.src);
+  };
+  if (content.version === 1) {
+    for (const entry of content.entries) {
+      for (const component of entry.components) {
+        if (component.type === 'gallery') component.images.forEach(add);
+        else if (component.richText) {
+          for (const block of component.richText.blocks) for (const node of block.content) if (node.type === 'image') add(node);
+        }
+      }
+    }
+  } else {
+    const collectionById = new Map(content.collections.map(collection=>[collection.id,collection]));
+    for (const page of content.pages) for (const block of page.blocks) {
+      if (block.type === 'gallery') block.images.forEach(add);
+      else if (block.type === 'richText') for (const richBlock of block.document.blocks) {
+        if (richBlock.type === 'gallery') richBlock.images.forEach(add);
+        else for (const node of richBlock.children) if (node.type === 'image') add(node.media);
+      }
+    }
+    for (const item of content.items) {
+      if (item.coverImage) add(item.coverImage);
+      const collection = collectionById.get(item.collectionId);
+      if (!collection) continue;
+      for (const field of collection.fields) {
+        const value = item.values[field.id];
+        if (field.type === 'gallery' && Array.isArray(value)) value.forEach(add);
+        if (field.type === 'text' && field.format === 'rich' && value && typeof value === 'object') {
+          const document = value as ContentV2['items'][number]['values'][string] & {blocks?:unknown[]};
+          if (Array.isArray(document.blocks)) for (const richBlock of document.blocks as Array<Record<string,unknown>>) {
+            if (richBlock.type === 'gallery' && Array.isArray(richBlock.images)) richBlock.images.forEach(add);
+            else if (Array.isArray(richBlock.children)) for (const node of richBlock.children as Array<Record<string,unknown>>) {
+              if (node.type === 'image' && node.media && typeof node.media === 'object') add(node.media as {src:string});
+            }
+          }
+        }
       }
     }
   }
@@ -73,14 +106,14 @@ async function readRegularFile(path: string): Promise<Buffer> {
   return readFile(path);
 }
 
-async function validateWebp(bytes: Buffer, src: string): Promise<void> {
+async function validateImage(bytes: Buffer, expectedFormat: 'webp' | 'jpeg' | 'png', label: string): Promise<void> {
   try {
     const image = sharp(bytes, { limitInputPixels: 40_000_000 });
     const meta = await image.metadata();
-    if (meta.format !== 'webp') throw new Error('not WebP');
-    await sharp(bytes, { limitInputPixels: 40_000_000 }).stats();
+    if (meta.format !== expectedFormat) throw new Error(`expected ${expectedFormat}`);
+    await sharp(bytes, { limitInputPixels: 40_000_000 }).raw().toBuffer();
   } catch {
-    throw new Error(`Invalid WebP media: ${src}`);
+    throw new Error(`Invalid ${expectedFormat} media: ${label}`);
   }
 }
 
@@ -89,8 +122,9 @@ function digest(bytes: Buffer): string {
 }
 
 /** Create a portable UTF-8 JSON backup containing content and its referenced WebP files. */
-export async function exportBackup(paths: BackupPaths): Promise<Buffer> {
-  const content = ContentSchema.parse(JSON.parse(await readFile(paths.contentPath, 'utf8')));
+export async function exportBackup(paths: BackupPaths, contentOverride?: unknown): Promise<Buffer> {
+  const rawContent=(contentOverride===undefined?JSON.parse(await readFile(paths.contentPath,'utf8')):contentOverride) as {version?:unknown};
+  const content=rawContent?.version===1?ContentSchema.parse(rawContent):rawContent?.version===2?ContentV2Schema.parse(rawContent):(()=>{throw new Error(`Unsupported content version: ${String(rawContent?.version)}`)})();
   const media: BackupMedia[] = [];
   let totalMediaBytes = 0;
 
@@ -100,7 +134,7 @@ export async function exportBackup(paths: BackupPaths): Promise<Buffer> {
     if (bytes.byteLength > MAX_MEDIA_BYTES) throw new Error(`Media exceeds the ${MAX_MEDIA_BYTES} byte limit: ${src}`);
     totalMediaBytes += bytes.byteLength;
     if (totalMediaBytes > MAX_BUNDLE_BYTES) throw new Error(`Backup exceeds the ${MAX_BUNDLE_BYTES} byte media limit`);
-    await validateWebp(bytes, src);
+    await validateImage(bytes, 'webp', src);
     const item: BackupMedia = { src, size: bytes.byteLength, sha256: digest(bytes), data: bytes.toString('base64') };
     if (paths.originalsDirectory) {
       const id = match[1];
@@ -111,11 +145,8 @@ export async function exportBackup(paths: BackupPaths): Promise<Buffer> {
           if (original.byteLength > MAX_MEDIA_BYTES) throw new Error(`Original exceeds the ${MAX_MEDIA_BYTES} byte limit: ${id}.${extension}`);
           totalMediaBytes += original.byteLength;
           if (totalMediaBytes > MAX_BUNDLE_BYTES) throw new Error(`Backup exceeds the ${MAX_BUNDLE_BYTES} byte media limit`);
-          const image = sharp(original, { limitInputPixels: 40_000_000 });
-          const metadata = await image.metadata();
           const expectedFormat = extension === 'png' ? 'png' : 'jpeg';
-          if (metadata.format !== expectedFormat) throw new Error(`Original file extension does not match its image data: ${id}.${extension}`);
-          await sharp(original, { limitInputPixels: 40_000_000 }).stats();
+          await validateImage(original, expectedFormat, `${id}.${extension}`);
           item.original = { name: `${id}.${extension}`, size: original.byteLength, sha256: digest(original), data: original.toString('base64') };
           break;
         } catch (error) {
@@ -143,7 +174,8 @@ function parseBackup(input: Buffer | string): BackupDocument {
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('Invalid backup document');
   const doc = parsed as Record<string, unknown>;
   if (doc.format !== FORMAT || doc.version !== VERSION) throw new Error('Unsupported backup format or version');
-  const content = ContentSchema.parse(doc.content);
+  const rawContent=doc.content as {version?:unknown};
+  const content=rawContent?.version===1?ContentSchema.parse(rawContent):rawContent?.version===2?ContentV2Schema.parse(rawContent):(()=>{throw new Error(`Unsupported content version: ${String(rawContent?.version)}`)})();
   if (!Array.isArray(doc.media) || doc.media.length > MAX_MEDIA_FILES) throw new Error('Invalid backup media list');
   const expected = referencedMedia(content);
   if (doc.media.length !== expected.length) throw new Error('Backup media does not match content references');
@@ -197,15 +229,12 @@ export async function restoreBackup(input: Buffer | string, paths: BackupPaths):
     for (const item of backup.media) {
       const match = MEDIA_SRC.exec(item.src)!;
       const bytes = Buffer.from(item.data, 'base64');
-      await validateWebp(bytes, item.src);
+      await validateImage(bytes, 'webp', item.src);
       await writeFile(join(stagedMedia, `${match[1]}.webp`), bytes, { flag: 'wx' });
       if (item.original) {
         const originalBytes = Buffer.from(item.original.data, 'base64');
-        const image = sharp(originalBytes, { limitInputPixels: 40_000_000 });
-        const originalMetadata = await image.metadata();
         const expectedFormat = item.original.name.endsWith('.png') ? 'png' : 'jpeg';
-        if (originalMetadata.format !== expectedFormat) throw new Error(`Invalid original JPEG/PNG: ${item.original.name}`);
-        await sharp(originalBytes, { limitInputPixels: 40_000_000 }).stats();
+        await validateImage(originalBytes, expectedFormat, item.original.name);
         await writeFile(join(stagedOriginals, item.original.name), originalBytes, { flag: 'wx' });
       }
     }
