@@ -11,6 +11,10 @@ import { exportBackup, restoreBackup } from './backup.js';
 import { migrateContentToV2 } from './content-migration.js';
 import { migrateV1ToV2 } from '../../../packages/contracts/src/content-migration.js';
 import { getSetupState, initializeSite } from './site-setup.js';
+import { applyThemeConfiguration } from './publisher.js';
+import { atelierManifest } from '../../../packages/theme/src/atelier-manifest.js';
+import { defaultThemeConfiguration, diagnosticsForState, readThemeConfiguration, themeConfigPath, themeState, validateThemeConfiguration } from './theme-settings.js';
+import { ThemeConfigurationV1Schema } from '../../../packages/theme/src/contract.js';
 const app=express();
 // API is loopback-only. Reject cross-origin writes, including requests without an origin.
 app.use((req,res,next)=>{if(req.method!=='GET'&&req.headers.origin!=='http://localhost:5173'&&req.headers.origin!=='http://127.0.0.1:5173'){res.status(403).json({error:'مبدأ درخواست مجاز نیست'});return;}next();});
@@ -20,8 +24,32 @@ const originalsDirectory=resolve(root,'content/media-originals');
 const backupPaths={contentPath:resolve(root,'content/content.json'),mediaDirectory,originalsDirectory};
 app.use('/media',express.static(mediaDirectory,{fallthrough:false,dotfiles:'deny'}));
 app.get('/api/content',async(_req,res)=>{res.json(await readContent());});
+app.get('/api/theme',async(_req,res,next)=>{try{
+ const content=await readContent();
+ const stored=await readThemeConfiguration(themeConfigPath,content);
+ const hasErrors=stored.diagnostics.some(diagnostic=>diagnostic.severity==='error');
+ const configuration=hasErrors?defaultThemeConfiguration(content):stored.configuration;
+ res.json(themeState(configuration,diagnosticsForState(stored.diagnostics),stored.exists&&!hasErrors));
+}catch(error){next(error);}});
 app.get('/api/status',async(_req,res,next)=>{try{let previewAvailable=false;try{const preview=await fetch('http://127.0.0.1:4321',{signal:AbortSignal.timeout(1500)});previewAvailable=preview.ok;}catch{}const setup=await getSetupState();res.json({previewAvailable,siteInitialized:setup.initialized,setupMode:setup.mode??null});}catch(e){next(e);}});
 let busy=false;
+app.post('/api/theme/select',async(req,res,next)=>{if(busy){res.status(409).json({error:'عملیات دیگری در حال اجراست'});return;}busy=true;try{
+ const themeId=req.body?.themeId;
+ if(themeId!==atelierManifest.id)throw new Error(`قالب «${String(themeId??'') }» نصب‌شده یا تأییدشده نیست. فعلاً فقط قالب Atelier در دسترس است.`);
+ const content=await readContent();
+ const stored=await readThemeConfiguration(themeConfigPath,content);
+ const hasErrors=stored.diagnostics.some(diagnostic=>diagnostic.severity==='error');
+ const configuration=hasErrors?defaultThemeConfiguration(content):{
+  ...stored.configuration,
+  selectedTheme:{id:atelierManifest.id,version:atelierManifest.version},
+ };
+ const validation=validateThemeConfiguration(configuration,content);
+ const errors=validation.diagnostics.filter(diagnostic=>diagnostic.severity==='error');
+ if(!validation.configuration||errors.length)throw new Error(errors.map(diagnostic=>diagnostic.message).join('\n')||'تنظیمات قالب معتبر نیست.');
+ const build=await applyThemeConfiguration(validation.configuration);
+ const warnings=diagnosticsForState(validation.diagnostics);
+ res.json({...themeState(validation.configuration,warnings,true),build});
+}catch(error){next(error);}finally{busy=false;}});
 app.post('/api/site/setup',async(req,res,next)=>{if(busy){res.status(409).json({error:'عملیات دیگری در حال اجراست'});return;}busy=true;try{const {mode,siteName,backupConfirmed}=req.body??{};if(mode!=='sample'&&mode!=='new-site')throw new Error('روش راه‌اندازی نامعتبر است');let backupFile:string|undefined;if(mode==='new-site'){if(backupConfirmed!==true)throw new Error('برای ساخت سایت تازه، ابتدا نسخهٔ پشتیبان را دانلود و جایگزینی محتوا را تأیید کنید.');const backup=await exportBackup(backupPaths);const directory=resolve(root,'content/backups');await mkdir(directory,{recursive:true});const filename=`before-new-site-${new Date().toISOString().replaceAll(':','-')}.astro-studio.json`;const temporary=resolve(directory,`${filename}.tmp`);backupFile=resolve(directory,filename);await writeFile(temporary,backup,{flag:'wx'});await rename(temporary,backupFile);}const content=await initializeSite(mode,typeof siteName==='string'?siteName:'');res.json({content,backupCreated:Boolean(backupFile)});}catch(e){next(e);}finally{busy=false;}});
 app.put('/api/content',async(req,res,next)=>{if(busy){res.status(409).json({error:'ساخت یا ذخیره در حال انجام است'});return;}busy=true;try{res.json(await saveContent(req.body));}catch(e){next(e);}finally{busy=false;}});
 app.post('/api/content/migrate-v2/preview',async(req,res,next)=>{try{res.json({draft:migrateV1ToV2(req.body?.draft)});}catch(error){next(error);}});
