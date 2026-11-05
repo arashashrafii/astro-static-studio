@@ -1,0 +1,8 @@
+---
+import Layout from '../../shared/Layout.astro';
+import { routes } from '../../shared/route-data';
+export function getStaticPaths() { return routes.filter(route => route.data.kind === 'page').map(route => ({ params: { slug: route.path.split('/')[2] }, props: { route } })); }
+const { route } = Astro.props;
+if (route.data.kind !== 'page') throw new Error('Expected editorial page data.');
+---
+<Layout data={route.data}><article><p class="kicker">{route.data.siteName}</p><h1>{route.data.title}</h1><p class="summary">{route.data.description}</p><div>{route.data.copy}</div></article></Layout>

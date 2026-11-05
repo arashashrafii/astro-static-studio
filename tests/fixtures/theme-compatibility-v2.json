@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "site": { "name": "Contract Fixture", "tagline": "A shared theme contract fixture", "email": "fixture@example.test", "phone": "", "language": "en", "direction": "ltr" },
+  "pages": [
+    { "id": "20000000-0000-4000-8000-000000000001", "slug": "home", "title": "Home", "published": true, "description": { "source": "manual", "value": "A shared home description." }, "blocks": [{ "type": "collectionView", "collectionId": "20000000-0000-4000-8000-000000000003", "view": "grid", "categoryIds": [], "sort": "manual", "limit": 12 }] },
+    { "id": "20000000-0000-4000-8000-000000000002", "slug": "about", "title": "About this fixture", "published": true, "description": { "source": "manual", "value": "About page metadata description." }, "blocks": [{ "type": "richText", "document": { "type": "document", "blocks": [{ "type": "paragraph", "size": "normal", "align": "start", "children": [{ "type": "text", "text": "Shared canonical page copy.", "marks": [] }] }] } }] }
+  ],
+  "collections": [{ "id": "20000000-0000-4000-8000-000000000003", "slug": "projects", "routeBase": "portfolio", "name": "Selected projects", "kind": "content", "listLayout": "grid", "loading": "pagination", "pageSize": 4, "excerptSourceFieldId": "20000000-0000-4000-8000-000000000004", "fields": [{ "id": "20000000-0000-4000-8000-000000000004", "type": "text", "format": "rich", "label": "Details" }] }],
+  "items": [
+    { "id": "20000000-0000-4000-8000-000000000005", "collectionId": "20000000-0000-4000-8000-000000000003", "slug": "first-work", "published": true, "title": "First work", "coverImage": { "src": "/media/4e656f50d995505d2d20190718a51034.webp", "alt": "A blue sculpture" }, "description": { "source": "auto" }, "values": { "20000000-0000-4000-8000-000000000004": { "type": "document", "blocks": [{ "type": "paragraph", "size": "normal", "align": "start", "children": [{ "type": "text", "text": "First work details.", "marks": [] }] }] } } },
+    { "id": "20000000-0000-4000-8000-000000000007", "collectionId": "20000000-0000-4000-8000-000000000003", "slug": "second-work", "published": true, "title": "Second work", "description": { "source": "auto" }, "values": {} },
+    { "id": "20000000-0000-4000-8000-000000000008", "collectionId": "20000000-0000-4000-8000-000000000003", "slug": "third-work", "published": true, "title": "Third work", "description": { "source": "auto" }, "values": {} },
+    { "id": "20000000-0000-4000-8000-000000000009", "collectionId": "20000000-0000-4000-8000-000000000003", "slug": "fourth-work", "published": true, "title": "Fourth work", "description": { "source": "auto" }, "values": {} },
+    { "id": "20000000-0000-4000-8000-000000000010", "collectionId": "20000000-0000-4000-8000-000000000003", "slug": "fifth-work", "published": true, "title": "Fifth work", "description": { "source": "auto" }, "values": {} },
+    { "id": "20000000-0000-4000-8000-000000000006", "collectionId": "20000000-0000-4000-8000-000000000003", "slug": "draft-work", "published": false, "title": "Unpublished work", "description": { "source": "auto" }, "values": {} }
+  ]
+}

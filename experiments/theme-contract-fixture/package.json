@@ -1,0 +1,10 @@
+{
+  "name": "@astro-static-studio/structural-theme-fixture",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@astro-static-studio/contracts": "*",
+    "@astro-static-studio/theme": "*",
+    "astro": "7.4.2"
+  }
+}

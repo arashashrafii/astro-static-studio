@@ -39,10 +39,11 @@ const detailHasGallery=detailDocument?.blocks?.some((block:any)=>block.type==='g
 const v1HasText=entry?.components.some((component:any)=>component.type==='text'&&(component.richText?richTextToPlainText(component.richText):component.body).trim().length>0)??false;
 const pageDescriptionDocument=page?.blocks.find((block:any)=>block.type==='richText')?.document;
 const direction=data.version===2?data.site.direction:'ltr';
+const metaDescription=resource==='item'?collectionItemDescription(collection,item):resource==='page'?descriptionForDisplay(page.description,pageDescriptionDocument):resource==='v1-entry'?entryExcerptFromContent(entry.components,entry.summary):data.site.tagline;
 const previousArrow=direction==='rtl'?'→':'←';
 const nextArrow=direction==='rtl'?'←':'→';
 ---
-<Layout data={data} title={resource==='item'?itemDisplayTitle:resource==='page'?page?.title:resource==='v1-entry'?entry?.title:collection?.name}>
+<Layout data={data} title={resource==='item'?itemDisplayTitle:resource==='page'?page?.title:resource==='v1-entry'?entry?.title:collection?.name} description={metaDescription}>
   {resource==='v1-entry'&&<><span class="eyebrow">{entry.kind==='project'?'PROJECT':'JOURNAL'}</span><h1>{entry.title}</h1>{!v1HasText&&<p class="muted">{entryExcerptFromContent(entry.components,entry.summary)}</p>}{entry.components.map((component:any)=>component.type==='text'?component.richText?<section class="rich-text-content">{component.richText.blocks.map((block:any)=><RichTextBlock block={block}/>)}</section>:<p class="prose">{component.body}</p>:<section class="gallery">{component.images.map((image:any)=><figure><img src={image.src} alt={image.alt}/>{image.alt&&<figcaption>{image.alt}</figcaption>}</figure>)}</section>)}</>}
   {resource==='page'&&<><span class="eyebrow">PAGE</span><h1>{page.title}</h1>{page.description.source==='manual'&&<p class="muted">{descriptionForDisplay(page.description,pageDescriptionDocument)}</p>}<V2PageBlocks blocks={page.blocks} data={data}/></>}
   {resource==='collection'&&collection&&<><span class="eyebrow">{collection.kind==='gallery'?'GALLERY':'COLLECTION'}</span><h1>{collection.name}</h1><V2CollectionListing collection={collection} items={listItems} page={listPage} totalPages={totalPages}/></>}
