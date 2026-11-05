@@ -1,0 +1,48 @@
+{
+  "requests": [
+    "http://127.0.0.1:4180/",
+    "http://127.0.0.1:4180/assets/index-rKNnv4_q.js",
+    "http://127.0.0.1:4180/assets/wasmer_sdk_js_bg-Bc-Ws4Ph.wasm",
+    "https://registry.wasmer.io/graphql",
+    "https://cdn.wasmer.io/webcimages/0774d9de5f53f0a58fe7609ebd667c42206177f0d0f6760f9970360708b3ac71.webc",
+    "https://registry.wasmer.io/graphql",
+    "https://registry.wasmer.io/graphql",
+    "https://cdn.wasmer.io/webcimages/35028c4e6b9fa8cccdffdcab2007d1df3af31b3f2b22fb890d022d7ae723bbd3.webc",
+    "https://cdn.wasmer.io/webcimages/059606d132e2e6bc1afe3b432ee64dcb1b1b059815c8bb213cf3b24798ef21e1.webc",
+    "http://127.0.0.1:4180/assets/browser-worker-D1-4j-ut.js",
+    "http://127.0.0.1:4180/assets/browser-worker-D1-4j-ut.js",
+    "http://127.0.0.1:4180/assets/node-compat.js",
+    "http://127.0.0.1:4180/assets/host-filesystem.js",
+    "http://127.0.0.1:4180/assets/node-network-rpc.js",
+    "http://127.0.0.1:4180/assets/capi-worker-bridge.js",
+    "http://127.0.0.1:4180/assets/node-compat.js",
+    "http://127.0.0.1:4180/assets/host-filesystem.js",
+    "http://127.0.0.1:4180/assets/node-network-rpc.js",
+    "http://127.0.0.1:4180/assets/capi-worker-bridge.js"
+  ],
+  "failures": [
+    {
+      "url": "http://127.0.0.1:4180/assets/node-compat.js",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "startedAt": "2026-11-05T21:11:12.042Z",
+  "shellMs": 313,
+  "isolated": true,
+  "elapsedMs": 122549,
+  "state": "Runtime command failed in 122156ms; online=true",
+  "result": "{\"exitCode\":1,\"reason\":\"exited\",\"stdout\":\"\",\"stderr\":\"\"}",
+  "storage": {
+    "quota": 10835728990,
+    "usage": 98310750,
+    "usageDetails": {
+      "caches": 98309888,
+      "serviceWorkerRegistrations": 862
+    },
+    "serviceWorker": 1
+  },
+  "endedAt": "2026-11-05T21:13:14.613Z"
+}
