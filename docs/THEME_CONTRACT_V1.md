@@ -3,9 +3,9 @@
 ## Scope
 
 The contract is a reviewed boundary for one bundled static Astro theme. It does not
-make arbitrary Astro projects installable, add theme selection UI, or claim Android,
-RTL, or multi-theme support. The current Atelier renderer is not yet loaded through a
-runtime adapter registry; issue #31 owns that integration.
+make arbitrary Astro projects installable, add theme selection UI, or claim Android or
+multi-theme support. Issue #31 implements the Atelier adapter and connects its route
+models to the existing static Astro pages.
 
 Executable schemas and diagnostics are in `packages/theme/src/contract.ts`. The
 representative manifest is `packages/theme/src/atelier-manifest.ts`.
@@ -23,9 +23,9 @@ The contract keeps these versions distinct:
 Unknown manifest or settings versions fail with an actionable version diagnostic.
 An adapter must implement `StudioThemeAdapter` with the same `contractVersion` as
 the manifest. Theme packages declare a package-relative adapter entry point and
-exported factory name. The manifest reserves the module location for the future build
-resolver; the entry point is not implemented yet, and the current Atelier renderer has
-not been wired to the contract.
+exported factory name. The Atelier entry point is
+`packages/theme/src/studio/adapter.ts`; its route models feed the current static Astro
+page templates. Persistent settings and a selectable theme registry remain in #32.
 
 `ThemeManifestV1` declares stable route-template roles, section IDs with allowed block
 types and route roles, required and optional capabilities, design-token types/defaults, localization/direction claims,
@@ -47,7 +47,8 @@ Atelier manifest only declares the exact evidence collected by #13 and #17:
 
 - Astro `7.4.2`, within `>=7.4.2 <7.4.3`.
 - Node `24.13.0`, within `>=24.13.0 <24.13.1`.
-- Static routes and LTR direction. Content locale is passed through; this does not
+- Static routes and LTR/RTL direction, verified in #31 on the desktop renderer and a
+  390px mobile viewport. Content locale is passed through; this does not
   claim that all theme labels are translated.
 - The theme/package license is `unknown`, because neither a repository-level license
   nor internal package license metadata was present in the audited source.
@@ -68,8 +69,9 @@ Unknown or incompatible themes must never silently fall back to Atelier.
 section/block compatibility, token values, placement IDs, Collection references, and
 optional field IDs against the effective capability set. Atelier accepts any valid
 BCP 47 language tag as pass-through text; this does not translate fixed interface
-labels. RTL input is rejected until a separate RTL visual and keyboard audit approves
-it. Missing placement IDs report that the versioned migration is required.
+labels. Direction validation accepts LTR and RTL; Atelier layouts use direction-aware
+navigation, logical alignment, and gallery arrows. Missing placement IDs report that
+the versioned migration is required.
 
 ## Stable placement IDs and migration
 
@@ -99,11 +101,11 @@ backup wiring remains in #32.
 ## Atelier manifest notes
 
 The checked-in manifest records the current `apps/site` dependency declarations and
-resolved versions from `package-lock.json`. It reserves `./studio/adapter.ts` as the
-Atelier adapter entry point for #31; the module is not present yet. It declares the
+resolved versions from `package-lock.json`. It points to the checked-in
+`./studio/adapter.ts` Atelier adapter. It declares the
 current route roles (`home`, `page`, `collectionList`, and `collectionItem`) and the finite color tokens
 already present in the theme metadata. Optional collection/field capabilities are
-declared separately from required V1/V2 content and static LTR rendering.
+declared separately from required V1/V2 content and required LTR/RTL directions.
 
 The adapter and manifest are not an import sandbox. Theme source and dependencies are
 executable build inputs and remain reviewed trusted code. Astro integrations, SSR,

@@ -1,2 +1,14 @@
 import type { ThemeInterface } from '@astro-static-studio/contracts';
-export const theme = {id:'atelier',name:'Atelier',version:'1.0.0',components:['text','gallery'],tokens:{background:'#f5f2eb',foreground:'#272b27',accent:'#9b4937'}} satisfies ThemeInterface;
+import { atelierManifest } from './atelier-manifest.js';
+
+export const theme = {
+  id: atelierManifest.id,
+  name: atelierManifest.name,
+  version: atelierManifest.version,
+  components: ['text', 'gallery'],
+  tokens: {
+    background: atelierManifest.designTokens.background.default,
+    foreground: atelierManifest.designTokens.foreground.default,
+    accent: atelierManifest.designTokens.accent.default,
+  },
+} satisfies ThemeInterface;

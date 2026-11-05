@@ -61,7 +61,7 @@ const runtime: ThemeRuntimeTarget = {
   nodeVersion: '24.13.0',
   availableCapabilities: [
     'content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page', 'route.collectionList',
-    'route.collectionItem', 'field.text', 'field.richText', 'field.category', 'field.gallery', 'field.link', 'media.webp', 'direction.ltr',
+    'route.collectionItem', 'field.text', 'field.richText', 'field.category', 'field.gallery', 'field.link', 'media.webp', 'direction.ltr', 'direction.rtl',
   ],
 };
 
@@ -70,7 +70,7 @@ test('Atelier manifest records the verified contract, desktop runtime, and unkno
   assert.equal(atelierManifest.contractVersion, 1);
   assert.equal(atelierManifest.compatibility.astro.testedVersion, '7.4.2');
   assert.equal(atelierManifest.compatibility.node.testedVersion, '24.13.0');
-  assert.deepEqual(atelierManifest.localization.directions, ['ltr']);
+  assert.deepEqual(atelierManifest.localization.directions, ['ltr', 'rtl']);
   assert.equal(atelierManifest.license.status, 'unknown');
   assert.equal(atelierManifest.adapter.entryPoint, './studio/adapter.ts');
   assert.equal(atelierManifest.adapter.exportName, 'createThemeAdapter');
@@ -144,7 +144,11 @@ test('theme settings validate template, token, stable placement, collection, and
 
   const rtl = contentFixture();
   rtl.site.direction = 'rtl';
-  const unsupportedDirection = validateThemeSettings(settingsFixture(), atelierManifest, rtl, runtime.availableCapabilities);
+  assert.deepEqual(validateThemeSettings(settingsFixture(), atelierManifest, rtl, runtime.availableCapabilities), []);
+  const ltrOnlyManifest = structuredClone(atelierManifest);
+  ltrOnlyManifest.localization.directions = ['ltr'];
+  ltrOnlyManifest.capabilities.required = ltrOnlyManifest.capabilities.required.filter(capability => capability !== 'direction.rtl');
+  const unsupportedDirection = validateThemeSettings(settingsFixture(), ltrOnlyManifest, rtl, runtime.availableCapabilities);
   assert(unsupportedDirection.some(diagnostic => diagnostic.code === 'theme.direction.unsupported'));
 
   const badLocale = contentFixture();
