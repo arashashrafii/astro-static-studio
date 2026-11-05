@@ -1,0 +1,20 @@
+{
+  "sdkVersion": "@wasmer/sdk 0.19.1",
+  "browserPackage": "wasmer/edgejs@=0.2.4",
+  "webcArtifacts": [
+    {
+      "sha256": "0774d9de5f53f0a58fe7609ebd667c42206177f0d0f6760f9970360708b3ac71",
+      "contentLengthBytes": 77397889
+    },
+    {
+      "sha256": "35028c4e6b9fa8cccdffdcab2007d1df3af31b3f2b22fb890d022d7ae723bbd3",
+      "contentLengthBytes": 12703522
+    },
+    {
+      "sha256": "059606d132e2e6bc1afe3b432ee64dcb1b1b059815c8bb213cf3b24798ef21e1",
+      "contentLengthBytes": 1870786
+    }
+  ],
+  "webcArtifactBytesTotal": 91972197,
+  "measurement": "HTTP HEAD Content-Length from CDN URLs requested by the browser; excludes registry GraphQL and protocol overhead."
+}

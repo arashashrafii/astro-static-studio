@@ -1,0 +1,22 @@
+{
+  "requests": [
+    "http://127.0.0.1:4181/",
+    "http://127.0.0.1:4181/assets/index-BkBeXD63.js",
+    "http://127.0.0.1:4181/assets/wasmer_sdk_js_bg-Bc-Ws4Ph.wasm",
+    "https://registry.wasmer.io/graphql",
+    "https://cdn.wasmer.io/webcimages/812c1d8078e47291e1f024588d818aed4fedeaa3b8db03e411b5ea3a540ab124.webc",
+    "https://registry.wasmer.io/graphql",
+    "https://registry.wasmer.io/graphql"
+  ],
+  "failures": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "startedAt": "2026-11-05T21:16:53.235Z",
+  "shellMs": 251,
+  "isolated": true,
+  "error": "TimeoutError: page.waitForFunction: Timeout 240000ms exceeded.",
+  "state": "Shell ready. crossOriginIsolated=true",
+  "result": "",
+  "endedAt": "2026-11-05T21:20:55.990Z"
+}

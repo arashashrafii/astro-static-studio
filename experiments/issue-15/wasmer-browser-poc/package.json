@@ -1,0 +1,18 @@
+{
+  "name": "issue-15-wasmer-browser-poc",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "vite build && node build-assets.mjs",
+    "serve": "node server.mjs",
+    "probe": "node run-browser.mjs"
+  },
+  "dependencies": {
+    "@wasmer/sdk": "0.19.1"
+  },
+  "devDependencies": {
+    "playwright-core": "1.56.1",
+    "vite": "8.3.6"
+  }
+}
