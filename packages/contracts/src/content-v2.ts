@@ -64,6 +64,8 @@ export const RichTextDocumentSchema = z.object({
 
 const CollectionViewSchema = z.object({
   type: z.literal('collectionView'),
+  /** Stable, theme-neutral identity for this page placement. Missing IDs are assigned by the versioned placement migration. */
+  placementId: z.string().uuid().optional(),
   collectionId: z.string().uuid(),
   view: z.enum(['grid', 'list', 'masonry']),
   categoryFieldId: z.string().uuid().optional(),
@@ -73,9 +75,9 @@ const CollectionViewSchema = z.object({
 });
 
 export const PageBlockV2Schema = z.discriminatedUnion('type', [
-  z.object({ type: z.literal('richText'), document: RichTextDocumentSchema }),
-  z.object({ type: z.literal('gallery'), images: z.array(MediaSchema).max(100), layout: z.enum(['grid', 'list', 'masonry']).default('grid') }),
-  z.object({ type: z.literal('image'), media: MediaSchema.optional(), align: z.enum(['start', 'center', 'end']).optional(), size: z.enum(['small', 'medium', 'large']).optional() }),
+  z.object({ type: z.literal('richText'), placementId: z.string().uuid().optional(), document: RichTextDocumentSchema }),
+  z.object({ type: z.literal('gallery'), placementId: z.string().uuid().optional(), images: z.array(MediaSchema).max(100), layout: z.enum(['grid', 'list', 'masonry']).default('grid') }),
+  z.object({ type: z.literal('image'), placementId: z.string().uuid().optional(), media: MediaSchema.optional(), align: z.enum(['start', 'center', 'end']).optional(), size: z.enum(['small', 'medium', 'large']).optional() }),
   CollectionViewSchema,
 ]);
 
@@ -199,6 +201,9 @@ export const ContentV2Schema = z.object({
   content.pages.forEach((page, index) => {
     addUnique(page.id, ['pages', index, 'id']);
     addPath(`/${page.slug}/`, ['pages', index, 'slug']);
+    page.blocks.forEach((block, blockIndex) => {
+      if (block.placementId) addUnique(block.placementId, ['pages', index, 'blocks', blockIndex, 'placementId']);
+    });
   });
   content.collections.forEach((collection, index) => {
     addUnique(collection.id, ['collections', index, 'id']);

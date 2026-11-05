@@ -1,1 +1,10 @@
-{"name":"@astro-static-studio/theme","version":"0.1.0","type":"module","exports":"./src/index.ts"}
+{
+  "name": "@astro-static-studio/theme",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./contract": "./src/contract.ts",
+    "./atelier-manifest": "./src/atelier-manifest.ts"
+  }
+}
