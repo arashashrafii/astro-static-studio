@@ -1,0 +1,10 @@
+---
+import Layout from '../shared/Layout.astro';
+import { routes } from '../shared/route-data';
+const route = routes.find(candidate => candidate.path === '/');
+if (!route || route.data.kind !== 'home') throw new Error('Structural fixture home route is missing.');
+---
+<Layout data={route.data}>
+  <section class="feature"><p class="kicker">{route.data.siteName} / PORTFOLIO</p><h1>{route.data.title}</h1><p>{route.data.description}</p></section>
+  <ul class="tiles">{route.data.featured.map(item => <li><a href={`/items/${item.slug}/`}><img src={item.coverImage?.src} alt={item.coverImage?.alt ?? ''}/><strong>{item.title}</strong></a></li>)}</ul>
+</Layout>
