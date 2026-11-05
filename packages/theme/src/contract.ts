@@ -258,18 +258,22 @@ export function validateThemeSettings(input: unknown, manifest: ThemeManifestV1,
       continue;
     }
     if (block.type === 'collectionView') {
-      const capability: ThemeCapability = 'route.collectionList';
-      if (![...manifest.capabilities.required, ...manifest.capabilities.optional].includes(capability)) {
-        diagnostics.push({ severity: 'error', code: 'theme.settings.capability-unsupported', message: `Theme ${manifest.id} does not declare support for ${capability}.` });
-      } else if (!availableCapabilities.includes(capability)) {
-        const required = manifest.capabilities.required.includes(capability);
-        diagnostics.push({
-          severity: required ? 'error' : 'warning',
-          code: required ? 'theme.settings.required-placement-unavailable' : 'theme.settings.optional-placement-omitted',
-          message: required
-            ? `Required Collection placement capability ${capability} is unavailable for theme ${manifest.id}.`
-            : `Collection placement ${placement.placementId} will be omitted because capability ${capability} is unavailable.`,
-        });
+      // A Collection view links to the Collection list and item routes. Both route
+      // capabilities are dependencies of this one placement in the first renderer.
+      for (const capability of ['route.collectionList', 'route.collectionItem'] as const) {
+        const declared = [...manifest.capabilities.required, ...manifest.capabilities.optional].includes(capability);
+        if (!declared) {
+          diagnostics.push({ severity: 'error', code: 'theme.settings.capability-unsupported', message: `Theme ${manifest.id} does not declare support for ${capability}.` });
+        } else if (!availableCapabilities.includes(capability)) {
+          const required = manifest.capabilities.required.includes(capability);
+          diagnostics.push({
+            severity: required ? 'error' : 'warning',
+            code: required ? 'theme.settings.required-placement-unavailable' : 'theme.settings.optional-placement-omitted',
+            message: required
+              ? `Required Collection placement capability ${capability} is unavailable for theme ${manifest.id}.`
+              : `Collection placement ${placement.placementId} will be omitted because capability ${capability} is unavailable.`,
+          });
+        }
       }
     }
     if (placement.collectionId) {

@@ -3,9 +3,17 @@ import Layout from '../layouts/Layout.astro';
 import Projects from '../components/Projects.astro';
 import V2CollectionListing from '../components/V2CollectionListing.astro';
 import { content } from '../lib/content';
+import { atelierRoutes } from '../lib/theme-routes';
 import { projectsIndexView } from '../lib/projects-route';
+import type { AtelierRouteData } from '@astro-static-studio/theme/studio/adapter';
 const data=await content();
-const view=projectsIndexView(data);
+const projectRoute=atelierRoutes(data).find(route=>route.path==='/projects/'&&route.role==='collectionList');
+const projectData=projectRoute?.data as AtelierRouteData|undefined;
+const view=projectData?.resource==='v1-projects'
+  ?{kind:'legacy' as const,entries:projectData.entries}
+  :projectData?.resource==='collection'
+    ?{kind:'collection' as const,collection:projectData.collection,items:projectData.content.items}
+    :projectsIndexView(data);
 const totalPages=view.kind==='collection'&&view.collection?.loading==='pagination'?Math.max(1,Math.ceil(view.items.filter(item=>item.published).length/view.collection.pageSize)):1;
 ---
 <Layout data={data} title={view.kind==='collection'?view.collection?.name??'Projects':'Projects'}><span class="eyebrow">{data.site.name} · PORTFOLIO</span><h1>{view.kind==='collection'?view.collection?.name??'Projects':'Projects'}</h1>{view.kind==='legacy'?(view.entries.length?<Projects entries={view.entries}/>:<p>هنوز پروژه‌ای منتشر نشده است.</p>):view.collection?<V2CollectionListing collection={view.collection} items={view.items} page={1} totalPages={totalPages}/>:<p>هنوز پروژه‌ای منتشر نشده است.</p>}</Layout>

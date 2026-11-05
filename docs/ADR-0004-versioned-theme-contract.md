@@ -5,8 +5,8 @@
 placement IDs, versioned theme settings separate from Content V2, and a versioned backup
 envelope that preserves v1 restore. The owner approved the concrete #30 contract shape
 below on 2026-11-05.
-**Evidence:** Issues #13, #17, #10 and #22; implementation and tests are prepared in
-the issue #30 branch.
+**Evidence:** Issues #13, #17, #10, #22 and #30; the RTL rendering evidence and
+adapter implementation for #31 are recorded in its current change.
 
 ## Context
 
@@ -15,7 +15,8 @@ existing `ThemeInterface` is metadata only. A future selector must not make cont
 theme-specific, claim support based on manifest assertions alone, or let unsupported
 themes silently fall back to Atelier. The verified build evidence covers only Node
 24.13.0, Astro 7.4.2, static output, and the bundled Atelier source. RTL rendering and
-the internal theme license remain unverified.
+the internal theme license remain unverified. Issue #31 adds RTL only after route,
+keyboard, and responsive rendering checks.
 
 ## Decision
 
@@ -29,7 +30,8 @@ the internal theme license remain unverified.
    optional features are omitted from generated view models.
 3. Declare exact tested runtime ranges until broader versions have passing evidence.
    Atelier currently claims only the verified Node/Astro patch versions, static routes,
-   and LTR. Locale text is passed through; no translation or RTL claim is made.
+   and the LTR/RTL directions checked under #31. Locale text is passed through; fixed
+   interface labels are not translated.
 4. Keep theme settings separate from Content V2. Map placements and optional fields by
    stable IDs, never display labels or block positions.
 5. Add a generic `placementId` to page blocks. A deterministic UUIDv8, versioned migration
@@ -42,8 +44,7 @@ the internal theme license remain unverified.
    implementation.
 7. Keep Atelier as the only bundled theme in the initial contract. Themes remain
    trusted executable build inputs; arbitrary imports, user schemas, markup, CSS,
-   Android support, RTL, and multi-theme compatibility require separate evidence and
-   decisions.
+   Android and multi-theme compatibility require separate evidence and decisions.
 
 ## Consequences
 
@@ -53,8 +54,9 @@ the internal theme license remain unverified.
 - `ensureV2PlacementIdsV1()` provides deterministic backfill and the V1-to-V2 migration
   now assigns placement IDs to generated blocks. Existing V2 payloads remain readable;
   they must be migrated and saved before settings can refer to their placements.
-- Issues #31 and #32 own Atelier adapter integration, persistence, settings UI, and
-  versioned backup wiring. No theme selection UI is added by this decision.
+- Issue #31 implements the Atelier adapter and connects its route models to the static
+  renderer. Issue #32 owns persistent settings, settings UI, and versioned backup
+  wiring. No theme selection UI is added by this decision.
 - A failed validation blocks the proposed theme operation; a future switch/build
   implementation must keep the last valid settings and successful output available.
 
@@ -66,8 +68,9 @@ the internal theme license remain unverified.
   order can change; stable IDs are required.
 - Accept arbitrary Astro folders and discover support by trying a build: rejected for
   the first release because it exposes an unbounded compatibility and trust surface.
-- Claim RTL or wider Node/Astro ranges from a single successful build: rejected because
-  the available audit does not establish those capabilities.
+- Claim wider Node/Astro ranges from a single successful build: rejected because the
+  available audit does not establish those capabilities. RTL was added only after the
+  #31 route, keyboard, and responsive visual checks.
 
 ## Verification
 

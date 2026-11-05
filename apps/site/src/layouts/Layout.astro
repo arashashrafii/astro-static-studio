@@ -31,4 +31,10 @@ const collections=data.version===2?data.collections:[];
 .v2-page-image.v2-image-size-large{width:100%}
 .v2-page-image figcaption{text-align:center;color:#777;font-size:.9rem;margin-top:.5rem}
 @media(max-width:650px){.v2-inline-image-wrap.v2-inline-image-wrap-start,.v2-inline-image-wrap.v2-inline-image-wrap-end{width:44%}.v2-page-image.v2-image-size-small{width:55%}.v2-page-image.v2-image-size-medium{width:78%}}
+/* Issue #31: keyboard, touch and contrast refinements for public collection controls. */
+a:focus-visible,button:focus-visible{outline:3px solid #9b4937;outline-offset:3px}
+.category-filters button{min-height:44px;padding-block:12px}
+.v2-pagination a,.v2-show-more{min-height:44px}
+.muted,.back-link,.v2-item-card p,.v2-item-card time,.v2-page-image figcaption{color:#666}
+.card img,.v2-item-card>img{object-fit:contain;background:#ece9e3}
 </style></head><body style={`background:${theme.tokens.background};color:${theme.tokens.foreground}`}><header><a class="brand" href="/">{data.site.name}<span style="color:#9b4937">.</span></a><nav><a href="/">Home</a>{data.version===1?<a href="/projects/">Projects</a>:collections.map((collection:any)=><a href={`/${collection.slug}/`}>{collection.name}</a>)}{pages.map((e:any)=><a href={`/${e.slug}/`}>{e.title}</a>)}</nav></header><main><slot/></main><footer><span>{data.site.name} · {new Date().getFullYear()}</span>{data.site.phone&&<span>{data.site.phone}</span>}{data.site.email&&<a href={`mailto:${data.site.email}`}>{data.site.email}</a>}</footer></body></html>

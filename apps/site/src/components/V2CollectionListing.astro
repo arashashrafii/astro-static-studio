@@ -24,8 +24,8 @@ function pageHref(nextPage: number) {
 }
 ---
 {categoryField?.categories.length > 0 && <nav class="category-filters" aria-label={`برچسب‌های ${collection.name}`}>
-  <button type="button" class="active" data-v2-filter="all">همه</button>
-  {categoryField.categories.map((category: any) => <button type="button" data-v2-filter={category.id}>{category.name}</button>)}
+  <button type="button" class="active" aria-pressed="true" data-v2-filter="all">همه</button>
+  {categoryField.categories.map((category: any) => <button type="button" aria-pressed="false" data-v2-filter={category.id}>{category.name}</button>)}
 </nav>}
 {published.length > 0 ? <>
   <div class:list={['v2-collection-items', `v2-view-${collection.listLayout}`, `v2-kind-${collection.kind}`]} id="v2-collection-items" data-loading={collection.loading} data-page-size={collection.pageSize}>
@@ -72,7 +72,11 @@ function pageHref(nextPage: number) {
     filterButtons.forEach(button => button.addEventListener('click', () => {
       filter = button.dataset.v2Filter ?? 'all';
       visible = pageSize;
-      filterButtons.forEach(option => option.classList.toggle('active', option === button));
+      filterButtons.forEach(option => {
+        const selected = option === button;
+        option.classList.toggle('active', selected);
+        option.setAttribute('aria-pressed', String(selected));
+      });
       render();
     }));
     showMoreButton?.addEventListener('click', () => { visible += pageSize; render(); });

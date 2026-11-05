@@ -26,10 +26,10 @@ export const atelierManifest = ThemeManifestV1Schema.parse({
     { id: 'collection-list', blockTypes: ['collectionView'], routeRoles: ['home', 'page'] },
   ],
   capabilities: {
-    required: ['content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page', 'field.text', 'field.gallery', 'direction.ltr'],
+    required: ['content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page', 'field.text', 'field.gallery', 'direction.ltr', 'direction.rtl'],
     optional: ['route.collectionList', 'route.collectionItem', 'field.richText', 'field.category', 'field.link', 'media.webp'],
   },
-  localization: { contentLocalePolicy: 'any-bcp47-pass-through', directions: ['ltr'] },
+  localization: { contentLocalePolicy: 'any-bcp47-pass-through', directions: ['ltr', 'rtl'] },
   designTokens: {
     background: { type: 'color', default: '#f5f2eb' },
     foreground: { type: 'color', default: '#272b27' },
