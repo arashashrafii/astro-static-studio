@@ -240,11 +240,24 @@ test('automatic descriptions derive text only; manual descriptions remain exact'
   const rich = parsed.items[0].values[richTextFieldId] as ReturnType<typeof migrateV1PlainTextToRichText>;
   assert.equal(descriptionForDisplay(parsed.items[0].description, rich), 'A sculpture');
   assert.equal(collectionItemDescription(parsed.collections[0], parsed.items[0]), 'A sculpture');
+  const manualItem = { ...parsed.items[0], description: { source: 'manual' as const, value: 'A hand-written description' } };
+  assert.equal(collectionItemDescription(parsed.collections[0], manualItem), 'A hand-written description');
   const configuredSource = structuredClone(parsed.collections[0]);
   configuredSource.excerptSourceFieldId = releaseDateFieldId;
   assert.equal(collectionItemDescription(configuredSource, parsed.items[0]), '2026');
   assert.equal(descriptionForDisplay({ source: 'manual', value: 'Owner text' }, rich), 'Owner text');
   assert.equal(descriptionForDisplay({ source: 'auto' }, undefined), '');
+});
+
+test('invalid item fields report stable paths for field-level form errors', () => {
+  const invalid = validContent();
+  invalid.items[0].values[galleryFieldId] = [{ ...image, src: 'https://example.com/remote.webp' }];
+  invalid.items[0].title = '';
+  const result = ContentV2Schema.safeParse(invalid);
+  assert.equal(result.success, false);
+  if (result.success) return;
+  assert.ok(result.error.issues.some(issue => issue.path.join('.') === 'items.0.title'));
+  assert.ok(result.error.issues.some(issue => issue.path.join('.') === `items.0.values.${galleryFieldId}`));
 });
 
 test('automatic excerpt is capped at 1000 Unicode code points', () => {
