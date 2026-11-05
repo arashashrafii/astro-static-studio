@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "site": {
+    "name": "Atelier fixture",
+    "tagline": "A small static portfolio example",
+    "email": "",
+    "phone": ""
+  },
+  "entries": [
+    {
+      "id": "10000000-0000-4000-8000-000000000001",
+      "kind": "page",
+      "slug": "about",
+      "title": "About",
+      "summary": "A short introduction.",
+      "published": true,
+      "components": [
+        { "type": "text", "body": "A compact fixture page for the Atelier theme audit." }
+      ]
+    },
+    {
+      "id": "10000000-0000-4000-8000-000000000002",
+      "kind": "project",
+      "slug": "sample-work",
+      "title": "Sample work",
+      "summary": "A small project example.",
+      "categories": ["Illustration"],
+      "published": true,
+      "components": [
+        { "type": "text", "body": "Project details appear on the static detail route." }
+      ]
+    }
+  ]
+}
