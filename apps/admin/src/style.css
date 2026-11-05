@@ -83,6 +83,22 @@ aside nav{display:flex;flex-direction:column}aside nav>button{width:100%;min-hei
 .v2-shell .stats small{@apply text-xs text-studio-muted}
 .v2-shell .stats strong{@apply text-3xl font-normal text-studio-forest}
 .v2-shell .panel{@apply mb-5 rounded-xl border border-studio-line bg-white p-7}
+.v2-shell .theme-choice-list{@apply my-5 grid gap-3 border-0 p-0}
+.v2-shell .theme-choice-list legend{@apply mb-2 text-sm font-semibold text-studio-ink}
+.v2-shell .theme-choice{@apply flex min-h-16 cursor-pointer items-center gap-3 rounded-xl border border-studio-line bg-white px-4 py-3}
+.v2-shell .theme-choice:has(input:checked){@apply border-studio-forest bg-studio-soft}
+.v2-shell .theme-choice input{@apply h-5 w-5 accent-emerald-800}
+.v2-shell .theme-choice-copy{@apply flex min-w-0 flex-1 flex-col gap-1}
+.v2-shell .theme-choice-copy strong{@apply text-sm font-semibold text-studio-ink}
+.v2-shell .theme-choice-copy small{@apply text-xs leading-6 text-studio-muted}
+.v2-shell .theme-selected{@apply shrink-0 rounded-full bg-studio-forest px-3 py-1 text-xs font-semibold text-white}
+.v2-shell .theme-apply{@apply min-h-12 rounded-lg bg-studio-forest px-5 py-3 text-sm font-semibold text-white}
+.v2-shell .theme-apply:disabled{@apply cursor-not-allowed opacity-55}
+.v2-shell .theme-choice:focus-within{@apply outline-2 outline-offset-2 outline-emerald-800}
+.v2-shell .theme-message{@apply my-3 rounded-lg border px-4 py-3 text-sm leading-7}
+.v2-shell .theme-error{@apply border-red-300 bg-red-50 text-red-900}
+.v2-shell .theme-warning{@apply border-amber-300 bg-amber-50 text-amber-950}
+.v2-shell .theme-success{@apply border-emerald-300 bg-emerald-50 text-emerald-950}
 .v2-shell .panel h2{@apply text-xl font-semibold leading-relaxed text-studio-forest}
 .v2-shell .panel h3{@apply text-lg font-semibold text-studio-ink}
 .v2-shell .hint,.v2-shell .field-help{@apply text-sm leading-7 text-studio-muted}

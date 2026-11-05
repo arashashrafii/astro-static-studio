@@ -141,6 +141,14 @@ export const ThemeSettingsV1Schema = z.object({
 
 export type ThemeSettingsV1 = z.infer<typeof ThemeSettingsV1Schema>;
 
+/** Persisted selection and per-theme presentation settings; intentionally separate from content. */
+export const ThemeConfigurationV1Schema = z.object({
+  configVersion: z.literal(1),
+  selectedTheme: z.object({ id: IdentifierSchema, version: SemverSchema }).strict(),
+  perThemeSettings: z.record(IdentifierSchema, ThemeSettingsV1Schema),
+}).strict();
+export type ThemeConfigurationV1 = z.infer<typeof ThemeConfigurationV1Schema>;
+
 export interface ThemeAdapterInput {
   content: Content | ContentV2;
   settings: ThemeSettingsV1;
