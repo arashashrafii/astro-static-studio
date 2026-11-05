@@ -2,6 +2,10 @@
 
 The implementation in `packages/contracts/src/index.ts` is the source of truth. Planning docs do not make a feature implemented.
 
+## Version status
+
+The committed package-root contract is V1. The current working tree also contains a V2 schema, migration and V2-capable API/dashboard/renderer, but those changes and the local V2 `content/content.json` are not the committed or released baseline. Keep a verified V1 backup, and do not mix V2 data with a V1-only build.
+
 ## Content v1
 
 - Root document: `version: 1`, site identity/contact fields, and entries in the single `content/content.json` file (up to 500 entries under the current schema).
@@ -13,7 +17,9 @@ The implementation in `packages/contracts/src/index.ts` is the source of truth. 
 
 ## Theme and publishing
 
-- Theme metadata declares supported content component types and color tokens. It does not yet support a runtime theme registry or dashboard theme selection.
+- The bundled theme metadata declares supported V1 component names and color tokens; it does not provide a runtime theme registry or dashboard selection. #17 audits the compatible Atelier desktop example. The proposed versioned manifest/adapter remains for #30 after #10/#22 review.
+- The current `ThemeInterface` contains theme ID/name/version, V1 component names (`text`/`gallery`) and three color tokens. `Layout.astro` renders Atelier directly; there is no versioned theme-settings file or capability negotiation. Content and theme presentation remain separate; do not add theme-specific fields to V1/V2 content to simulate selection.
+- V1 unknown component types and V2 unsupported page-block/field shapes are rejected by their discriminated schemas; unsupported content versions are rejected by the API, renderer, and backup import/export. There is no selector/registry yet, so unknown theme IDs/capabilities have no Studio validation path. #30 must define actionable diagnostics before selectable themes are added.
 - The `PublisherInterface` local build contract retains the last good `apps/site/dist` on failed builds. **Separately**, `apps/api/src/publishing.ts` implements Cloudflare Pages Direct Upload for the current desktop workflow; the local publisher alone does not deploy. QA preview validation is documented in [M2_VALIDATION](M2_VALIDATION.md).
 
 Schema changes require validation tests and a migration plan before breaking existing content files.
@@ -31,7 +37,7 @@ Before V1→V2 migration, the API writes a standard V1 recovery bundle under `co
 
 ## Content v2 runtime
 
-`packages/contracts/src/content-v2.ts` is the local target Content V2 schema. V1 is the last committed format and remains readable for existing files and backups. In the current uncommitted workspace, the dashboard gate migrates V1 to V2 after writing a complete pre-migration backup under ignored `content/backups/`. If a valid `studio-draft-v1` exists, the gate first asks the read-only preview route for its V2 mapping and stores/read-back validates `studio-draft-v2`; only then does migration write a paired standard V1 backup for the draft and its referenced media. The original V1 draft remains untouched. A missing draft asset or unavailable browser storage blocks migration. The migration in `packages/contracts/src/content-migration.ts` is deterministic, and the API atomically replaces the active content file only after the saved-content backup, optional draft backup, and full V2 validation succeed. Issue #19 remains open until the migration and acceptance evidence are complete.
+`packages/contracts/src/content-v2.ts` is the local target Content V2 schema. V1 remains the committed format and supported recovery input. The current V2-capable dashboard gate writes a complete pre-migration backup under ignored `content/backups/`. If a valid `studio-draft-v1` exists, the gate previews its V2 mapping and stores/read-back validates `studio-draft-v2`; only then does migration write a paired standard V1 backup for the draft and its referenced media. The original V1 draft remains untouched. Missing draft media or unavailable browser storage blocks migration. The migration in `packages/contracts/src/content-migration.ts` is deterministic, and the API atomically replaces active content only after the saved-content backup, optional draft backup, and full V2 validation succeed. Migration/browser acceptance remains tracked under #19; customer-specific readiness requires its own backup and review.
 
 - Root data separates `pages`, generic `collections`, and their `items`. IDs are UUIDs; page and collection list paths plus collection item detail paths must be unique. Root paths cannot use `admin`, `api` or `media`; collection item slugs are scoped below their route prefix.
 - Collection definitions have a stable ID, name, list slug, detail `routeBase`, `kind` (`gallery` or `content`), `listLayout`, `loading`, `pageSize`, and field definitions. New fields are additive and default older V2 data to `content`, `grid`, `show-more`, and 12 items per page. The existing `project` preset remains content and keeps `/projects/` plus `/portfolio/<slug>/` routes.
@@ -41,6 +47,6 @@ Before V1→V2 migration, the API writes a standard V1 recovery bundle under `co
 - Link fields allow site-root-relative paths and `http`, `https`, `mailto`, or `tel` URLs; protocol-relative and active-content schemes such as `javascript:` are rejected.
 - Project preset route compatibility is `/projects/` for the list and `/portfolio/<slug>/` for item details. It preconfigures separate Category fields for categories and tags, Gallery, rich Text details, and plain Text release date. V1 pages keep their IDs, slugs and published flags; projects keep their item IDs, slugs, published state, order, media references, alt text and interleaved text/gallery order. Existing summaries remain manual. Cover Image points to the first existing gallery image; no file is copied.
 
-The runtime enforces document IDs, collection references, path collisions, field value types, category membership, media paths and supported rich-text nodes. Focused tests cover migration fidelity, unknown versions, and V1/V2 backup restoration.
+The runtime enforces document IDs, collection references, path collisions, field value types, category membership, managed media paths and supported rich-text nodes. Focused tests cover migration fidelity, unknown versions, and V1/V2 backup restoration. `parseStoredContent()`, the Astro renderer, and backup import/export reject unknown content versions. Backups serialize validated content and referenced media only; they do not read publisher credentials. A regression test verifies that unknown provider credential fields are stripped from V1/V2 exports.
 
-**V2 is the owner-selected target contract in the local working tree, not yet the committed or released contract.** The committed V1-only application rejects a V2 content file because its schema requires `version: 1` and `entries`; use the matching V2-capable local code for V2 data. V1 backup restore is supported by the current V2 migration path; restoring a V1 backup through the V2 dashboard migrates it to V2 after creating another recovery backup. Unknown versions and malformed V2 values are rejected. Keep the migration backup available for recovery. Do not mix a V2 content file with an older V1-only application build.
+V2 is an owner-selected target in the current uncommitted workspace, not a released contract. The committed V1-only build rejects `version: 2`; use a matching V2-capable build only with a preserved V1 recovery backup. Restoring a V1 backup through the V2 dashboard migrates it after creating another recovery backup; it is not a rollback-to-V1 path. Unknown versions and malformed values are rejected. Customer-specific migration still requires an owner-controlled backup and browser verification.

@@ -213,3 +213,25 @@ test('restore requires an originals directory when the bundle carries an origina
     mediaDirectory: source.paths.mediaDirectory,
   }), /originals directory is required/);
 });
+
+test('backup exports only validated V1/V2 content and never carries unknown provider credentials', async t => {
+  const source = await setup(t);
+  const v1 = structuredClone(fixtureContent()) as any;
+  v1.cloudflare = { apiToken: 'test-secret-cloudflare-token' };
+  v1.site.publishPassword = 'test-secret-publish-password';
+  v1.entries[0].providerCredentials = { token: 'test-secret-entry-token' };
+  const v2 = migrateV1ToV2(v1) as any;
+  v2.publishCredentials = { apiToken: 'test-secret-v2-token' };
+  v2.site.publishPassword = 'test-secret-v2-password';
+
+  for (const candidate of [v1, v2]) {
+    const exported = await exportBackup(source.paths, candidate);
+    const serialized = exported.toString('utf8');
+    assert.doesNotMatch(serialized, /test-secret-/);
+    const document = JSON.parse(serialized);
+    assert.equal(Object.hasOwn(document.content, 'cloudflare'), false);
+    assert.equal(Object.hasOwn(document.content, 'publishCredentials'), false);
+    assert.equal(Object.hasOwn(document.content.site, 'publishPassword'), false);
+    if (document.content.version === 1) assert.equal(Object.hasOwn(document.content.entries[0], 'providerCredentials'), false);
+  }
+});
