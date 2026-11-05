@@ -342,3 +342,4 @@ aside nav{display:flex;flex-direction:column}aside nav>button{width:100%;min-hei
  .v2-shell .activity-chart{@apply h-44 gap-1 px-2}
  .v2-shell .activity-track{@apply h-28 max-w-8}
 }
+.collection-description-field{margin:18px 0}.collection-description-field>label{display:grid;gap:8px}.collection-description-field textarea{width:100%;min-height:112px;resize:vertical;border:1px solid #aeb8a7;border-radius:8px;background:#fff;padding:12px 14px;color:#263b2c;font:inherit;line-height:1.7}.collection-description-field textarea:focus{outline:2px solid #256b48;outline-offset:2px}.field-error{display:block;margin-top:6px;color:#a33129;font-size:13px;line-height:1.6}.collection-description-field .v2-control-link{min-height:44px;margin-top:6px}
