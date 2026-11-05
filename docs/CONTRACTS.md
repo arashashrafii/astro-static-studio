@@ -1,6 +1,6 @@
 # Content and theme contracts
 
-The implementation in `packages/contracts/src/index.ts` is the source of truth. Planning docs do not make a feature implemented.
+The Content V1 implementation in `packages/contracts/src/index.ts` and Content V2 implementation in `packages/contracts/src/content-v2.ts` are the data-contract sources of truth. The theme contract source of truth is `packages/theme/src/contract.ts`. Planning docs do not make a feature implemented.
 
 ## Version status
 
@@ -17,9 +17,12 @@ The committed package-root contract is V1. The current working tree also contain
 
 ## Theme and publishing
 
-- The bundled theme metadata declares supported V1 component names and color tokens; it does not provide a runtime theme registry or dashboard selection. #17 audits the compatible Atelier desktop example. The proposed versioned manifest/adapter remains for #30 after #10/#22 review.
-- The current `ThemeInterface` contains theme ID/name/version, V1 component names (`text`/`gallery`) and three color tokens. `Layout.astro` renders Atelier directly; there is no versioned theme-settings file or capability negotiation. Content and theme presentation remain separate; do not add theme-specific fields to V1/V2 content to simulate selection.
-- V1 unknown component types and V2 unsupported page-block/field shapes are rejected by their discriminated schemas; unsupported content versions are rejected by the API, renderer, and backup import/export. There is no selector/registry yet, so unknown theme IDs/capabilities have no Studio validation path. #30 must define actionable diagnostics before selectable themes are added.
+- The original `ThemeInterface` remains metadata for the current Atelier renderer. #30 adds versioned manifest/settings schemas, the adapter API shape, compatibility diagnostics, and a checked-in representative manifest in `packages/theme/src/contract.ts` and `packages/theme/src/atelier-manifest.ts`; the detailed contract is [THEME_CONTRACT_V1](THEME_CONTRACT_V1.md).
+- The manifest validator rejects unknown document versions, unsupported content/runtime versions, and missing required capabilities. Missing optional capabilities produce warnings. Settings validation checks theme/version identity, template/section/token IDs, stable placement IDs, Collection references and optional field IDs. These validators are not yet wired to a theme selector, persisted settings, renderer registry, or production backup envelope; issues #31/#32 own those integrations.
+- Content V2 page blocks may carry a generic `placementId`; `ensureV2PlacementIdsV1()` deterministically adds IDs to older blocks, and V1→V2 migration creates IDs for generated blocks. Existing IDs, slugs, routes and media paths remain unchanged. Map by stable IDs rather than block order or labels.
+- Atelier's manifest records only the verified Node 24.13.0/Astro 7.4.2 static desktop path and LTR direction. RTL and the internal theme license remain unverified. This contract does not claim Android or arbitrary-theme compatibility.
+- The owner-approved detailed contract and #22 boundaries are recorded in [ADR-0004](ADR-0004-versioned-theme-contract.md). Theme settings remain separate from canonical content; the future versioned backup envelope must continue to restore existing backup format v1.
+- V1 unknown component types and V2 unsupported page-block/field shapes are rejected by their discriminated schemas; unsupported content versions are rejected by the API, renderer, and backup import/export. A runtime theme selector/registry does not exist yet.
 - The `PublisherInterface` local build contract retains the last good `apps/site/dist` on failed builds. **Separately**, `apps/api/src/publishing.ts` implements Cloudflare Pages Direct Upload for the current desktop workflow; the local publisher alone does not deploy. QA preview validation is documented in [M2_VALIDATION](M2_VALIDATION.md).
 
 Schema changes require validation tests and a migration plan before breaking existing content files.
