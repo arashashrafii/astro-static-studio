@@ -5,7 +5,6 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import test from 'node:test';
 import sharp from 'sharp';
-import { ContentSchema } from '../packages/contracts/src/index.js';
 import { ContentV2Schema } from '../packages/contracts/src/content-v2.js';
 import { atelierManifest } from '../packages/theme/src/atelier-manifest.js';
 import { ThemeConfigurationV1Schema } from '../packages/theme/src/contract.js';
@@ -19,10 +18,26 @@ import {
 } from '../apps/api/src/theme-settings.js';
 
 function contentFixture() {
-  return ContentSchema.parse({
-    version: 1,
-    site: { name: 'Theme settings', tagline: '', email: '', phone: '' },
-    entries: [{ id: '51000000-0000-4000-8000-000000000001', kind: 'page', slug: 'home', title: 'Home', summary: '', published: true, components: [{ type: 'text', body: 'Hello' }] }],
+  return ContentV2Schema.parse({
+    version: 2,
+    site: { name: 'Theme settings', tagline: '', email: '', phone: '', language: 'en', direction: 'ltr' },
+    pages: [{
+      id: '51000000-0000-4000-8000-000000000001',
+      slug: 'home',
+      title: 'Home',
+      published: true,
+      description: { source: 'manual', value: '' },
+      blocks: [{
+        type: 'richText',
+        placementId: '51000000-0000-4000-8000-000000000002',
+        document: {
+          type: 'document',
+          blocks: [{ type: 'paragraph', size: 'normal', align: 'start', children: [{ type: 'text', text: 'Hello', marks: [] }] }],
+        },
+      }],
+    }],
+    collections: [],
+    items: [],
   });
 }
 

@@ -1,0 +1,19 @@
+{
+	"appId": "com.astrostaticstudio.app",
+	"appName": "Astro Static Studio",
+	"webDir": "apps/admin/dist",
+	"bundledWebRuntime": false,
+	"server": {
+		"androidScheme": "https",
+		"iosScheme": "capacitor"
+	},
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 800,
+			"launchAutoHide": true,
+			"backgroundColor": "#263c32",
+			"androidSplashResourceName": "splash",
+			"showSpinner": false
+		}
+	}
+}

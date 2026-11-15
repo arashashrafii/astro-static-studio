@@ -1,11 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import {content} from '../lib/content';
-import RichTextBlock from '../components/RichTextBlock.astro';
 import V2PageBlocks from '../components/V2PageBlocks.astro';
 import V2RichText from '../components/V2RichText.astro';
 import V2CollectionListing from '../components/V2CollectionListing.astro';
-import {entryExcerptFromContent,richTextToPlainText} from '@astro-static-studio/contracts';
 import {collectionItemDescription,descriptionForDisplay} from '@astro-static-studio/contracts/content-v2';
 import {atelierRoutes} from '../lib/theme-routes';
 import type {AtelierRouteData} from '@astro-static-studio/theme/studio/adapter';
@@ -21,7 +19,6 @@ const route=Astro.props.route;
 const view=route.data as AtelierRouteData;
 const {content:data}=view;
 const resource=view.resource;
-const entry=view.resource==='v1-entry'?view.entry:undefined;
 const page=view.resource==='page'?view.page:undefined;
 const item=view.resource==='item'?view.item:undefined;
 const previousItem=view.resource==='item'?view.previousItem:undefined;
@@ -36,16 +33,14 @@ const galleryImage=collection?.kind==='gallery'&&imageField?item?.values[imageFi
 const itemDisplayTitle=item?.title||galleryImage?.title||collection?.name;
 const detailDocument=richField?item?.values[richField.id]:undefined;
 const detailHasGallery=detailDocument?.blocks?.some((block:any)=>block.type==='gallery')??false;
-const v1HasText=entry?.components.some((component:any)=>component.type==='text'&&(component.richText?richTextToPlainText(component.richText):component.body).trim().length>0)??false;
 const pageDescriptionDocument=page?.blocks.find((block:any)=>block.type==='richText')?.document;
-const direction=data.version===2?data.site.direction:'ltr';
-const metaDescription=resource==='item'?collectionItemDescription(collection,item):resource==='page'?descriptionForDisplay(page.description,pageDescriptionDocument):resource==='v1-entry'?entryExcerptFromContent(entry.components,entry.summary):data.site.tagline;
+const direction=data.site.direction;
+const metaDescription=resource==='item'&&collection&&item?collectionItemDescription(collection,item):resource==='page'&&page?descriptionForDisplay(page.description,pageDescriptionDocument):data.site.tagline;
 const previousArrow=direction==='rtl'?'→':'←';
 const nextArrow=direction==='rtl'?'←':'→';
 ---
-<Layout data={data} title={resource==='item'?itemDisplayTitle:resource==='page'?page?.title:resource==='v1-entry'?entry?.title:collection?.name} description={metaDescription}>
-  {resource==='v1-entry'&&<><span class="eyebrow">{entry.kind==='project'?'PROJECT':'JOURNAL'}</span><h1>{entry.title}</h1>{!v1HasText&&<p class="muted">{entryExcerptFromContent(entry.components,entry.summary)}</p>}{entry.components.map((component:any)=>component.type==='text'?component.richText?<section class="rich-text-content">{component.richText.blocks.map((block:any)=><RichTextBlock block={block}/>)}</section>:<p class="prose">{component.body}</p>:<section class="gallery">{component.images.map((image:any)=><figure><img src={image.src} alt={image.alt}/>{image.alt&&<figcaption>{image.alt}</figcaption>}</figure>)}</section>)}</>}
-  {resource==='page'&&<><span class="eyebrow">PAGE</span><h1>{page.title}</h1>{page.description.source==='manual'&&<p class="muted">{descriptionForDisplay(page.description,pageDescriptionDocument)}</p>}<V2PageBlocks blocks={page.blocks} data={data}/></>}
+<Layout data={data} title={resource==='item'?itemDisplayTitle:resource==='page'?page?.title:collection?.name} description={metaDescription}>
+  {resource==='page'&&page&&<><span class="eyebrow">PAGE</span><h1>{page.title}</h1>{page.description.source==='manual'&&<p class="muted">{descriptionForDisplay(page.description,pageDescriptionDocument)}</p>}<V2PageBlocks blocks={page.blocks} data={data}/></>}
   {resource==='collection'&&collection&&<><span class="eyebrow">{collection.kind==='gallery'?'GALLERY':'COLLECTION'}</span><h1>{collection.name}</h1><V2CollectionListing collection={collection} items={listItems} page={listPage} totalPages={totalPages}/></>}
   {resource==='item'&&collection&&item&&<><span class="eyebrow">{collection.name}</span>{item.title||galleryImage?.title?<h1>{itemDisplayTitle}</h1>:null}{collection.kind==='gallery'&&<nav class="gallery-item-navigation" aria-label="پیمایش تصاویر">{previousItem?<a href={`/${collection.routeBase}/${previousItem.slug}/`}><span aria-hidden="true">{previousArrow}</span> تصویر قبلی</a>:<span/>}<a href={`/${collection.slug}/`}>بازگشت به گالری</a>{nextItem?<a href={`/${collection.routeBase}/${nextItem.slug}/`}>تصویر بعدی <span aria-hidden="true">{nextArrow}</span></a>:<span/>}</nav>}{item.coverImage&&collection.kind==='content'&&<img class="item-cover" src={item.coverImage.src} alt={item.coverImage.alt}/ >}{item.description.source==='manual'&&item.description.value&&<p class="muted">{collectionItemDescription(collection,item)}</p>}{collection.fields.map((field:any)=>{const value=item.values[field.id];if(value===undefined)return null;if(field===richField)return <V2RichText document={value}/>;if(field.type==='gallery')return collection.presetId==='project'&&detailHasGallery?null:<section class={collection.kind==='gallery'?'gallery-photo-detail':'gallery'}>{value.map((image:any)=><figure><img src={image.src} alt={image.alt}/>{image.title&&<figcaption>{image.title}</figcaption>}</figure>)}</section>;if(field.type==='category'){const names=field.categories.filter((category:any)=>(value as string[]).includes(category.id)).map((category:any)=>category.name);return names.length?<p class="category-list">{names.join(' / ')}</p>:null;}if(field.type==='link')return <p><a href={value.href}>{value.label}</a></p>;if(field.type==='text'&&field.format==='plain'&&field.label.includes('تاریخ'))return <time class="item-date">{value}</time>;return <p class="prose">{value}</p>})}</>}
 </Layout>

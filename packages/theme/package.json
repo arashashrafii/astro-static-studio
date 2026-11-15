@@ -7,5 +7,9 @@
     "./contract": "./src/contract.ts",
     "./atelier-manifest": "./src/atelier-manifest.ts",
     "./studio/adapter": "./src/studio/adapter.ts"
+  },
+  "dependencies": {
+    "@astro-static-studio/contracts": "*",
+    "zod": "^4.1.0"
   }
 }

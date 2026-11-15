@@ -2,25 +2,27 @@ import { readFile, writeFile, rename } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
-import { ContentSchema, type Content } from '@astro-static-studio/contracts';
 import { ContentV2Schema, type ContentV2 } from '../../../packages/contracts/src/content-v2.js';
-export const root=fileURLToPath(new URL('../../../',import.meta.url));
-export const contentPath=resolve(root,'content/content.json');
-export type StoredContent=Content|ContentV2;
-export function parseStoredContent(input:unknown):StoredContent{
- if(!input||typeof input!=='object'||Array.isArray(input))throw new Error('محتوای سایت معتبر نیست.');
- const version=(input as {version?:unknown}).version;
- if(version===1)return ContentSchema.parse(input);
- if(version===2)return ContentV2Schema.parse(input);
- throw new Error(`نسخهٔ محتوای سایت پشتیبانی نمی‌شود: ${String(version)}.`);
+
+export const root = fileURLToPath(new URL('../../../', import.meta.url));
+export const contentPath = resolve(root, 'content/content.json');
+export type StoredContent = ContentV2;
+
+export function parseStoredContent(input: unknown): StoredContent {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('محتوای سایت معتبر نیست.');
+  const version = (input as { version?: unknown }).version;
+  if (version === 2) return ContentV2Schema.parse(input);
+  throw new Error(`نسخهٔ محتوای سایت پشتیبانی نمی‌شود: ${String(version)}.`);
 }
-export async function readContent(path=contentPath):Promise<StoredContent>{return parseStoredContent(JSON.parse(await readFile(path,'utf8')));}
-export async function saveContent(input:unknown,path=contentPath):Promise<StoredContent>{
- const data=parseStoredContent(input);
- try {const current=parseStoredContent(JSON.parse(await readFile(path,'utf8')));if(current.version===2&&data.version!==2)throw new Error('محتوای نسخهٔ ۲ را نمی‌توان با نسخهٔ قدیمی‌تر جایگزین کرد.');}
- catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;}
- const temporary=`${path}.${randomUUID()}.tmp`;
- await writeFile(temporary,JSON.stringify(data,null,2),{flag:'wx'});
- await rename(temporary,path);
- return data;
+
+export async function readContent(path = contentPath): Promise<StoredContent> {
+  return parseStoredContent(JSON.parse(await readFile(path, 'utf8')));
+}
+
+export async function saveContent(input: unknown, path = contentPath): Promise<StoredContent> {
+  const data = parseStoredContent(input);
+  const temporary = `${path}.${randomUUID()}.tmp`;
+  await writeFile(temporary, JSON.stringify(data, null, 2), { flag: 'wx' });
+  await rename(temporary, path);
+  return data;
 }

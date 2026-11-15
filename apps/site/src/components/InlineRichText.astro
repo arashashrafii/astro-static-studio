@@ -1,4 +1,0 @@
----
-const {nodes}=Astro.props;
----
-{nodes.map((node:any)=>node.type==='image'?<img class="rich-inline-image" src={node.src} alt={node.alt}/>:<span class:list={['rich-inline-text',node.size&&`rich-size-${node.size}`]}>{node.bold&&node.italic?<strong><em>{node.text}</em></strong>:node.bold?<strong>{node.text}</strong>:node.italic?<em>{node.text}</em>:node.text}</span>)}

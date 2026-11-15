@@ -1,7 +1,7 @@
 import { readFile, writeFile, rename, mkdir } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
-import { ContentSchema, type Content } from '@astro-static-studio/contracts';
+import { ContentV2Schema, type ContentV2 } from '../../../packages/contracts/src/content-v2.js';
 import { contentPath, root, saveContent } from './store.js';
 
 export const setupPath = resolve(root, 'content/.studio-site.json');
@@ -21,25 +21,27 @@ export async function getSetupState(path = setupPath): Promise<{ initialized: bo
 export async function initializeSite(
   mode: SetupMode,
   siteName: string,
-  options: { setupFile?: string; contentFile?: string; save?: (content: Content) => Promise<unknown> } = {},
-): Promise<Content> {
+  options: { setupFile?: string; contentFile?: string; save?: (content: ContentV2) => Promise<unknown> } = {},
+): Promise<ContentV2> {
   const setupFile = options.setupFile ?? setupPath;
   const contentFile = options.contentFile ?? contentPath;
   if ((await getSetupState(setupFile)).initialized) throw new Error('تنظیم اولیه قبلاً انجام شده است.');
 
-  let content: Content;
+  let content: ContentV2;
   if (mode === 'new-site') {
     const name = siteName.trim();
     if (!name || name.length > 200) throw new Error('نام سایت را وارد کنید (حداکثر ۲۰۰ نویسه).');
-    content = ContentSchema.parse({
-      version: 1,
-      site: { name, tagline: '', email: '', phone: '' },
-      entries: [],
+    content = ContentV2Schema.parse({
+      version: 2,
+      site: { name, tagline: '', email: '', phone: '', language: 'en', direction: 'ltr' },
+      pages: [],
+      collections: [],
+      items: [],
     });
     await mkdir(dirname(contentFile), { recursive: true });
     await (options.save ?? saveContent)(content);
   } else {
-    content = ContentSchema.parse(JSON.parse(await readFile(contentFile, 'utf8')));
+    content = ContentV2Schema.parse(JSON.parse(await readFile(contentFile, 'utf8')));
   }
 
   await mkdir(dirname(setupFile), { recursive: true });

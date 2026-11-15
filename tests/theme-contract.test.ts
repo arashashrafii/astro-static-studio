@@ -1,9 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { ContentSchema } from '../packages/contracts/src/index.js';
 import { ContentV2Schema } from '../packages/contracts/src/content-v2.js';
-import { ensureV2PlacementIdsV1, migrateV1ToV2 } from '../packages/contracts/src/content-migration.js';
+import { ensureV2PlacementIdsV1 } from '../packages/contracts/src/content-migration.js';
 import { atelierManifest } from '../packages/theme/src/atelier-manifest.js';
 import {
   effectiveThemeCapabilities,
@@ -60,7 +59,7 @@ const runtime: ThemeRuntimeTarget = {
   astroVersion: '7.4.2',
   nodeVersion: '24.13.0',
   availableCapabilities: [
-    'content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page', 'route.collectionList',
+    'content.v2', 'routes.static', 'route.home', 'route.page', 'route.collectionList',
     'route.collectionItem', 'field.text', 'field.richText', 'field.category', 'field.gallery', 'field.link', 'media.webp', 'direction.ltr', 'direction.rtl',
   ],
 };
@@ -107,7 +106,7 @@ test('theme compatibility reports unknown versions, incompatible runtimes, and m
     'theme.contract.incompatible', 'theme.content.incompatible', 'theme.astro.incompatible', 'theme.node.incompatible', 'theme.license.unknown',
   ]);
 
-  const missingRequired = validateThemeManifest(atelierManifest, { ...runtime, availableCapabilities: ['content.v1'] });
+  const missingRequired = validateThemeManifest(atelierManifest, { ...runtime, availableCapabilities: ['content.v2'] });
   assert(missingRequired.some(diagnostic => diagnostic.code === 'theme.capability.required' && diagnostic.severity === 'error'));
 });
 
@@ -156,10 +155,10 @@ test('theme settings validate template, token, stable placement, collection, and
   const invalidLocale = validateThemeSettings(settingsFixture(), atelierManifest, badLocale, runtime.availableCapabilities);
   assert(invalidLocale.some(diagnostic => diagnostic.code === 'theme.locale.invalid'));
 
-  const v1 = ContentSchema.parse({ version: 1, site: { name: 'Legacy', tagline: '', email: '', phone: '' }, entries: [] });
-  const legacySettings = settingsFixture();
-  legacySettings.placements = [];
-  assert.deepEqual(validateThemeSettings(legacySettings, atelierManifest, v1, runtime.availableCapabilities), []);
+  const emptyV2 = ContentV2Schema.parse({ version: 2, site: { name: 'Empty', tagline: '', email: '', phone: '', language: 'en', direction: 'ltr' }, pages: [], collections: [], items: [] });
+  const emptySettings = settingsFixture();
+  emptySettings.placements = [];
+  assert.deepEqual(validateThemeSettings(emptySettings, atelierManifest, emptyV2, runtime.availableCapabilities), []);
 
   const incompatibleSection = settingsFixture();
   incompatibleSection.placements[0].sectionId = 'gallery';
@@ -195,16 +194,16 @@ test('placement migration assigns deterministic IDs, preserves assigned IDs, and
   duplicate.pages[0].blocks.push({ ...duplicate.pages[0].blocks[0], type: 'image' });
   assert.equal(ContentV2Schema.safeParse(duplicate).success, false);
 
-  const v1 = ContentSchema.parse({
-    version: 1,
-    site: { name: 'Legacy', tagline: '', email: '', phone: '' },
-    entries: [{ id: ids.page, kind: 'page', slug: 'home', title: 'Home', summary: '', published: true, components: [{ type: 'text', body: 'Welcome' }] }],
-  });
-  const migratedV1 = migrateV1ToV2(v1);
-  const migratedAgain = migrateV1ToV2(v1);
-  assert.match(migratedV1.pages[0].blocks[0].placementId ?? '', /^[0-9a-f-]{36}$/);
-  assert.equal(migratedV1.pages[0].blocks[0].placementId?.[14], '8', 'custom SHA-256 placement IDs use the UUIDv8 version nibble');
-  assert.equal(migratedV1.pages[0].blocks[0].placementId, migratedAgain.pages[0].blocks[0].placementId);
+  const deterministic = contentFixture();
+  deterministic.pages[0].blocks = [{
+    type: 'richText',
+    document: { type: 'document', blocks: [{ type: 'paragraph', size: 'normal', align: 'start', children: [{ type: 'text', text: 'Welcome', marks: [] }] }] },
+  }];
+  const assigned = ensureV2PlacementIdsV1(deterministic);
+  const assignedAgain = ensureV2PlacementIdsV1(deterministic);
+  assert.match(assigned.pages[0].blocks[0].placementId ?? '', /^[0-9a-f-]{36}$/);
+  assert.equal(assigned.pages[0].blocks[0].placementId?.[14], '8', 'custom SHA-256 placement IDs use the UUIDv8 version nibble');
+  assert.equal(assigned.pages[0].blocks[0].placementId, assignedAgain.pages[0].blocks[0].placementId);
 
   const legacyText = contentFixture();
   legacyText.pages[0].blocks = [{

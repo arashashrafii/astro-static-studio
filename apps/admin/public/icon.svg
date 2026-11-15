@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Astro Static Studio">
+  <rect width="512" height="512" rx="96" fill="#263c32"/>
+  <path fill="#f2f2db" d="M148 138h188v26h18v96h-18v24h-60v40h54v40h32v28h-52v-28h-38v-40h-62v-36h-16v94h-46V138Zm46 46v54h110v-54H194Z"/>
+</svg>

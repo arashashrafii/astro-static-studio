@@ -2,7 +2,6 @@ import { randomUUID } from 'node:crypto';
 import { readFile, rename, rm, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
-import type { Content } from '@astro-static-studio/contracts';
 import type { ContentV2 } from '../../../packages/contracts/src/content-v2.js';
 import { ensureV2PlacementIdsV1 } from '../../../packages/contracts/src/content-migration.js';
 import { atelierManifest } from '../../../packages/theme/src/atelier-manifest.js';
@@ -18,16 +17,19 @@ import {
 import { createAtelierDefaultSettings } from '../../../packages/theme/src/studio/adapter.js';
 import { root as projectRoot } from './store.js';
 
-export type ThemeContent = Content | ContentV2;
+export type ThemeContent = ContentV2;
 export const themeConfigPath = resolve(projectRoot, 'content/theme-settings.json');
 const astroRuntimeVersion = (() => {
-  try { return JSON.parse(readFileSync(resolve(projectRoot, 'node_modules/astro/package.json'), 'utf8')).version as string; }
-  catch { return atelierManifest.compatibility.astro.testedVersion; }
+  for (const candidate of ['apps/site/node_modules/astro/package.json', 'node_modules/astro/package.json']) {
+    try { return JSON.parse(readFileSync(resolve(projectRoot, candidate), 'utf8')).version as string; }
+    catch {}
+  }
+  return atelierManifest.compatibility.astro.testedVersion;
 })();
 
 // This list describes capabilities implemented by the bundled Atelier renderer.
 export const atelierAvailableCapabilities: ThemeCapability[] = [
-  'content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page',
+  'content.v2', 'routes.static', 'route.home', 'route.page',
   'route.collectionList', 'route.collectionItem', 'field.text', 'field.richText',
   'field.category', 'field.gallery', 'field.link', 'media.webp', 'direction.ltr', 'direction.rtl',
 ];
@@ -66,7 +68,7 @@ export function validateThemeConfiguration(input: unknown, content: ThemeContent
     diagnostics.push({ severity: 'error', code: 'theme.selection.unavailable', message: `Selected theme ${selected.id}@${selected.version} is not installed. Choose Atelier to restore a supported theme.` });
   }
   const settings: ThemeSettingsV1 | undefined = configuration.perThemeSettings[selected.id];
-  const normalizedContent = content.version === 2 ? ensureV2PlacementIdsV1(content) : content;
+  const normalizedContent = ensureV2PlacementIdsV1(content);
   if (settings) diagnostics.push(...validateThemeSettings(settings, atelierManifest, normalizedContent, runtime.availableCapabilities));
   else diagnostics.push({ severity: 'error', code: 'theme.settings.missing', message: `Settings for selected theme ${selected.id} are missing.` });
   return { configuration, diagnostics };

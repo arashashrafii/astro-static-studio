@@ -1,4 +1,3 @@
-import { ContentSchema, type Content, type RichText } from '@astro-static-studio/contracts';
 import {
   ContentV2Schema,
   type ContentV2,
@@ -19,15 +18,11 @@ import {
   type ThemeSettingsV1,
 } from '../contract.js';
 
-type ContentInput = Content | ContentV2;
 type ContentPageV2 = ContentV2['pages'][number];
 type CollectionV2 = ContentV2['collections'][number];
 type CollectionItemV2 = ContentV2['items'][number];
 
 export type AtelierRouteData =
-  | { resource: 'home-v1'; content: Content }
-  | { resource: 'v1-entry'; content: Content; entry: Content['entries'][number] }
-  | { resource: 'v1-projects'; content: Content; entries: Content['entries'] }
   | { resource: 'home-v2'; content: ContentV2; page?: ContentPageV2 }
   | { resource: 'page'; content: ContentV2; page: ContentPageV2 }
   | { resource: 'collection'; content: ContentV2; collection: CollectionV2; items: CollectionItemV2[]; page: number; totalPages: number }
@@ -46,23 +41,19 @@ function blockSectionId(type: ContentV2['pages'][number]['blocks'][number]['type
   return 'gallery';
 }
 
-/** Make the current Atelier choices from the contract and content. The returned settings are ephemeral until #32 adds persistence. */
-export function createAtelierDefaultSettings(input: ContentInput, manifest: ThemeManifestV1 = atelierManifest): ThemeSettingsV1 {
-  const content = input.version === 1
-    ? ContentSchema.parse(input)
-    : ensureV2PlacementIdsV1(ContentV2Schema.parse(input));
-  const placements = content.version === 2
-    ? content.pages.flatMap(page => page.blocks.map(block => {
-      const collection = block.type === 'collectionView'
-        ? content.collections.find(candidate => candidate.id === block.collectionId)
-        : undefined;
-      return {
-        placementId: block.placementId!,
-        sectionId: blockSectionId(block.type),
-        ...(collection ? { collectionId: collection.id, optionalFieldIds: collection.fields.map(field => field.id) } : { optionalFieldIds: [] }),
-      };
-    }))
-    : [];
+/** Build default Atelier theme settings for Content V2. */
+export function createAtelierDefaultSettings(input: ContentV2, manifest: ThemeManifestV1 = atelierManifest): ThemeSettingsV1 {
+  const content = ensureV2PlacementIdsV1(ContentV2Schema.parse(input));
+  const placements = content.pages.flatMap(page => page.blocks.map(block => {
+    const collection = block.type === 'collectionView'
+      ? content.collections.find(candidate => candidate.id === block.collectionId)
+      : undefined;
+    return {
+      placementId: block.placementId!,
+      sectionId: blockSectionId(block.type),
+      ...(collection ? { collectionId: collection.id, optionalFieldIds: collection.fields.map(field => field.id) } : { optionalFieldIds: [] }),
+    };
+  }));
 
   return ThemeSettingsV1Schema.parse({
     settingsVersion: 1,
@@ -78,13 +69,6 @@ function supports(capabilities: readonly ThemeCapability[], capability: ThemeCap
   return capabilities.includes(capability);
 }
 
-function omitV1RichMedia(document: RichText): RichText {
-  return {
-    ...document,
-    blocks: document.blocks.map(block => ({ ...block, content: block.content.filter(node => node.type !== 'image') })),
-  };
-}
-
 function omitV2RichMedia(document: RichTextDocumentV2): RichTextDocumentV2 {
   return {
     ...document,
@@ -92,26 +76,6 @@ function omitV2RichMedia(document: RichTextDocumentV2): RichTextDocumentV2 {
       if (block.type === 'gallery') return [];
       return [{ ...block, children: block.children.filter(node => node.type !== 'image') }];
     }),
-  };
-}
-
-function projectV1(content: Content, capabilities: readonly ThemeCapability[]): Content {
-  if (supports(capabilities, 'media.webp') && supports(capabilities, 'field.richText')) return content;
-  return {
-    ...content,
-    entries: content.entries.map(entry => ({
-      ...entry,
-      components: entry.components.flatMap(component => {
-        if (component.type === 'gallery' && !supports(capabilities, 'media.webp')) return [];
-        if (component.type === 'text' && component.richText && !supports(capabilities, 'field.richText')) {
-          return [{ type: 'text' as const, body: component.body }];
-        }
-        if (component.type === 'text' && component.richText && !supports(capabilities, 'media.webp')) {
-          return [{ ...component, richText: omitV1RichMedia(component.richText) }];
-        }
-        return [component];
-      }),
-    })),
   };
 }
 
@@ -187,29 +151,13 @@ function assertUniqueRoutes(routes: ThemeRouteModel[]): ThemeRouteModel[] {
   return routes;
 }
 
-function buildRoutes(content: ContentInput, settings: ThemeSettingsV1, manifest: ThemeManifestV1, capabilities: readonly ThemeCapability[]): ThemeRouteModel[] {
+function buildRoutes(content: ContentV2, settings: ThemeSettingsV1, manifest: ThemeManifestV1, capabilities: readonly ThemeCapability[]): ThemeRouteModel[] {
   const templateIds = new Map(settings.templates.map(template => [template.role, template.templateId]));
   const route = (role: ThemeRouteRole, path: string, data: AtelierRouteData): ThemeRouteModel => {
     const templateId = templateIds.get(role);
     if (!templateId) throw new Error(`Atelier has no selected ${role} template for route ${path}.`);
     return { role, path, templateId, data };
   };
-
-  if (content.version === 1) {
-    const projected = projectV1(content, capabilities);
-    const routes: ThemeRouteModel[] = [route('home', '/', { resource: 'home-v1', content: projected })];
-    for (const entry of projected.entries.filter(candidate => candidate.published)) {
-      if (entry.kind === 'project') {
-        if (supports(capabilities, 'route.collectionItem')) routes.push(route('collectionItem', `/portfolio/${entry.slug}/`, { resource: 'v1-entry', content: projected, entry }));
-      } else {
-        routes.push(route('page', pathForPage(entry.slug), { resource: 'v1-entry', content: projected, entry }));
-      }
-    }
-    if (supports(capabilities, 'route.collectionList') && supports(capabilities, 'route.collectionItem')) {
-      routes.push(route('collectionList', '/projects/', { resource: 'v1-projects', content: projected, entries: projected.entries.filter(entry => entry.kind === 'project' && entry.published) }));
-    }
-    return assertUniqueRoutes(routes);
-  }
 
   const normalized = ensureV2PlacementIdsV1(ContentV2Schema.parse(content));
   const diagnostics = validateThemeSettings(settings, manifest, normalized, capabilities);
@@ -259,9 +207,7 @@ export function createThemeAdapter(manifest: ThemeManifestV1 = atelierManifest):
       if (missingRequired.length) {
         throw new Error(`Atelier requires unavailable capabilities: ${missingRequired.join(', ')}.`);
       }
-      const content = input.content.version === 1
-        ? ContentSchema.parse(input.content)
-        : ensureV2PlacementIdsV1(ContentV2Schema.parse(input.content));
+      const content = ensureV2PlacementIdsV1(ContentV2Schema.parse(input.content));
       const diagnostics = validateThemeSettings(input.settings, manifest, content, input.availableCapabilities);
       failOnDiagnostics(diagnostics);
       return buildRoutes(content, input.settings, manifest, input.availableCapabilities);

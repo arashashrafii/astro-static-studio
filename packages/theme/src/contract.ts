@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import type { Content } from '@astro-static-studio/contracts';
 import type { ContentV2, PageBlockV2 } from '@astro-static-studio/contracts/content-v2';
 
 export const THEME_CONTRACT_VERSION = 1 as const;
@@ -8,7 +7,7 @@ export const ThemeRouteRoleSchema = z.enum(['home', 'page', 'collectionList', 'c
 export type ThemeRouteRole = z.infer<typeof ThemeRouteRoleSchema>;
 
 export const ThemeCapabilitySchema = z.enum([
-  'content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page',
+  'content.v2', 'routes.static', 'route.home', 'route.page',
   'route.collectionList', 'route.collectionItem', 'field.text', 'field.richText',
   'field.category', 'field.gallery', 'field.link', 'media.webp', 'direction.ltr', 'direction.rtl',
 ]);
@@ -73,7 +72,7 @@ export const ThemeManifestV1Schema = z.object({
   version: SemverSchema,
   adapter: z.object({ entryPoint: AdapterEntryPointSchema, exportName: IdentifierSchema }).strict(),
   compatibility: z.object({
-    contentVersions: z.array(z.union([z.literal(1), z.literal(2)])).min(1),
+    contentVersions: z.array(z.literal(2)).min(1),
     astro: RuntimeCompatibilitySchema,
     node: RuntimeCompatibilitySchema,
   }).strict(),
@@ -150,7 +149,7 @@ export const ThemeConfigurationV1Schema = z.object({
 export type ThemeConfigurationV1 = z.infer<typeof ThemeConfigurationV1Schema>;
 
 export interface ThemeAdapterInput {
-  content: Content | ContentV2;
+  content: ContentV2;
   settings: ThemeSettingsV1;
   manifest: ThemeManifestV1;
   availableCapabilities: readonly ThemeCapability[];
@@ -201,7 +200,7 @@ export function validateThemeManifest(input: unknown, target: ThemeRuntimeTarget
   const manifest = parsed.data;
   const diagnostics: ThemeDiagnostic[] = [];
   if (manifest.contractVersion !== target.contractVersion) diagnostics.push({ severity: 'error', code: 'theme.contract.incompatible', message: `Theme requires Studio theme contract ${manifest.contractVersion}; this build provides ${target.contractVersion}.` });
-  if (!manifest.compatibility.contentVersions.includes(target.contentVersion as 1 | 2)) diagnostics.push({ severity: 'error', code: 'theme.content.incompatible', message: `Theme ${manifest.id} does not support Content V${target.contentVersion}.` });
+  if (!manifest.compatibility.contentVersions.includes(target.contentVersion as 2)) diagnostics.push({ severity: 'error', code: 'theme.content.incompatible', message: `Theme ${manifest.id} does not support Content V${target.contentVersion}.` });
   if (!inRange(target.astroVersion, manifest.compatibility.astro.range)) diagnostics.push({ severity: 'error', code: 'theme.astro.incompatible', message: `Theme ${manifest.id} requires Astro ${formatRange(manifest.compatibility.astro.range)}; found ${target.astroVersion}.` });
   if (!inRange(target.nodeVersion, manifest.compatibility.node.range)) diagnostics.push({ severity: 'error', code: 'theme.node.incompatible', message: `Theme ${manifest.id} requires Node ${formatRange(manifest.compatibility.node.range)}; found ${target.nodeVersion}.` });
   for (const capability of manifest.capabilities.required) {
@@ -219,7 +218,7 @@ export function effectiveThemeCapabilities(manifest: ThemeManifestV1, target: Th
     .filter(capability => target.availableCapabilities.includes(capability));
 }
 
-export function validateThemeSettings(input: unknown, manifest: ThemeManifestV1, content: Content | ContentV2, availableCapabilities: readonly ThemeCapability[]): ThemeDiagnostic[] {
+export function validateThemeSettings(input: unknown, manifest: ThemeManifestV1, content: ContentV2, availableCapabilities: readonly ThemeCapability[]): ThemeDiagnostic[] {
   if (!input || typeof input !== 'object' || Array.isArray(input) || (input as Record<string, unknown>).settingsVersion !== 1) {
     const version = input && typeof input === 'object' ? String((input as Record<string, unknown>).settingsVersion) : 'missing';
     return [{ severity: 'error', code: 'theme.settings.unknown-version', message: `Theme settings version ${version} is not supported. Expected version 1.` }];
@@ -229,9 +228,9 @@ export function validateThemeSettings(input: unknown, manifest: ThemeManifestV1,
   const settings = parsed.data;
   const diagnostics: ThemeDiagnostic[] = [];
   if (settings.themeId !== manifest.id || settings.themeVersion !== manifest.version) diagnostics.push({ severity: 'error', code: 'theme.settings.theme-mismatch', message: `Settings target ${settings.themeId}@${settings.themeVersion}, but manifest is ${manifest.id}@${manifest.version}.` });
-  const direction = content.version === 1 ? 'ltr' : content.site.direction;
+  const direction = content.site.direction;
   if (!manifest.localization.directions.includes(direction)) diagnostics.push({ severity: 'error', code: 'theme.direction.unsupported', message: `Theme ${manifest.id} does not declare ${direction.toUpperCase()} direction support.` });
-  if (content.version === 2 && !isLanguageTag(content.site.language)) diagnostics.push({ severity: 'error', code: 'theme.locale.invalid', message: `Content locale ${content.site.language} is not a valid BCP 47 language tag.` });
+  if (!isLanguageTag(content.site.language)) diagnostics.push({ severity: 'error', code: 'theme.locale.invalid', message: `Content locale ${content.site.language} is not a valid BCP 47 language tag.` });
   const templates = new Map(manifest.templates.map(template => [template.role, template.id]));
   settings.templates.forEach(template => {
     if (templates.get(template.role) !== template.templateId) diagnostics.push({ severity: 'error', code: 'theme.settings.template-unknown', message: `Template ${template.templateId} is not declared for route role ${template.role}.` });
@@ -243,13 +242,12 @@ export function validateThemeSettings(input: unknown, manifest: ThemeManifestV1,
     if (!manifest.designTokens[tokenId]) diagnostics.push({ severity: 'error', code: 'theme.settings.token-unknown', message: `Design token ${tokenId} is not declared by theme ${manifest.id}.` });
     else if (!/^#[0-9a-fA-F]{6}$/.test(value)) diagnostics.push({ severity: 'error', code: 'theme.settings.token-invalid', message: `Design token ${tokenId} must be a six-digit hex color.` });
   }
-  const v2Content = content.version === 2 ? content : undefined;
   const blocks = new Map<string, { block: PageBlockV2; role: 'home' | 'page' }>();
-  for (const page of v2Content?.pages ?? []) {
+  for (const page of content.pages) {
     const role: 'home' | 'page' = page.slug === 'home' ? 'home' : 'page';
     for (const block of page.blocks) if (block.placementId) blocks.set(block.placementId, { block, role });
   }
-  const collections = new Map(v2Content?.collections.map(collection => [collection.id, collection]) ?? []);
+  const collections = new Map(content.collections.map(collection => [collection.id, collection]));
   for (const placement of settings.placements) {
     const section = manifest.sections.find(candidate => candidate.id === placement.sectionId);
     if (!section) diagnostics.push({ severity: 'error', code: 'theme.settings.section-unknown', message: `Section ${placement.sectionId} is not declared by theme ${manifest.id}.` });

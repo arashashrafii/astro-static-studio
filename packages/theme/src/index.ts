@@ -5,7 +5,7 @@ export const theme = {
   id: atelierManifest.id,
   name: atelierManifest.name,
   version: atelierManifest.version,
-  components: ['text', 'gallery'],
+  components: ['richText', 'gallery', 'image', 'collectionView'],
   tokens: {
     background: atelierManifest.designTokens.background.default,
     foreground: atelierManifest.designTokens.foreground.default,

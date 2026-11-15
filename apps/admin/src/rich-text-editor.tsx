@@ -2,14 +2,18 @@ import React, {useEffect, useRef, useState} from 'react';
 import Quill from 'quill';
 import ImageBlot from 'quill/formats/image';
 import 'quill/dist/quill.snow.css';
-import {RichTextSchema, richTextToPlainText, type RichText} from '@astro-static-studio/contracts';
+import {resolveMediaSrc, saveOfflineMedia} from './offline-media.js';
 
 type ImagePlacement = 'inline'|'wrap-start'|'wrap-end'|'block-start'|'block-center'|'block-end';
 type EditorInline = {type:'text';text:string;bold?:boolean;italic?:boolean;size?:'small'|'large'}|{type:'image';src:string;alt:string;title?:string;placement?:ImagePlacement};
 export type EditorRichText = {version:1;blocks:Array<{type:'paragraph';align?:'left'|'center'|'right';content:EditorInline[]}|{type:'heading';level:2|3|4;align?:'left'|'center'|'right';content:EditorInline[]}>};
 type DeltaImage = {src:string;alt:string;title?:string;placement?:ImagePlacement};
 type DeltaOp = {insert: string | {image: DeltaImage}; attributes?: Record<string, unknown>};
-type EditorProps = {value?: RichText|EditorRichText; body: string; direction?: 'ltr'|'rtl'; imageMode?:'alt-required'|'inline'; onChange(value: EditorRichText, body: string): void};
+type EditorProps = {value?: EditorRichText; body: string; direction?: 'ltr'|'rtl'; imageMode?:'inline'; onChange(value: EditorRichText, body: string): void};
+
+function editorRichTextToPlainText(value: EditorRichText): string {
+  return value.blocks.map(block => block.content.map(node => node.type === 'text' ? node.text : '').join('')).join('\n\n').slice(0, 50000);
+}
 
 const BaseImage = ImageBlot as unknown as {new(...args: never[]): object; create(value: unknown): HTMLImageElement; value(node: HTMLImageElement): unknown; blotName: string; tagName: string};
 class ManagedImageBlot extends (BaseImage as new(...args: never[])=>object) {
@@ -19,7 +23,10 @@ class ManagedImageBlot extends (BaseImage as new(...args: never[])=>object) {
     const node = (BaseImage as unknown as {create(value: string): HTMLImageElement}).create('');
     if (!value || typeof value !== 'object') return node;
     const image = value as {src?: unknown; alt?: unknown;title?:unknown;placement?:unknown};
-    if (typeof image.src === 'string' && /^\/media\/(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.webp$/.test(image.src)) node.setAttribute('src', image.src);
+    if (typeof image.src === 'string' && /^\/media\/(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.webp$/.test(image.src)) {
+      node.setAttribute('data-studio-src', image.src);
+      node.setAttribute('src', resolveMediaSrc(image.src));
+    }
     if (typeof image.alt === 'string') node.setAttribute('alt', image.alt.slice(0, 500));
     if (typeof image.title === 'string') node.setAttribute('title',image.title.slice(0,500));
     if (['inline','wrap-start','wrap-end','block-start','block-center','block-end'].includes(String(image.placement))) node.setAttribute('data-placement',String(image.placement));
@@ -28,12 +35,12 @@ class ManagedImageBlot extends (BaseImage as new(...args: never[])=>object) {
   static value(node: HTMLImageElement): DeltaImage {
     const placement=node.getAttribute('data-placement');
     const title=node.getAttribute('title');
-    return {src: node.getAttribute('src') ?? '', alt: node.getAttribute('alt') ?? '', ...(title!==null?{title}:{}), ...(placement&&['inline','wrap-start','wrap-end','block-start','block-center','block-end'].includes(placement)?{placement:placement as ImagePlacement}:{})};
+    return {src: node.getAttribute('data-studio-src') ?? node.getAttribute('src') ?? '', alt: node.getAttribute('alt') ?? '', ...(title!==null?{title}:{}), ...(placement&&['inline','wrap-start','wrap-end','block-start','block-center','block-end'].includes(placement)?{placement:placement as ImagePlacement}:{})};
   }
 }
 Quill.register('formats/image', ManagedImageBlot as never, true);
 
-function richTextToDelta(value?: RichText|EditorRichText, body=''): DeltaOp[] {
+function richTextToDelta(value?: EditorRichText, body=''): DeltaOp[] {
   if (!value) return [{insert: body}, {insert: '\n'}];
   const ops: DeltaOp[] = [];
   for (const block of value.blocks) {
@@ -56,7 +63,7 @@ function richTextToDelta(value?: RichText|EditorRichText, body=''): DeltaOp[] {
   return ops;
 }
 
-function deltaToRichText(ops: DeltaOp[], allowEmptyImageAlt=false): EditorRichText {
+function deltaToRichText(ops: DeltaOp[]): EditorRichText {
   const blocks: EditorRichText['blocks'] = [];
   let content: EditorInline[] = [];
   let blockAttrs: Record<string, unknown> = {};
@@ -86,23 +93,21 @@ function deltaToRichText(ops: DeltaOp[], allowEmptyImageAlt=false): EditorRichTe
       });
     } else {
       const image = op.insert.image;
-      if (/^\/media\/(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.webp$/.test(image.src) && (allowEmptyImageAlt||image.alt.trim())) content.push({type:'image',src:image.src,alt:image.alt,...(image.title!==undefined?{title:image.title}:{}),...(image.placement?{placement:image.placement}:{})});
+      if (/^\/media\/(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.webp$/.test(image.src)) content.push({type:'image',src:image.src,alt:image.alt,...(image.title!==undefined?{title:image.title}:{}),...(image.placement?{placement:image.placement}:{})});
     }
   }
   if (content.length) blocks.push({type:'paragraph', ...(blockAttrs.align==='left'||blockAttrs.align==='center'||blockAttrs.align==='right'?{align:blockAttrs.align}:{}),content});
-  const result={version:1 as const,blocks};
-  return allowEmptyImageAlt?result:RichTextSchema.parse(result) as EditorRichText;
+  return {version:1 as const,blocks};
 }
 
-export function RichTextEditor({value, body, direction='rtl', imageMode='alt-required', onChange}: EditorProps) {
+export function RichTextEditor({value, body, direction='rtl', imageMode='inline', onChange}: EditorProps) {
   const hostRef = useRef<HTMLDivElement|null>(null);
   const onChangeRef = useRef(onChange);
   const fileRef = useRef<HTMLInputElement|null>(null);
   const quillRef = useRef<Quill|null>(null);
   const selectionRef = useRef<{index:number;length:number}|null>(null);
-  const [pendingImage, setPendingImage] = useState<{src:string;alt:string}>();
   const [uploadBusy, setUploadBusy] = useState(false);
-  const [imageAlt, setImageAlt] = useState('');
+  const [uploadError, setUploadError] = useState('');
   const [selectedImage,setSelectedImage]=useState<{index:number;media:DeltaImage}>();
   onChangeRef.current = onChange;
 
@@ -153,8 +158,8 @@ export function RichTextEditor({value, body, direction='rtl', imageMode='alt-req
     quill.root.addEventListener('click',onImageClick);
     document.addEventListener('keydown',onTab,true);
     const update = () => {
-      const richText = deltaToRichText(quill.getContents().ops as DeltaOp[],imageMode==='inline');
-      onChangeRef.current(richText, richTextToPlainText(richText as RichText));
+      const richText = deltaToRichText(quill.getContents().ops as DeltaOp[]);
+      onChangeRef.current(richText, editorRichTextToPlainText(richText));
     };
     quill.on('text-change',update);
     quillRef.current = quill;
@@ -168,26 +173,21 @@ export function RichTextEditor({value, body, direction='rtl', imageMode='alt-req
   async function uploadImage(file?: File) {
     if (!file) return;
     setUploadBusy(true);
+    setUploadError('');
     try {
       const form = new FormData(); form.append('image',file);
       const response = await fetch('/api/media',{method:'POST',body:form});
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'بارگذاری تصویر انجام نشد.');
-      const image={src:result.src,alt:''};
-      if(imageMode==='inline')insertUploadedImage(image);
-      else {setPendingImage(image); setImageAlt('')}
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'بارگذاری تصویر انجام نشد.';
-      window.alert(message);
+      insertUploadedImage({src:result.src,alt:''});
+    } catch {
+      try {
+        const offline = await saveOfflineMedia(file);
+        insertUploadedImage({src:offline.src,alt:''});
+      } catch (offlineError) {
+        setUploadError(offlineError instanceof Error ? offlineError.message : 'بارگذاری تصویر انجام نشد.');
+      }
     } finally {setUploadBusy(false)}
-  }
-
-  function insertImage(event: React.FormEvent) {
-    event.preventDefault();
-    const image = pendingImage;
-    if (!image || !imageAlt.trim()) return;
-    insertUploadedImage({...image,alt:imageAlt.trim()});
-    setPendingImage(undefined); setImageAlt('');
   }
 
   function insertUploadedImage(image:DeltaImage) {
@@ -229,7 +229,7 @@ export function RichTextEditor({value, body, direction='rtl', imageMode='alt-req
     <div ref={hostRef}/>
     <input ref={fileRef} hidden type="file" accept="image/jpeg,image/png" onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value='';void uploadImage(file)}}/>
     {uploadBusy&&<p className="hint" role="status">در حال بارگذاری تصویر…</p>}
+    {uploadError&&<p className="status-error" role="alert">{uploadError}</p>}
     {selectedImage&&imageMode==='inline'&&<div className="rich-image-properties"><label>چیدمان تصویر<select aria-label="چیدمان تصویر" value={selectedImage.media.placement??'inline'} onChange={event=>changeImagePlacement(event.target.value as ImagePlacement)}><option value="inline">هم‌ردیف متن</option><option value="wrap-start">{wrapStartLabel}</option><option value="wrap-end">{wrapEndLabel}</option><option value="block-start">{blockStartLabel}</option><option value="block-center">وسط‌چین</option><option value="block-end">{blockEndLabel}</option></select></label></div>}
-    {pendingImage&&imageMode==='alt-required'&&<form className="rich-image-alt" onSubmit={insertImage}><label>توضیح تصویر<input autoFocus required maxLength={500} value={imageAlt} onChange={event=>setImageAlt(event.target.value)} placeholder="تصویر چه چیزی را نشان می‌دهد؟"/></label><div className="actions"><button type="submit" disabled={!imageAlt.trim()}>افزودن به متن</button><button type="button" onClick={()=>setPendingImage(undefined)}>لغو</button></div></form>}
   </div>;
 }

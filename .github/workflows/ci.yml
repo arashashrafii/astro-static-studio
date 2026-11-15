@@ -1,0 +1,35 @@
+name: CI Verification
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts && node scripts/link-workspaces.mjs
+
+      - name: Typecheck
+        run: npm run check
+
+      - name: Build admin bundle
+        run: npm run build -w apps/admin
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Verify npm package tarball
+        run: npm pack --dry-run

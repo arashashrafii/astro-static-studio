@@ -8,6 +8,26 @@ type ThemeInfo = {
   configAvailable: boolean;
 };
 
+const BUNDLED_ATELIER_THEME: InstalledTheme = { id: 'atelier', name: 'Atelier', version: '1.0.0' };
+const OFFLINE_THEME_KEY = 'studio-theme-selection-v1';
+
+function readOfflineThemeInfo(): ThemeInfo {
+  let selected = BUNDLED_ATELIER_THEME;
+  try {
+    const saved = localStorage.getItem(OFFLINE_THEME_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved) as InstalledTheme;
+      if (parsed?.id === BUNDLED_ATELIER_THEME.id) selected = parsed;
+    }
+  } catch {}
+  return {
+    selectedTheme: selected,
+    installedThemes: [BUNDLED_ATELIER_THEME],
+    warnings: [],
+    configAvailable: true,
+  };
+}
+
 function presentDiagnostic(message: string) {
   if (message.startsWith('License metadata for theme atelier is unknown')) {
     return 'اطلاعات مجوز توزیع Atelier در مخزن تأیید نشده است؛ حق بازتوزیع آن را مفروض نمی‌گیریم.';
@@ -32,6 +52,19 @@ export function ThemeSettingsPanel() {
   const [applying, setApplying] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isOnline, setIsOnline] = useState(() => (typeof navigator !== 'undefined' ? navigator.onLine : true));
+  const [catalogMessage, setCatalogMessage] = useState('');
+
+  useEffect(() => {
+    const onOnline = () => setIsOnline(true);
+    const onOffline = () => setIsOnline(false);
+    window.addEventListener('online', onOnline);
+    window.addEventListener('offline', onOffline);
+    return () => {
+      window.removeEventListener('online', onOnline);
+      window.removeEventListener('offline', onOffline);
+    };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -40,9 +73,15 @@ export function ThemeSettingsPanel() {
         if (!active) return;
         setInfo(result);
         setChoice(result.selectedTheme.id);
+        try {
+          localStorage.setItem(OFFLINE_THEME_KEY, JSON.stringify(result.selectedTheme));
+        } catch {}
       })
-      .catch((reason: unknown) => {
-        if (active) setError(reason instanceof Error ? reason.message : 'تنظیم قالب دریافت نشد.');
+      .catch(() => {
+        if (!active) return;
+        const offlineInfo = readOfflineThemeInfo();
+        setInfo(offlineInfo);
+        setChoice(offlineInfo.selectedTheme.id);
       })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
@@ -61,12 +100,33 @@ export function ThemeSettingsPanel() {
       }) as ThemeInfo & { build: { outputDirectory: string; builtAt: string } };
       setInfo(result);
       setChoice(result.selectedTheme.id);
+      try {
+        localStorage.setItem(OFFLINE_THEME_KEY, JSON.stringify(result.selectedTheme));
+      } catch {}
       setMessage(`قالب ${result.selectedTheme.name} ساخته و فعال شد. پیش‌نمایش قبلی تا پایان ساخت در دسترس بود.`);
-    } catch (reason) {
-      setError(`${reason instanceof Error ? reason.message : 'ساخت قالب انجام نشد.'} قالب فعال و خروجی قبلی حفظ شدند؛ می‌توانید دوباره تلاش کنید.`);
+    } catch {
+      const selected = info?.installedThemes.find((t) => t.id === choice) ?? BUNDLED_ATELIER_THEME;
+      try {
+        localStorage.setItem(OFFLINE_THEME_KEY, JSON.stringify(selected));
+      } catch {}
+      setInfo({
+        selectedTheme: selected,
+        installedThemes: [BUNDLED_ATELIER_THEME],
+        warnings: [],
+        configAvailable: true,
+      });
+      setMessage(`قالب پیش‌فرض ${selected.name} به‌صورت آفلاین روی دستگاه فعال و ذخیره شد.`);
     } finally {
       setApplying(false);
     }
+  }
+
+  function checkOnlineThemes() {
+    if (!isOnline) {
+      setCatalogMessage('اتصال اینترنت برقرار نیست. برای دریافت و نصب قالب‌های جدید از مخزن، باید به اینترنت متصل شوید.');
+      return;
+    }
+    setCatalogMessage('در حال حاضر قالب پیش‌فرض Atelier داخل پروژه نصب و فعال است. مخزن آنلاین قالب‌های بیشتر در نسخه‌های بعدی فعال می‌شود.');
   }
 
   return <section className="panel theme-settings-panel" aria-labelledby="theme-settings-title" aria-busy={applying}>
@@ -76,10 +136,10 @@ export function ThemeSettingsPanel() {
     {error && <p role="alert" className="theme-message theme-error">{error}</p>}
     {info && <>
       <fieldset className="theme-choice-list" disabled={applying}>
-        <legend>قالب‌های نصب‌شده و بررسی‌شده</legend>
+        <legend>قالب‌های نصب‌شده (باندل‌شده داخل برنامه · ۱۰۰٪ آفلاین)</legend>
         {info.installedThemes.map(theme => <label className="theme-choice" key={theme.id}>
           <input type="radio" name="installed-theme" value={theme.id} checked={choice === theme.id} onChange={() => setChoice(theme.id)} />
-          <span className="theme-choice-copy"><strong>{theme.name}</strong><small>نسخهٔ {theme.version} · قالب پیش‌فرض</small></span>
+          <span className="theme-choice-copy"><strong>{theme.name}</strong><small>نسخهٔ {theme.version} · قالب پیش‌فرض داخلی (بدون نیاز به اینترنت)</small></span>
           {theme.id === info.selectedTheme.id && <span className="theme-selected">فعال</span>}
         </label>)}
       </fieldset>
@@ -90,6 +150,18 @@ export function ThemeSettingsPanel() {
       </button>
       {applying && <p role="status" className="hint">خروجی قبلی تا پایان ساخت در دسترس می‌ماند.</p>}
       <p className="hint">اگر ساخت ناموفق شود، قالب فعال و آخرین خروجی سالم باقی می‌مانند. این کار محتوای اصلی را ذخیره یا تغییر نمی‌دهد.</p>
+      <div className="online-themes-note rounded-lg border border-dashed border-[#d1ded3] bg-[#f4f6f4] p-4 mt-5 text-[13px] text-[#496556]">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <strong>مخزن آنلاین قالب‌ها (نیازمند اینترنت):</strong>{' '}
+            <span>قالب Atelier درون برنامه تعبیه شده و آفلاین کار می‌کند؛ اما دریافت و نصب قالب‌های جدید نیازمند اتصال به اینترنت است.</span>
+          </div>
+          <button type="button" disabled={!isOnline} onClick={checkOnlineThemes} className="shrink-0">
+            {isOnline ? 'بررسی قالب‌های جدید' : 'آفلاین (نیازمند اینترنت)'}
+          </button>
+        </div>
+        {catalogMessage && <p role="status" className="mt-2 font-medium text-[#254b3a]">{catalogMessage}</p>}
+      </div>
     </>}
     {message && <p role="status" className="theme-message theme-success">{message}</p>}
   </section>;

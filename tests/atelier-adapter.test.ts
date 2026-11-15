@@ -1,6 +1,5 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { ContentSchema } from '../packages/contracts/src/index.js';
 import { ContentV2Schema } from '../packages/contracts/src/content-v2.js';
 import { atelierManifest } from '../packages/theme/src/atelier-manifest.js';
 import {
@@ -66,19 +65,8 @@ function v2Fixture() {
   });
 }
 
-function v1Fixture() {
-  return ContentSchema.parse({
-    version: 1,
-    site: { name: 'Legacy', tagline: '', email: '', phone: '' },
-    entries: [
-      { id: '53000000-0000-4000-8000-000000000001', kind: 'page', slug: 'about', title: 'About', summary: '', published: true, components: [{ type: 'text', body: 'About text' }] },
-      { id: '53000000-0000-4000-8000-000000000002', kind: 'project', slug: 'sculpture', title: 'Sculpture', summary: 'A piece', published: true, components: [{ type: 'text', body: 'Details' }] },
-    ],
-  });
-}
-
 const allCapabilities: ThemeCapability[] = [
-  'content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page', 'route.collectionList', 'route.collectionItem',
+  'content.v2', 'routes.static', 'route.home', 'route.page', 'route.collectionList', 'route.collectionItem',
   'field.text', 'field.richText', 'field.category', 'field.gallery', 'field.link', 'media.webp', 'direction.ltr', 'direction.rtl',
 ];
 
@@ -123,12 +111,6 @@ test('default settings use stable block IDs and preserve IDs already present on 
   assert.equal(first.placements.find(placement => placement.placementId === ids.placement)?.sectionId, 'collection-list');
   assert.equal(first.placements.length, 2);
   assert.deepEqual(content, before);
-});
-
-test('Atelier maps V1 home, page, legacy list, and project detail routes', () => {
-  const routes = map(v1Fixture());
-  assert.deepEqual(routes.map(route => route.path), ['/', '/about/', '/portfolio/sculpture/', '/projects/']);
-  assert.deepEqual(routes.map(route => route.role), ['home', 'page', 'collectionItem', 'collectionList']);
 });
 
 test('invalid required mappings stop route generation with an actionable diagnostic', () => {

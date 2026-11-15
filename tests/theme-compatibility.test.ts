@@ -14,7 +14,7 @@ import { mapStructuralFixture, type FixtureRoute } from '../experiments/theme-co
 const repo = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const fixturePath = resolve(repo, 'tests/fixtures/theme-compatibility-v2.json');
 const capabilities: ThemeCapability[] = [
-  'content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page', 'route.collectionList',
+  'content.v2', 'routes.static', 'route.home', 'route.page', 'route.collectionList',
   'route.collectionItem', 'field.text', 'field.richText', 'field.category', 'field.gallery', 'field.link',
   'media.webp', 'direction.ltr', 'direction.rtl',
 ];

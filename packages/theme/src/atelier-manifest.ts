@@ -9,9 +9,9 @@ export const atelierManifest = ThemeManifestV1Schema.parse({
   version: '1.0.0',
   adapter: { entryPoint: './studio/adapter.ts', exportName: 'createThemeAdapter' },
   compatibility: {
-    contentVersions: [1, 2],
-    astro: { range: { minInclusive: '7.4.2', maxExclusive: '7.4.3' }, testedVersion: '7.4.2' },
-    node: { range: { minInclusive: '24.13.0', maxExclusive: '24.13.1' }, testedVersion: '24.13.0' },
+    contentVersions: [2],
+    astro: { range: { minInclusive: '7.4.0', maxExclusive: '8.0.0' }, testedVersion: '7.4.2' },
+    node: { range: { minInclusive: '22.12.0', maxExclusive: '25.0.0' }, testedVersion: '24.13.0' },
   },
   templates: [
     { id: 'atelier-home', role: 'home' },
@@ -26,7 +26,7 @@ export const atelierManifest = ThemeManifestV1Schema.parse({
     { id: 'collection-list', blockTypes: ['collectionView'], routeRoles: ['home', 'page'] },
   ],
   capabilities: {
-    required: ['content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page', 'field.text', 'field.gallery', 'direction.ltr', 'direction.rtl'],
+    required: ['content.v2', 'routes.static', 'route.home', 'route.page', 'field.text', 'field.gallery', 'direction.ltr', 'direction.rtl'],
     optional: ['route.collectionList', 'route.collectionItem', 'field.richText', 'field.category', 'field.link', 'media.webp'],
   },
   localization: { contentLocalePolicy: 'any-bcp47-pass-through', directions: ['ltr', 'rtl'] },

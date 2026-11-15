@@ -6,7 +6,6 @@ import {
   createThemeAdapter,
 } from '@astro-static-studio/theme/studio/adapter';
 import { ThemeConfigurationV1Schema, validateThemeSettings } from '@astro-static-studio/theme/contract';
-import type { Content } from '@astro-static-studio/contracts';
 import type { ContentV2 } from '@astro-static-studio/contracts/content-v2';
 import { ensureV2PlacementIdsV1 } from '@astro-static-studio/contracts/migration';
 import type { ThemeCapability, ThemeRouteModel } from '@astro-static-studio/theme/contract';
@@ -16,16 +15,14 @@ import { fileURLToPath } from 'node:url';
 
 const adapter = createThemeAdapter();
 
-// These capabilities are implemented by the bundled Atelier renderer. RTL is
-// included after the page templates and gallery controls are direction-aware.
 const availableCapabilities: ThemeCapability[] = [
-  'content.v1', 'content.v2', 'routes.static', 'route.home', 'route.page',
+  'content.v2', 'routes.static', 'route.home', 'route.page',
   'route.collectionList', 'route.collectionItem', 'field.text', 'field.richText',
   'field.category', 'field.gallery', 'field.link', 'media.webp', 'direction.ltr', 'direction.rtl',
 ];
 
-/** Resolve validated content into the route view models consumed by Astro pages. */
-export function atelierRoutes(content: Content | ContentV2): ThemeRouteModel[] {
+/** Resolve validated Content V2 into the route view models consumed by Astro pages. */
+export function atelierRoutes(content: ContentV2): ThemeRouteModel[] {
   const configuredPath = process.env.STUDIO_THEME_CONFIG_PATH;
   const projectRoot = fileURLToPath(new URL('../../../../', import.meta.url));
   const persistedConfigPath = resolve(projectRoot, 'content/theme-settings.json');
@@ -44,7 +41,7 @@ export function atelierRoutes(content: Content | ContentV2): ThemeRouteModel[] {
     }
     const selectedSettings = configuration.perThemeSettings[atelierManifest.id];
     if (!selectedSettings) throw new Error('Theme settings for Atelier are missing. Apply Atelier from Settings > Theme and try again.');
-    const normalizedContent = content.version === 2 ? ensureV2PlacementIdsV1(content) : content;
+    const normalizedContent = ensureV2PlacementIdsV1(content);
     const diagnostics = validateThemeSettings(selectedSettings, atelierManifest, normalizedContent, availableCapabilities);
     const errors = diagnostics.filter(diagnostic => diagnostic.severity === 'error');
     if (errors.length) throw new Error(errors.map(diagnostic => diagnostic.message).join('\n'));

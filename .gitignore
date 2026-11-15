@@ -13,3 +13,12 @@ apps/.dist.staging-*
 apps/.dist.backup-*
 apps/api/node_modules/.cache/wrangler/
 .DS_Store
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+android/capacitor-cordova-android-plugins/build/
+ios/App/Pods/
+ios/DerivedData/
+release-artifacts/
+*.tgz

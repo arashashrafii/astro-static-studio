@@ -6,19 +6,47 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 import { exportBackup, restoreBackup, type BackupPaths } from '../apps/api/src/backup.js';
-import { migrateV1ToV2 } from '../packages/contracts/src/content-migration.js';
+import { ContentV2Schema } from '../packages/contracts/src/content-v2.js';
 
 const mediaId = 'd316af54-1fe7-4db9-a86a-3b4dd22114a8';
+const collectionId = '11111111-1111-4111-8111-111111111111';
+const galleryFieldId = '22222222-2222-4222-8222-222222222222';
+const richTextFieldId = '33333333-3333-4333-8333-333333333333';
+const itemId = 'cf8a0acb-a235-4aa8-9741-c68e8b1b46b4';
+const pageId = 'a7b1bb0e-92b7-4772-b88e-60389c07c033';
 
 function fixtureContent(src = `/media/${mediaId}.webp`) {
-  return {
-    version: 1,
-    site: { name: 'Sample', tagline: '', email: 'owner@example.com', phone: '' },
-    entries: [{
-      id: 'cf8a0acb-a235-4aa8-9741-c68e8b1b46b4', kind: 'project', slug: 'sample', title: 'Sample', summary: '',
-      published: true, components: [{ type: 'gallery', images: [{ src, alt: 'Sample image' }] }],
+  return ContentV2Schema.parse({
+    version: 2,
+    site: { name: 'Sample', tagline: '', email: 'owner@example.com', phone: '', language: 'en', direction: 'ltr' },
+    pages: [],
+    collections: [{
+      id: collectionId,
+      slug: 'projects',
+      routeBase: 'portfolio',
+      name: 'Projects',
+      kind: 'content',
+      listLayout: 'grid',
+      loading: 'show-more',
+      pageSize: 12,
+      excerptSourceFieldId: richTextFieldId,
+      fields: [
+        { id: galleryFieldId, type: 'gallery', label: 'Gallery', maxItems: 10 },
+        { id: richTextFieldId, type: 'text', format: 'rich', label: 'Details' },
+      ],
     }],
-  };
+    items: [{
+      id: itemId,
+      collectionId,
+      slug: 'sample',
+      published: true,
+      title: 'Sample',
+      description: { source: 'manual', value: '' },
+      values: {
+        [galleryFieldId]: [{ src, alt: 'Sample image' }],
+      },
+    }],
+  });
 }
 
 async function setup(t: { after(fn: () => void | Promise<void>): void }, withOriginal = true): Promise<{ root: string; paths: BackupPaths; webp: Buffer; original: Buffer }> {
@@ -41,7 +69,7 @@ async function setup(t: { after(fn: () => void | Promise<void>): void }, withOri
   return { root, paths, webp, original };
 }
 
-test('backup round-trip preserves validated content, WebP and its JPEG original', async t => {
+test('backup round-trip preserves validated V2 content, WebP and its JPEG original', async t => {
   const source = await setup(t);
   const backup = await exportBackup(source.paths);
   const targetRoot = await mkdtemp(join(tmpdir(), 'astro-backup-target-'));
@@ -63,64 +91,108 @@ test('backup round-trip preserves validated content, WebP and its JPEG original'
 
 test('backup includes managed inline rich-text images and restores their references', async t => {
   const source = await setup(t);
-  const content = JSON.parse(await readFile(source.paths.contentPath, 'utf8'));
-  content.entries[0].components = [{
-    type: 'text', body: 'Inline image', richText: {version: 1, blocks: [{type: 'paragraph', content: [
-      {type: 'text', text: 'Inline image'}, {type: 'image', src: `/media/${mediaId}.webp`, alt: 'A meaningful alt'},
-    ]}]},
-  }];
+  const content = fixtureContent();
+  content.items[0].values = {
+    [richTextFieldId]: {
+      type: 'document',
+      blocks: [{
+        type: 'paragraph',
+        size: 'normal',
+        align: 'start',
+        children: [
+          { type: 'text', text: 'Inline image', marks: [] },
+          { type: 'image', media: { src: `/media/${mediaId}.webp`, alt: 'A meaningful alt' } },
+        ],
+      }],
+    },
+  };
   await writeFile(source.paths.contentPath, JSON.stringify(content));
   const backup = await exportBackup(source.paths);
   const parsed = JSON.parse(backup.toString('utf8'));
-  assert.deepEqual(parsed.media.map((item: {src:string})=>item.src), [`/media/${mediaId}.webp`]);
+  assert.deepEqual(parsed.media.map((item: { src: string }) => item.src), [`/media/${mediaId}.webp`]);
 
   const targetRoot = await mkdtemp(join(tmpdir(), 'astro-backup-inline-target-'));
   t.after(() => rm(targetRoot, { recursive: true, force: true }));
-  const target: BackupPaths = {contentPath:join(targetRoot,'content','content.json'),mediaDirectory:join(targetRoot,'media'),originalsDirectory:join(targetRoot,'originals'),tempDirectory:targetRoot};
-  await mkdir(join(targetRoot,'content'),{recursive:true});
-  await restoreBackup(backup,target);
-  const restored = JSON.parse(await readFile(target.contentPath,'utf8'));
-  assert.deepEqual(restored.entries[0].components[0].richText.blocks[0].content[1], {type:'image',src:`/media/${mediaId}.webp`,alt:'A meaningful alt'});
+  const target: BackupPaths = {
+    contentPath: join(targetRoot, 'content', 'content.json'),
+    mediaDirectory: join(targetRoot, 'media'),
+    originalsDirectory: join(targetRoot, 'originals'),
+    tempDirectory: targetRoot,
+  };
+  await mkdir(join(targetRoot, 'content'), { recursive: true });
+  await restoreBackup(backup, target);
+  const restored = JSON.parse(await readFile(target.contentPath, 'utf8'));
+  assert.deepEqual(restored.items[0].values[richTextFieldId].blocks[0].children[1], {
+    type: 'image',
+    media: { src: `/media/${mediaId}.webp`, alt: 'A meaningful alt' },
+  });
 });
 
-test('v2 backup and restore collect media from page blocks and collection item fields',async t=>{
-  const source=await setup(t);
-  const content=JSON.parse(await readFile(source.paths.contentPath,'utf8'));
-  content.entries.unshift({id:'a7b1bb0e-92b7-4772-b88e-60389c07c033',kind:'page',slug:'about',title:'About',summary:'',published:true,components:[{type:'gallery',images:[{src:`/media/${mediaId}.webp`,alt:'Page image'}]}]});
-  const inlineId='9e9eeb74-5df7-4c51-9de7-d6e45b239074';
-  const inlineWebp=await sharp({create:{width:4,height:4,channels:3,background:'#884466'}}).webp().toBuffer();
-  await writeFile(join(source.paths.mediaDirectory,`${inlineId}.webp`),inlineWebp);
-  content.entries[1].components.unshift({type:'text',body:'Details',richText:{version:1,blocks:[{type:'paragraph',content:[{type:'text',text:'Details'},{type:'image',src:`/media/${inlineId}.webp`,alt:'Inline image'}]}]}});
-  const v2=migrateV1ToV2(content);
-  v2.collections[0].kind='gallery';
-  v2.collections[0].listLayout='masonry';
-  v2.collections[0].loading='pagination';
-  v2.collections[0].pageSize=24;
-  await writeFile(source.paths.contentPath,JSON.stringify(v2));
-  const backup=await exportBackup(source.paths);
-  const parsed=JSON.parse(backup.toString('utf8'));
-  assert.equal(parsed.content.version,2);
-  assert.deepEqual(parsed.media.map((item:{src:string})=>item.src),[`/media/${inlineId}.webp`,`/media/${mediaId}.webp`]);
-  const targetRoot=await mkdtemp(join(tmpdir(),'astro-backup-v2-target-'));
-  t.after(()=>rm(targetRoot,{recursive:true,force:true}));
-  await mkdir(join(targetRoot,'content'),{recursive:true});
-  const target:BackupPaths={contentPath:join(targetRoot,'content','content.json'),mediaDirectory:join(targetRoot,'media'),originalsDirectory:join(targetRoot,'originals'),tempDirectory:targetRoot};
-  await restoreBackup(backup,target);
-  const restored=JSON.parse(await readFile(target.contentPath,'utf8'));
-  assert.equal(restored.version,2);
-  assert.deepEqual({kind:restored.collections[0].kind,layout:restored.collections[0].listLayout,loading:restored.collections[0].loading,pageSize:restored.collections[0].pageSize},{kind:'gallery',layout:'masonry',loading:'pagination',pageSize:24});
-  assert.deepEqual(restored.pages[0].blocks[0].images,[{src:`/media/${mediaId}.webp`,alt:'Page image'}]);
-  assert.deepEqual(await readFile(join(target.mediaDirectory,`${inlineId}.webp`)),inlineWebp);
+test('v2 backup and restore collect media from page blocks and collection item fields', async t => {
+  const source = await setup(t);
+  const content = fixtureContent();
+  content.pages.push({
+    id: pageId,
+    slug: 'about',
+    title: 'About',
+    published: true,
+    description: { source: 'manual', value: '' },
+    blocks: [{ type: 'gallery', layout: 'grid', images: [{ src: `/media/${mediaId}.webp`, alt: 'Page image' }] }],
+  });
+  const inlineId = '9e9eeb74-5df7-4c51-9de7-d6e45b239074';
+  const inlineWebp = await sharp({ create: { width: 4, height: 4, channels: 3, background: '#884466' } }).webp().toBuffer();
+  await writeFile(join(source.paths.mediaDirectory, `${inlineId}.webp`), inlineWebp);
+  content.items[0].values[richTextFieldId] = {
+    type: 'document',
+    blocks: [{
+      type: 'paragraph',
+      size: 'normal',
+      align: 'start',
+      children: [
+        { type: 'text', text: 'Details', marks: [] },
+        { type: 'image', media: { src: `/media/${inlineId}.webp`, alt: 'Inline image' } },
+      ],
+    }],
+  };
+  content.collections[0].kind = 'gallery';
+  content.collections[0].listLayout = 'masonry';
+  content.collections[0].loading = 'pagination';
+  content.collections[0].pageSize = 24;
+  await writeFile(source.paths.contentPath, JSON.stringify(content));
+  const backup = await exportBackup(source.paths);
+  const parsed = JSON.parse(backup.toString('utf8'));
+  assert.equal(parsed.content.version, 2);
+  assert.deepEqual(parsed.media.map((item: { src: string }) => item.src), [`/media/${inlineId}.webp`, `/media/${mediaId}.webp`]);
+  const targetRoot = await mkdtemp(join(tmpdir(), 'astro-backup-v2-target-'));
+  t.after(() => rm(targetRoot, { recursive: true, force: true }));
+  await mkdir(join(targetRoot, 'content'), { recursive: true });
+  const target: BackupPaths = {
+    contentPath: join(targetRoot, 'content', 'content.json'),
+    mediaDirectory: join(targetRoot, 'media'),
+    originalsDirectory: join(targetRoot, 'originals'),
+    tempDirectory: targetRoot,
+  };
+  await restoreBackup(backup, target);
+  const restored = JSON.parse(await readFile(target.contentPath, 'utf8'));
+  assert.equal(restored.version, 2);
+  assert.deepEqual(
+    { kind: restored.collections[0].kind, layout: restored.collections[0].listLayout, loading: restored.collections[0].loading, pageSize: restored.collections[0].pageSize },
+    { kind: 'gallery', layout: 'masonry', loading: 'pagination', pageSize: 24 },
+  );
+  assert.deepEqual(restored.pages[0].blocks[0].images, [{ src: `/media/${mediaId}.webp`, alt: 'Page image' }]);
+  assert.deepEqual(await readFile(join(target.mediaDirectory, `${inlineId}.webp`)), inlineWebp);
 });
 
-test('backup restore rejects an unknown content version without writing files',async t=>{
-  const targetRoot=await mkdtemp(join(tmpdir(),'astro-backup-unknown-version-'));
-  t.after(()=>rm(targetRoot,{recursive:true,force:true}));
-  await mkdir(join(targetRoot,'content'),{recursive:true});
-  const target:BackupPaths={contentPath:join(targetRoot,'content','content.json'),mediaDirectory:join(targetRoot,'media'),tempDirectory:targetRoot};
-  const document={format:'astro-static-studio-backup',version:1,content:{version:99},media:[]};
-  await assert.rejects(restoreBackup(JSON.stringify(document),target),/Unsupported content version/);
-  await assert.rejects(readFile(target.contentPath),{code:'ENOENT'});
+test('backup restore rejects V1 and unknown content versions without writing files', async t => {
+  const targetRoot = await mkdtemp(join(tmpdir(), 'astro-backup-unknown-version-'));
+  t.after(() => rm(targetRoot, { recursive: true, force: true }));
+  await mkdir(join(targetRoot, 'content'), { recursive: true });
+  const target: BackupPaths = { contentPath: join(targetRoot, 'content', 'content.json'), mediaDirectory: join(targetRoot, 'media'), tempDirectory: targetRoot };
+  for (const version of [1, 99]) {
+    const document = { format: 'astro-static-studio-backup', version: 1, content: { version }, media: [] };
+    await assert.rejects(restoreBackup(JSON.stringify(document), target), /Unsupported content version/);
+  }
+  await assert.rejects(readFile(target.contentPath), { code: 'ENOENT' });
 });
 
 test('backup records a missing original as optional', async t => {
@@ -152,7 +224,7 @@ test('backup supports legacy media IDs without dashes', async t => {
   await writeFile(source.paths.contentPath, JSON.stringify(content));
   await writeFile(join(source.paths.mediaDirectory, `${legacyId}.webp`), source.webp);
   const backup = JSON.parse((await exportBackup(source.paths)).toString('utf8'));
-  assert.equal(backup.content.entries[0].components[0].images[0].src, `/media/${legacyId}.webp`);
+  assert.equal(backup.content.items[0].values[galleryFieldId][0].src, `/media/${legacyId}.webp`);
 });
 
 test('restore rejects a checksum mismatch without changing content or media', async t => {
@@ -184,8 +256,10 @@ test('restore rolls back newly added WebP if an original collides', async t => {
   const targetRoot = await mkdtemp(join(tmpdir(), 'astro-backup-target-'));
   t.after(() => rm(targetRoot, { recursive: true, force: true }));
   const target: BackupPaths = {
-    contentPath: join(targetRoot, 'content.json'), mediaDirectory: join(targetRoot, 'media'),
-    originalsDirectory: join(targetRoot, 'originals'), tempDirectory: targetRoot,
+    contentPath: join(targetRoot, 'content.json'),
+    mediaDirectory: join(targetRoot, 'media'),
+    originalsDirectory: join(targetRoot, 'originals'),
+    tempDirectory: targetRoot,
   };
   await mkdir(target.mediaDirectory, { recursive: true });
   await mkdir(target.originalsDirectory!, { recursive: true });
@@ -214,24 +288,20 @@ test('restore requires an originals directory when the bundle carries an origina
   }), /originals directory is required/);
 });
 
-test('backup exports only validated V1/V2 content and never carries unknown provider credentials', async t => {
+test('backup exports only validated V2 content and never carries unknown provider credentials', async t => {
   const source = await setup(t);
-  const v1 = structuredClone(fixtureContent()) as any;
-  v1.cloudflare = { apiToken: 'test-secret-cloudflare-token' };
-  v1.site.publishPassword = 'test-secret-publish-password';
-  v1.entries[0].providerCredentials = { token: 'test-secret-entry-token' };
-  const v2 = migrateV1ToV2(v1) as any;
+  const v2 = structuredClone(fixtureContent()) as any;
+  v2.cloudflare = { apiToken: 'test-secret-cloudflare-token' };
   v2.publishCredentials = { apiToken: 'test-secret-v2-token' };
   v2.site.publishPassword = 'test-secret-v2-password';
+  v2.items[0].providerCredentials = { token: 'test-secret-item-token' };
 
-  for (const candidate of [v1, v2]) {
-    const exported = await exportBackup(source.paths, candidate);
-    const serialized = exported.toString('utf8');
-    assert.doesNotMatch(serialized, /test-secret-/);
-    const document = JSON.parse(serialized);
-    assert.equal(Object.hasOwn(document.content, 'cloudflare'), false);
-    assert.equal(Object.hasOwn(document.content, 'publishCredentials'), false);
-    assert.equal(Object.hasOwn(document.content.site, 'publishPassword'), false);
-    if (document.content.version === 1) assert.equal(Object.hasOwn(document.content.entries[0], 'providerCredentials'), false);
-  }
+  const exported = await exportBackup(source.paths, v2);
+  const serialized = exported.toString('utf8');
+  assert.doesNotMatch(serialized, /test-secret-/);
+  const document = JSON.parse(serialized);
+  assert.equal(Object.hasOwn(document.content, 'cloudflare'), false);
+  assert.equal(Object.hasOwn(document.content, 'publishCredentials'), false);
+  assert.equal(Object.hasOwn(document.content.site, 'publishPassword'), false);
+  assert.equal(Object.hasOwn(document.content.items[0], 'providerCredentials'), false);
 });

@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Projects from '../components/Projects.astro';
 import V2PageBlocks from '../components/V2PageBlocks.astro';
 import V2CollectionView from '../components/V2CollectionView.astro';
 import {content} from '../lib/content';
@@ -8,12 +7,12 @@ import {atelierRoutes} from '../lib/theme-routes';
 import type {AtelierRouteData} from '@astro-static-studio/theme/studio/adapter';
 const route=atelierRoutes(await content()).find(candidate=>candidate.path==='/');
 if(!route)throw new Error('Atelier did not produce a home route.');
-const home=route.data as AtelierRouteData;
+const home=route.data as Extract<AtelierRouteData,{resource:'home-v2'}>;
 const data=home.content;
-const homePage=home.resource==='home-v2'?home.page:undefined;
-const firstCollection=home.resource==='home-v2'?data.collections[0]:undefined;
-const homeCollectionBlock=firstCollection?{type:'collectionView',collectionId:firstCollection.id,view:'grid',categoryIds:[],sort:'manual',limit:12}:undefined;
+const homePage=home.page;
+const firstCollection=data.collections[0];
+const homeCollectionBlock=firstCollection?{type:'collectionView' as const,collectionId:firstCollection.id,view:'grid' as const,categoryIds:[],sort:'manual' as const,limit:12}:undefined;
 ---
 <Layout data={data}>
-  {home.resource==='home-v1'?<><section class="hero"><span class="eyebrow">{data.site.name} · PORTFOLIO</span><h1>{data.site.tagline||data.site.name}</h1>{!data.site.tagline&&<p>این صفحهٔ اصلی سایت شماست. عنوان و محتوای سایت را در Studio ویرایش کنید.</p>}</section>{data.entries.some(e=>e.kind==='project'&&e.published)&&<><h2 class="section-title">Selected work</h2><Projects entries={data.entries.filter(e=>e.kind==='project'&&e.published)}/></>}</>:homePage?<><section class="hero"><span class="eyebrow">{data.site.name}</span><h1>{homePage.title}</h1>{homePage.description.source==='manual'&&<p>{homePage.description.value}</p>}</section><V2PageBlocks blocks={homePage.blocks} data={data}/></>:<><section class="hero"><span class="eyebrow">{data.site.name}</span><h1>{data.site.tagline||data.site.name}</h1></section>{firstCollection&&homeCollectionBlock&&<V2CollectionView block={homeCollectionBlock} collection={firstCollection} items={data.items}/>}</>}
+  {homePage?<><section class="hero"><span class="eyebrow">{data.site.name}</span><h1>{homePage.title}</h1>{homePage.description.source==='manual'&&<p>{homePage.description.value}</p>}</section><V2PageBlocks blocks={homePage.blocks} data={data}/></>:<><section class="hero"><span class="eyebrow">{data.site.name}</span><h1>{data.site.tagline||data.site.name}</h1></section>{firstCollection&&homeCollectionBlock&&<V2CollectionView block={homeCollectionBlock} collection={firstCollection} items={data.items}/>}</>}
 </Layout>

@@ -1,0 +1,235 @@
+name: Build & Release (Android APK, iOS IPA, npm Package)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release version tag (e.g. v1.0.0)'
+        required: false
+        default: 'v1.0.0'
+      publish_npm:
+        description: 'Publish to npm registry (requires NPM_TOKEN secret)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+      version: ${{ steps.meta.outputs.version }}
+    steps:
+      - name: Resolve release version
+        id: meta
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            TAG="${{ github.ref_name }}"
+          else
+            TAG="${{ inputs.release_tag || 'v1.0.0' }}"
+          fi
+          VERSION="${TAG#v}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+  build-npm-package:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts && node scripts/link-workspaces.mjs
+
+      - name: Set package version
+        run: npm version "${{ needs.prepare.outputs.version }}" --no-git-tag-version --allow-same-version
+
+      - name: Build admin & verify
+        run: |
+          npm run check
+          npm run build -w apps/admin
+          npm test
+
+      - name: Pack npm tarball
+        run: |
+          mkdir -p release-artifacts
+          TARBALL=$(npm pack --silent)
+          mv "$TARBALL" "release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}.tgz"
+
+      - name: Publish to npm registry (when NPM_TOKEN secret is set)
+        if: ${{ (github.event_name == 'push' || inputs.publish_npm) && secrets.NPM_TOKEN != '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
+
+      - name: Upload npm artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-package
+          path: release-artifacts/*.tgz
+
+  build-android-apk:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies & build offline web bundle
+        run: |
+          npm install --ignore-scripts
+          node scripts/link-workspaces.mjs
+          npm run build -w apps/admin
+
+      - name: Initialize & sync Capacitor Android project
+        run: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
+          npx cap sync android
+          chmod +x android/gradlew
+
+      - name: Build Android APK
+        run: |
+          mkdir -p release-artifacts
+          cd android
+          if [ -n "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" ]; then
+            echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > app/release.keystore
+            ./gradlew assembleRelease \
+              -Pandroid.injected.signing.store.file=app/release.keystore \
+              -Pandroid.injected.signing.store.password="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" \
+              -Pandroid.injected.signing.key.alias="${{ secrets.ANDROID_KEY_ALIAS }}" \
+              -Pandroid.injected.signing.key.password="${{ secrets.ANDROID_KEY_PASSWORD }}"
+            cp app/build/outputs/apk/release/app-release.apk "../release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}-android-release.apk"
+          else
+            ./gradlew assembleDebug
+            cp app/build/outputs/apk/debug/app-debug.apk "../release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}-android.apk"
+          fi
+
+      - name: Upload Android APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: release-artifacts/*.apk
+
+  build-ios-app:
+    needs: prepare
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies & build offline web bundle
+        run: |
+          npm install --ignore-scripts
+          node scripts/link-workspaces.mjs
+          npm run build -w apps/admin
+
+      - name: Initialize & sync Capacitor iOS project
+        run: |
+          if [ ! -d "ios" ]; then
+            npx cap add ios
+          fi
+          npx cap sync ios
+
+      - name: Archive & package iOS output (.ipa and .xcarchive.zip)
+        run: |
+          mkdir -p release-artifacts/ios-build/Payload
+          cd ios/App
+          if [ -f "App.xcworkspace/contents.xcworkspacedata" ]; then
+            BUILD_TARGET=(-workspace App.xcworkspace)
+          else
+            BUILD_TARGET=(-project App.xcodeproj)
+          fi
+
+          xcodebuild archive \
+            "${BUILD_TARGET[@]}" \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -archivePath "../../release-artifacts/App.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
+
+          cp -R "../../release-artifacts/App.xcarchive/Products/Applications/App.app" "../../release-artifacts/ios-build/Payload/"
+          cd ../../release-artifacts/ios-build
+          zip -r "../astro-static-studio-${{ needs.prepare.outputs.version }}-ios-unsigned.ipa" Payload
+          cd ..
+          zip -r "astro-static-studio-${{ needs.prepare.outputs.version }}-ios.xcarchive.zip" App.xcarchive
+          rm -rf App.xcarchive ios-build
+
+      - name: Upload iOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-app
+          path: |
+            release-artifacts/*.ipa
+            release-artifacts/*.xcarchive.zip
+
+  publish-github-release:
+    needs: [prepare, build-npm-package, build-android-apk, build-ios-app]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-artifacts
+          merge-multiple: true
+
+      - name: Generate SHA256 checksums
+        run: |
+          cd all-artifacts
+          sha256sum * > SHA256SUMS.txt
+          ls -lh
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.prepare.outputs.tag }}
+          name: Astro Static Studio ${{ needs.prepare.outputs.tag }}
+          generate_release_notes: true
+          files: all-artifacts/*
+          body: |
+            ### خروجی‌های رسمی Astro Static Studio (${{ needs.prepare.outputs.tag }})
+
+            - **Android (`.apk`)**: اپلیکیشن مستقل ۱۰۰٪ آفلاین (بدون نیاز به اینترنت برای ویرایش و پیش‌نمایش).
+            - **iOS (`.ipa` و `.xcarchive.zip`)**: خروجی مستقل iOS آمادهٔ امضای Xcode / توزیع داخلی یا TestFlight.
+            - **Node / npm (`.tgz`)**: بستهٔ قابل نصب روی **Windows / macOS / Linux**:
+              ```bash
+              npx astro-static-studio
+              # یا نصب سراسری:
+              npm install -g astro-static-studio && astro-studio
+              ```

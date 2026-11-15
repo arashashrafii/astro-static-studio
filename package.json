@@ -1,22 +1,84 @@
 {
   "name": "astro-static-studio",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Offline-first static website CMS & Astro builder with Android APK, iOS, and cross-platform Node CLI support",
+  "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "keywords": [
+    "astro",
+    "cms",
+    "static-site",
+    "offline-first",
+    "studio"
+  ],
+  "bin": {
+    "astro-studio": "./bin/astro-studio.mjs",
+    "astro-static-studio": "./bin/astro-studio.mjs"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "apps/admin/dist/",
+    "apps/admin/public/",
+    "apps/api/src/",
+    "apps/api/package.json",
+    "apps/site/src/",
+    "apps/site/public/",
+    "apps/site/astro.config.*",
+    "apps/site/package.json",
+    "packages/contracts/src/",
+    "packages/contracts/package.json",
+    "packages/theme/src/",
+    "packages/theme/package.json",
+    "content/content.json",
+    "content/theme-config.json",
+    "tsconfig.json",
+    "README.md"
+  ],
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "dev": "concurrently -k -n api,site,admin \"npm run dev -w apps/api\" \"npm run dev -w apps/site\" \"npm run dev -w apps/admin\"",
+    "postinstall": "node scripts/link-workspaces.mjs",
+    "prepack": "npm run build -w apps/admin",
+    "dev": "npm run build -w apps/admin && npm run dev -w apps/api",
+    "start": "npm run dev -w apps/api",
     "build": "npm run build:site && npm run build -w apps/admin",
     "build:site": "tsx apps/api/src/build-site.ts",
+    "cap:sync": "npm run build -w apps/admin && npx cap sync",
+    "mobile:android": "npm run build -w apps/admin && npx cap sync android",
+    "mobile:ios": "npm run build -w apps/admin && npx cap sync ios",
     "check": "tsc --noEmit",
+    "lint": "tsc --noEmit --target ES2022 --module ESNext --moduleResolution Bundler --jsx react-jsx --strict --esModuleInterop --resolveJsonModule --skipLibCheck --allowImportingTsExtensions apps/admin/src/*.ts apps/admin/src/*.tsx apps/api/src/*.ts packages/contracts/src/*.ts packages/theme/src/*.ts packages/theme/src/studio/*.ts",
     "test": "node --import tsx --test tests/*.test.ts",
     "test:smoke": "node tests/smoke.mjs"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/ios": "^8.6.2",
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "concurrently": "^9.2.1",
-    "tsx": "^4.20.6",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "astro": "7.4.0",
+    "blake3-wasm": "2.1.5",
+    "express": "^5.1.0",
+    "mime-types": "3.0.2",
+    "multer": "^2.0.2",
+    "sharp": "^0.35.5",
+    "tsx": "^4.20.6",
+    "wrangler": "4.149.0",
+    "zod": "^4.1.0"
   }
 }
