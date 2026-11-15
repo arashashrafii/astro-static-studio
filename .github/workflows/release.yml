@@ -11,7 +11,7 @@ on:
         required: false
         default: 'v1.0.0'
       publish_npm:
-        description: 'Publish to npm registry (requires NPM_TOKEN secret)'
+        description: 'Publish package to npm registry (requires NPM_TOKEN secret)'
         type: boolean
         default: false
 
@@ -50,16 +50,16 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
-        run: npm install --ignore-scripts && node scripts/link-workspaces.mjs
+      - name: Install all build and runtime dependencies
+        run: npm install && node scripts/link-workspaces.mjs
 
       - name: Set package version
         run: npm version "${{ needs.prepare.outputs.version }}" --no-git-tag-version --allow-same-version
 
-      - name: Build admin & verify
+      - name: Execute npm run build and run verification tests
         run: |
           npm run check
-          npm run build -w apps/admin
+          npm run build
           npm test
 
       - name: Pack npm tarball
@@ -98,24 +98,31 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Setup Android SDK
+      - name: Setup Android SDK & accept licenses
         uses: android-actions/setup-android@v3
 
-      - name: Install dependencies & build offline web bundle
+      - name: Install required Android SDK platform and build-tools
         run: |
-          npm install --ignore-scripts
-          node scripts/link-workspaces.mjs
-          npm run build -w apps/admin
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;35.0.0"
 
-      - name: Initialize & sync Capacitor Android project
+      - name: Install dependencies & run full offline build (npm run build)
+        run: |
+          npm install
+          node scripts/link-workspaces.mjs
+          npm run build
+          node scripts/generate-mobile-assets.mjs
+
+      - name: Sync offline bundle to Capacitor Android project
         run: |
           if [ ! -d "android" ]; then
             npx cap add android
           fi
           npx cap sync android
+          test -f android/app/src/main/assets/public/index.html
           chmod +x android/gradlew
 
-      - name: Build Android APK
+      - name: Package Android APK
         run: |
           mkdir -p release-artifacts
           cd android
@@ -150,46 +157,81 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies & build offline web bundle
+      - name: Install dependencies & run full offline build (npm run build)
         run: |
-          npm install --ignore-scripts
+          npm install
           node scripts/link-workspaces.mjs
-          npm run build -w apps/admin
+          npm run build
+          node scripts/generate-mobile-assets.mjs
 
-      - name: Initialize & sync Capacitor iOS project
+      - name: Sync offline bundle to Capacitor iOS project
         run: |
           if [ ! -d "ios" ]; then
             npx cap add ios
           fi
           npx cap sync ios
+          test -f ios/App/App/public/index.html
 
-      - name: Archive & package iOS output (.ipa and .xcarchive.zip)
+      - name: Resolve Capacitor iOS Swift Package dependencies
+        run: |
+          cd ios/App
+          xcodebuild -resolvePackageDependencies -project App.xcodeproj -scheme App
+
+      - name: Archive & package iOS IPA artifact
         run: |
           mkdir -p release-artifacts/ios-build/Payload
           cd ios/App
-          if [ -f "App.xcworkspace/contents.xcworkspacedata" ]; then
-            BUILD_TARGET=(-workspace App.xcworkspace)
+
+          if [ -n "${{ secrets.IOS_CERTIFICATE_BASE64 }}" ] && [ -n "${{ secrets.IOS_PROVISION_PROFILE_BASE64 }}" ]; then
+            KEYCHAIN_PATH="$RUNNER_TEMP/build.keychain-db"
+            KEYCHAIN_PASS="ci-temp-keychain"
+            security create-keychain -p "$KEYCHAIN_PASS" "$KEYCHAIN_PATH"
+            security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+            security unlock-keychain -p "$KEYCHAIN_PASS" "$KEYCHAIN_PATH"
+            echo "${{ secrets.IOS_CERTIFICATE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+            security import "$RUNNER_TEMP/cert.p12" -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+            security list-keychain -d user -s "$KEYCHAIN_PATH"
+
+            mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+            echo "${{ secrets.IOS_PROVISION_PROFILE_BASE64 }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/ci.mobileprovision
+
+            xcodebuild archive \
+              -project App.xcodeproj \
+              -scheme App \
+              -configuration Release \
+              -sdk iphoneos \
+              -destination 'generic/platform=iOS' \
+              -archivePath "../../release-artifacts/App.xcarchive" \
+              MARKETING_VERSION="${{ needs.prepare.outputs.version }}"
+
+            echo "${{ secrets.IOS_EXPORT_OPTIONS_PLIST_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/ExportOptions.plist"
+            xcodebuild -exportArchive \
+              -archivePath "../../release-artifacts/App.xcarchive" \
+              -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+              -exportPath "../../release-artifacts/ios-signed"
+            cp ../../release-artifacts/ios-signed/*.ipa "../../release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}-ios-release.ipa"
           else
-            BUILD_TARGET=(-project App.xcodeproj)
+            xcodebuild archive \
+              -project App.xcodeproj \
+              -scheme App \
+              -configuration Release \
+              -sdk iphoneos \
+              -destination 'generic/platform=iOS' \
+              -archivePath "../../release-artifacts/App.xcarchive" \
+              MARKETING_VERSION="${{ needs.prepare.outputs.version }}" \
+              CODE_SIGNING_ALLOWED=NO \
+              CODE_SIGNING_REQUIRED=NO \
+              CODE_SIGN_IDENTITY=""
+
+            cp -R "../../release-artifacts/App.xcarchive/Products/Applications/App.app" "../../release-artifacts/ios-build/Payload/"
+            cd ../../release-artifacts/ios-build
+            zip -r "../astro-static-studio-${{ needs.prepare.outputs.version }}-ios-unsigned.ipa" Payload
+            cd ..
           fi
 
-          xcodebuild archive \
-            "${BUILD_TARGET[@]}" \
-            -scheme App \
-            -configuration Release \
-            -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
-            -archivePath "../../release-artifacts/App.xcarchive" \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY=""
-
-          cp -R "../../release-artifacts/App.xcarchive/Products/Applications/App.app" "../../release-artifacts/ios-build/Payload/"
-          cd ../../release-artifacts/ios-build
-          zip -r "../astro-static-studio-${{ needs.prepare.outputs.version }}-ios-unsigned.ipa" Payload
-          cd ..
+          cd "$GITHUB_WORKSPACE/release-artifacts"
           zip -r "astro-static-studio-${{ needs.prepare.outputs.version }}-ios.xcarchive.zip" App.xcarchive
-          rm -rf App.xcarchive ios-build
+          rm -rf App.xcarchive ios-build ios-signed
 
       - name: Upload iOS artifacts
         uses: actions/upload-artifact@v4
@@ -225,8 +267,8 @@ jobs:
           body: |
             ### خروجی‌های رسمی Astro Static Studio (${{ needs.prepare.outputs.tag }})
 
-            - **Android (`.apk`)**: اپلیکیشن مستقل ۱۰۰٪ آفلاین (بدون نیاز به اینترنت برای ویرایش و پیش‌نمایش).
-            - **iOS (`.ipa` و `.xcarchive.zip`)**: خروجی مستقل iOS آمادهٔ امضای Xcode / توزیع داخلی یا TestFlight.
+            - **Android (`.apk`)**: اپلیکیشن مستقل ۱۰۰٪ آفلاین (ساخته‌شده با `npm run build` + Capacitor).
+            - **iOS (`.ipa` و `.xcarchive.zip`)**: خروجی مستقل iOS آمادهٔ نصب/امضای Xcode یا TestFlight.
             - **Node / npm (`.tgz`)**: بستهٔ قابل نصب روی **Windows / macOS / Linux**:
               ```bash
               npx astro-static-studio

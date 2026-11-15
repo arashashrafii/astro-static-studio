@@ -88,6 +88,9 @@ test('Android install prompts are removed and native Capacitor Android + iOS + G
   assert.match(releaseWorkflow, /build-android-apk/);
   assert.match(releaseWorkflow, /build-ios-app/);
   assert.match(releaseWorkflow, /build-npm-package/);
+  assert.match(releaseWorkflow, /npm run build/);
+  assert.match(releaseWorkflow, /sdkmanager/);
+  assert.match(releaseWorkflow, /-resolvePackageDependencies/);
   assert.match(releaseWorkflow, /softprops\/action-gh-release/);
 });
 

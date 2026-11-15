@@ -20,13 +20,16 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install --ignore-scripts && node scripts/link-workspaces.mjs
+        run: npm install && node scripts/link-workspaces.mjs
 
       - name: Typecheck
         run: npm run check
 
-      - name: Build admin bundle
-        run: npm run build -w apps/admin
+      - name: Build site and offline admin bundle
+        run: npm run build
+
+      - name: Verify Capacitor sync
+        run: npx cap sync
 
       - name: Run unit tests
         run: npm test

@@ -84,7 +84,7 @@ define(['./workbox-8d0d8005'], (function (workbox) { 'use strict';
     "revision": "49cbd4be7c63127cfa99e158a3abdc3b"
   }, {
     "url": "index.html",
-    "revision": "e50bb84cad917c094ef24939852ce8af"
+    "revision": "4bb6bb7b3e4ffce212d9b87336f163a1"
   }, {
     "url": "icon.svg",
     "revision": "fbd06e78b717c14689bf128c24d0d251"
@@ -98,25 +98,25 @@ define(['./workbox-8d0d8005'], (function (workbox) { 'use strict';
     "url": "apple-touch-icon.png",
     "revision": "07d857d8f76a54cdd70db9fba44326a8"
   }, {
-    "url": "assets/rich-text-editor-Dxly38OY.js",
+    "url": "assets/rich-text-editor-BiIBTm2o.js",
     "revision": null
   }, {
-    "url": "assets/quill.snow-KeOAQ3y8.js",
+    "url": "assets/quill.snow-DxS_hAU9.js",
     "revision": null
   }, {
     "url": "assets/quill-DVB7LGv8.css",
     "revision": null
   }, {
-    "url": "assets/index-gcfO1OWs.js",
+    "url": "assets/index-BNwCHrbJ.js",
     "revision": null
   }, {
     "url": "assets/index-4WIgW5cy.css",
     "revision": null
   }, {
-    "url": "assets/dashboard-v2-CUvex-LF.js",
+    "url": "assets/dashboard-v2-mVKLnkPo.js",
     "revision": null
   }, {
-    "url": "assets/collection-review-prototype-Dztp-k80.js",
+    "url": "assets/collection-review-prototype-BzXetEz-.js",
     "revision": null
   }, {
     "url": "assets/collection-review-prototype-BWimBqWm.css",
