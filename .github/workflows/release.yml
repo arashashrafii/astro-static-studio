@@ -316,13 +316,21 @@ jobs:
           generate_release_notes: true
           files: all-artifacts/*
           body: |
-            ### خروجی‌های رسمی Astro Static Studio (${{ needs.prepare.outputs.tag }})
+            ### Official Astro Static Studio Builds (${{ needs.prepare.outputs.tag }})
 
-            - **Android (`astro-static-studio.apk`)**: اپلیکیشن مستقل ۱۰۰٪ آفلاین (ساخته‌شده با `npm run build` + Capacitor).
-            - **iOS (`astro-static-studio*.ipa` و `astro-static-studio.xcarchive.zip`)**: خروجی مستقل iOS آمادهٔ امضا و نصب.
-            - **Node / npm (`.tgz`)**: بستهٔ قابل نصب روی **Windows / macOS / Linux**:
-              ```bash
-              npx astro-static-studio
-              # یا نصب سراسری:
-              npm install -g astro-static-studio && astro-studio
-              ```
+            - **Android (`astro-static-studio.apk`)**: Standalone offline app built with `npm run build` and Capacitor.
+            - **iOS (`astro-static-studio-unsigned.ipa` and `astro-static-studio.xcarchive.zip`)**: Standalone iOS build, ready for signing and installation.
+            - **Node.js / npm (`.tgz`)**: Installable package for **Windows, macOS, and Linux**.
+
+            Run without a global installation:
+
+            ```bash
+            npx astro-static-studio
+            ```
+
+            Or install globally:
+
+            ```bash
+            npm install -g astro-static-studio
+            astro-studio
+            ```
