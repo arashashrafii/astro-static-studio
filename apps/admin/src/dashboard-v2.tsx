@@ -6,6 +6,7 @@ import {readContentDraft} from './draft.js';
 import {ThemeSettingsPanel} from './theme-settings-panel.js';
 import {computeAnalyticsV2,searchContentV2} from './analytics-search.js';
 import {OfflineIndicator} from './pwa-install.js';
+import {requestApiBlob,requestApiJson} from './api-client.js';
 import {exportOfflineMediaMap,getOfflineMediaStats,importOfflineMediaMap,resolveMediaSrc,saveOfflineMedia,subscribeOfflineMedia} from './offline-media.js';
 import {buildOfflinePreviewHtml} from './offline-preview.js';
 
@@ -47,10 +48,7 @@ function tagFields(collection:CollectionV2){
 }
 
 async function request(path:string,options:RequestInit={}){
- const response=await fetch('/api/'+path,options);
- const result=await response.json().catch(()=>({}));
- if(!response.ok)throw new Error(result.error||'خطای ارتباط');
- return result;
+ return requestApiJson<any>('/api/'+path,options);
 }
 function newId(){return crypto.randomUUID()}
 function slugify(value:string){return value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
@@ -94,7 +92,7 @@ function OfflineImg({src,alt,className}:{src:string;alt:string;className?:string
 
 function MediaGalleryEditor({images,onChange,label='گالری تصاویر',single=false,readOnly=false}:{images:ImageValue[];onChange(images:ImageValue[]):void;label?:string;single?:boolean;readOnly?:boolean}){
  const [pending,setPending]=useState<{src:string;alt:string}>();const [title,setTitle]=useState('');const [busy,setBusy]=useState(false);const [error,setError]=useState('');
- async function upload(file?:File){if(!file)return;setBusy(true);setError('');try{const form=new FormData();form.append('image',file);const response=await fetch('/api/media',{method:'POST',body:form});const result=await response.json();if(!response.ok)throw new Error(result.error||'بارگذاری تصویر انجام نشد.');setPending({src:result.src,alt:''});setTitle('')}catch{try{const offline=await saveOfflineMedia(file);setPending({src:offline.src,alt:''});setTitle('')}catch(offlineReason){setError(offlineReason instanceof Error?offlineReason.message:'بارگذاری تصویر انجام نشد.')}}finally{setBusy(false)}}
+ async function upload(file?:File){if(!file)return;setBusy(true);setError('');try{const form=new FormData();form.append('image',file);const result=await requestApiJson<{src?:string}>('/api/media',{method:'POST',body:form},'بارگذاری تصویر انجام نشد.');if(typeof result.src!=='string')throw new Error('بارگذاری تصویر انجام نشد.');setPending({src:result.src,alt:''});setTitle('')}catch{try{const offline=await saveOfflineMedia(file);setPending({src:offline.src,alt:''});setTitle('')}catch(offlineReason){setError(offlineReason instanceof Error?offlineReason.message:'بارگذاری تصویر انجام نشد.')}}finally{setBusy(false)}}
  function add(event:React.FormEvent){event.preventDefault();if(!pending)return;const image={...pending,alt:'',...(title.trim()?{title:title.trim()}:{})};onChange(single?[image]:[...images,image]);setPending(undefined);setTitle('')}
  return <section className="v2-media-control"><strong>{label}</strong>{images.length>0&&<div className="v2-media-list">{images.map((image,index)=><article key={`${image.src}-${index}`}><OfflineImg src={image.src} alt={image.alt??''}/><label>عنوان تصویر <span className="optional">(اختیاری)</span><input disabled={readOnly} maxLength={500} value={image.title??''} onChange={event=>onChange(images.map((item,itemIndex)=>itemIndex===index?{...item,title:event.target.value||undefined}:item))}/></label>{!readOnly&&<div className="actions image-actions"><button type="button" className="icon-button" aria-label="انتقال تصویر به بالا" title="انتقال تصویر به بالا" disabled={index===0} onClick={()=>{const next=[...images];[next[index-1],next[index]]=[next[index],next[index-1]];onChange(next)}}><NavGlyph name="up"/></button><button type="button" className="icon-button" aria-label="انتقال تصویر به پایین" title="انتقال تصویر به پایین" disabled={index===images.length-1} onClick={()=>{const next=[...images];[next[index],next[index+1]]=[next[index+1],next[index]];onChange(next)}}><NavGlyph name="down"/></button><button type="button" className="icon-button danger" aria-label="حذف تصویر" title="حذف تصویر" onClick={()=>onChange(images.filter((_,itemIndex)=>itemIndex!==index))}><NavGlyph name="delete"/></button></div>}</article>)}</div>}{!readOnly&&(!single||images.length===0)&&<label className="upload v2-upload-button"><NavGlyph name="add"/><span>افزودن تصویر</span><input className="v2-visually-hidden-file" aria-label="انتخاب تصویر" type="file" accept="image/jpeg,image/png" disabled={busy} onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value='';void upload(file)}}/></label>}{busy&&<p role="status" className="hint">در حال بارگذاری…</p>}{error&&<p role="alert" className="status-error">{error}</p>}{pending&&<form className="rich-image-alt" onSubmit={add}><label>عنوان تصویر <span className="optional">(اختیاری)</span><input autoFocus maxLength={500} value={title} onChange={event=>setTitle(event.target.value)} placeholder="مثلاً: نمایی از اثر"/></label><div className="actions"><button type="submit">افزودن تصویر</button><button type="button" onClick={()=>setPending(undefined)}>لغو</button></div></form>}</section>;
 }
@@ -306,9 +304,7 @@ export default function DashboardV2({initialContent}:{initialContent:ContentV2})
 
  async function downloadBackup(){
   try{
-   const response=await fetch('/api/backup');
-   if(!response.ok)throw new Error('server');
-   const blob=await response.blob();
+   const blob=await requestApiBlob('/api/backup',{},'application/json');
    const url=URL.createObjectURL(blob);
    const link=document.createElement('a');
    link.href=url;

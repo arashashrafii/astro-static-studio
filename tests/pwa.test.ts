@@ -94,3 +94,51 @@ test('Android install prompts are removed and native Capacitor Android + iOS + G
   assert.match(releaseWorkflow, /softprops\/action-gh-release/);
 });
 
+test('requestApiJson and requestApiBlob reject 200 OK HTML SPA fallback responses so Capacitor APK falls back to offline storage', async () => {
+  const { isBundledMobileRuntime, requestApiBlob, requestApiJson } = await import('../apps/admin/src/api-client.js');
+
+  const originalFetch = globalThis.fetch;
+  const originalWindow = (globalThis as { window?: unknown }).window;
+
+  try {
+    (globalThis as { window?: unknown }).window = {
+      location: { protocol: 'http:', hostname: '127.0.0.1', port: '3000' },
+    };
+    assert.equal(isBundledMobileRuntime(), false);
+
+    // Simulate Capacitor WebViewLocalServer returning 200 OK index.html for /api/content
+    globalThis.fetch = (async () =>
+      new Response('<!doctype html><html><body>splash</body></html>', {
+        status: 200,
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      })) as typeof fetch;
+
+    await assert.rejects(() => requestApiJson('/api/content'), /JSON/);
+    await assert.rejects(() => requestApiBlob('/api/backup', {}, 'application/json'), /server/);
+
+    // Simulate real API error JSON
+    globalThis.fetch = (async () =>
+      new Response(JSON.stringify({ error: 'اسلاگ تکراری است' }), {
+        status: 400,
+        headers: { 'content-type': 'application/json' },
+      })) as typeof fetch;
+
+    await assert.rejects(() => requestApiJson('/api/content'), /اسلاگ تکراری است/);
+
+    // Simulate Capacitor native bundled APK (https://localhost without port)
+    (globalThis as { window?: unknown }).window = {
+      Capacitor: { isNativePlatform: () => true },
+      location: { protocol: 'https:', hostname: 'localhost', port: '' },
+    };
+    assert.equal(isBundledMobileRuntime(), true);
+    await assert.rejects(() => requestApiJson('/api/content'), /آفلاین/);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalWindow === undefined) {
+      delete (globalThis as { window?: unknown }).window;
+    } else {
+      (globalThis as { window?: unknown }).window = originalWindow;
+    }
+  }
+});
+

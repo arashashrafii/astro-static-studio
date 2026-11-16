@@ -1,6 +1,7 @@
-import React, {lazy,Suspense,useEffect,useState} from 'react';
+import React, {Component,lazy,Suspense,useEffect,useState,type ReactNode} from 'react';
 import {createRoot} from 'react-dom/client';
 import {ContentV2Schema,type ContentV2} from '@astro-static-studio/contracts/content-v2';
+import {requestApiJson} from './api-client.js';
 import {hydrateOfflineMediaMap} from './offline-media.js';
 import './style.css';
 
@@ -26,10 +27,7 @@ const CollectionReviewPrototype=lazy(()=>import('./collection-review-prototype.j
 const DashboardV2=lazy(()=>import('./dashboard-v2.js'));
 
 async function request(path:string,options:RequestInit={}){
- const response=await fetch('/api/'+path,options);
- const value=await response.json().catch(()=>({}));
- if(!response.ok)throw new Error(value.error||'خطای ارتباط');
- return value;
+ return requestApiJson('/api/'+path,options);
 }
 
 function AppSplash({status,onRetry,isError=false}:{status:string;onRetry?:()=>void;isError?:boolean}){
@@ -119,5 +117,20 @@ function StudioApp(){
  return <Suspense fallback={<AppSplash status="در حال بارگذاری پیشخوان…"/>}><DashboardV2 initialContent={content}/></Suspense>;
 }
 
+class StudioErrorBoundary extends Component<{children:ReactNode},{error:string}>{
+ state={error:''};
+ static getDerivedStateFromError(reason:unknown){
+  return {error:reason instanceof Error&&reason.message?reason.message:'خطای غیرمنتظره در بارگذاری استودیو'};
+ }
+ render(){
+  if(this.state.error)return <AppSplash status={this.state.error} isError onRetry={()=>location.reload()}/>;
+  return this.props.children;
+ }
+}
+
 const isCollectionReview = new URLSearchParams(window.location.search).get('review') === 'collections';
-createRoot(document.getElementById('root')!).render(isCollectionReview ? <Suspense fallback={<AppSplash status="در حال بارگذاری نمونهٔ بازبینی…"/>}><CollectionReviewPrototype/></Suspense> : <StudioApp/>);
+createRoot(document.getElementById('root')!).render(
+ <StudioErrorBoundary>
+  {isCollectionReview ? <Suspense fallback={<AppSplash status="در حال بارگذاری نمونهٔ بازبینی…"/>}><CollectionReviewPrototype/></Suspense> : <StudioApp/>}
+ </StudioErrorBoundary>
+);

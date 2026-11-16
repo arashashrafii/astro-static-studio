@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { requestApiJson } from './api-client.js';
 
 type InstalledTheme = { id: string; name: string; version: string };
 type ThemeInfo = {
@@ -38,11 +39,8 @@ function presentDiagnostic(message: string) {
   return message;
 }
 
-async function requestTheme(path: string, options: RequestInit = {}) {
-  const response = await fetch(`/api/theme${path}`, options);
-  const body = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(body.error ?? 'تنظیم قالب دریافت نشد.');
-  return body;
+async function requestTheme<T = ThemeInfo>(path: string, options: RequestInit = {}) {
+  return requestApiJson<T>(`/api/theme${path}`, options, 'تنظیم قالب دریافت نشد.');
 }
 
 export function ThemeSettingsPanel() {

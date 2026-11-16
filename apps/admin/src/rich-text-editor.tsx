@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import Quill from 'quill';
 import ImageBlot from 'quill/formats/image';
 import 'quill/dist/quill.snow.css';
+import {requestApiJson} from './api-client.js';
 import {resolveMediaSrc, saveOfflineMedia} from './offline-media.js';
 
 type ImagePlacement = 'inline'|'wrap-start'|'wrap-end'|'block-start'|'block-center'|'block-end';
@@ -176,9 +177,8 @@ export function RichTextEditor({value, body, direction='rtl', imageMode='inline'
     setUploadError('');
     try {
       const form = new FormData(); form.append('image',file);
-      const response = await fetch('/api/media',{method:'POST',body:form});
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'بارگذاری تصویر انجام نشد.');
+      const result = await requestApiJson<{src?:string}>('/api/media',{method:'POST',body:form},'بارگذاری تصویر انجام نشد.');
+      if (typeof result.src !== 'string') throw new Error('بارگذاری تصویر انجام نشد.');
       insertUploadedImage({src:result.src,alt:''});
     } catch {
       try {
