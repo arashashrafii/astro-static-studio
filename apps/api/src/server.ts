@@ -107,9 +107,10 @@ app.use('/preview',async(req,res,next)=>{
   next();
  }catch(error){next(error);}
 });
-app.use(express.static(adminDistDirectory,{setHeaders(res,filePath){if(filePath.endsWith('sw.js')||filePath.endsWith('registerSW.js')){res.setHeader('Cache-Control','no-cache, no-store, must-revalidate');}else if(filePath.endsWith('.webmanifest')){res.setHeader('Content-Type','application/manifest+json; charset=utf-8');res.setHeader('Cache-Control','no-cache');}}}));
+app.use(express.static(adminDistDirectory,{setHeaders(res,filePath){if(filePath.endsWith('sw.js')||filePath.endsWith('registerSW.js')||filePath.endsWith('index.html')){res.setHeader('Cache-Control','no-cache, no-store, must-revalidate');}else if(filePath.endsWith('.webmanifest')){res.setHeader('Content-Type','application/manifest+json; charset=utf-8');res.setHeader('Cache-Control','no-cache');}}}));
 app.use((req,res,next)=>{
  if(req.method!=='GET'||req.path.startsWith('/api/')||req.path.startsWith('/media/')||req.path.startsWith('/preview')){next();return;}
+ res.setHeader('Cache-Control','no-cache, no-store, must-revalidate');
  res.sendFile(resolve(adminDistDirectory,'index.html'),error=>{if(error)next();});
 });
 app.use((err:unknown,_req:express.Request,res:express.Response,_next:express.NextFunction)=>{console.error(err);res.status(400).json({error:err instanceof Error?err.message:'خطای درخواست'});});

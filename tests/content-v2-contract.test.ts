@@ -292,3 +292,41 @@ test('v1 text maps to structured text without changing line breaks or markup-lik
   const parsed = ContentV2Schema.parse(migrated);
   assert.equal(collectionItemDescription(parsed.collections[0], parsed.items[0]), 'Legacy summary');
 });
+
+test('collectionView blocks accept a specific itemId from the same collection and reject mismatched or unknown itemIds', () => {
+  const withSingleItem = structuredClone(validContent());
+  withSingleItem.pages[0].blocks[0].itemId = itemId;
+  const parsed = ContentV2Schema.safeParse(withSingleItem);
+  assert.equal(parsed.success, true);
+
+  const unknownItem = structuredClone(validContent());
+  unknownItem.pages[0].blocks[0].itemId = '99999999-9999-4999-8999-999999999999';
+  assert.equal(ContentV2Schema.safeParse(unknownItem).success, false);
+
+  const otherCollectionId = '20000000-0000-4000-8000-000000000099';
+  const otherItemId = '20000000-0000-4000-8000-000000000100';
+  const crossCollection = structuredClone(validContent());
+  crossCollection.collections.push({
+    id: otherCollectionId,
+    slug: 'notes',
+    routeBase: 'notes',
+    name: 'Notes',
+    kind: 'content',
+    listLayout: 'list',
+    loading: 'show-more',
+    pageSize: 12,
+    fields: [{ id: '20000000-0000-4000-8000-000000000101', type: 'text', format: 'plain', label: 'Date' }],
+  });
+  crossCollection.items.push({
+    id: otherItemId,
+    collectionId: otherCollectionId,
+    slug: 'note-1',
+    published: true,
+    title: 'Note 1',
+    description: { source: 'manual', value: 'Short note' },
+    values: {},
+  });
+  crossCollection.pages[0].blocks[0].itemId = otherItemId;
+  assert.equal(ContentV2Schema.safeParse(crossCollection).success, false);
+});
+

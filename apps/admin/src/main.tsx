@@ -6,6 +6,22 @@ import './style.css';
 
 void hydrateOfflineMediaMap();
 
+if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
+ const hadController = Boolean(navigator.serviceWorker.controller);
+ let reloading = false;
+ navigator.serviceWorker.addEventListener('controllerchange', () => {
+  if (hadController && !reloading) {
+   reloading = true;
+   window.location.reload();
+  }
+ });
+ void navigator.serviceWorker.getRegistrations().then((registrations) => {
+  for (const registration of registrations) {
+   void registration.update().catch(() => {});
+  }
+ });
+}
+
 const CollectionReviewPrototype=lazy(()=>import('./collection-review-prototype.js'));
 const DashboardV2=lazy(()=>import('./dashboard-v2.js'));
 

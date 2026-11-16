@@ -32,7 +32,7 @@ acceptance and offline/PWA operation remain unverified. See
 selection (#16), generic Collection schema (#18), and experience/permission separation
 (#25) require explicit owner approval before their corresponding product changes.
 
-**Status:** Desktop local editing/build, setup/recovery and Cloudflare QA preview publishing exist. Milestone 1 non-technical usability validation was accepted by the owner and issue #5 is closed. M2 preview publishing is complete with owner-confirmed reachability. Content V2 is the owner-selected target, with migration, dashboard and renderer work present in the uncommitted local workspace; issue #19 remains open for migration/restore and browser acceptance evidence. Native mobile builds remain later work.
+**Status (Current Workspace):** Content V2 (Pages, Collections, rich text, WebP media, RTL/LTR theme support, and V1 migration/backup compatibility), cross-platform Node/npm CLI (`Windows/macOS/Linux`), standalone 100% offline Capacitor Android (`astro-static-studio.apk`) & iOS (`ios/`) projects, and the automated GitHub Actions Release workflow (`.github/workflows/release.yml`) are implemented. Physical Android/iOS device acceptance on the generated Release artifacts and Cloudflare production publishing remain subject to owner verification.
 
 ## Goal
 Deliver a simple, mobile-first CMS for Astro websites. Customers can edit projects, text and pictures, then publish a static site without using Git or a terminal.

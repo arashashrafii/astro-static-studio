@@ -1,6 +1,6 @@
-# Architecture Proposal
+# Architecture
 
-**Status: committed desktop baseline is Content V1; local target is Content V2 and remains uncommitted.** The local editor, file-backed API, Astro renderer, image conversion, safe local build path and first Cloudflare Pages Direct Upload adapter exist in the project baseline. The current working tree contains the V2 Collections schema, migration, static list/detail routes and dashboard forms. These local changes are not a committed or released baseline; issue #19 remains open for migration and browser acceptance. A QA preview was uploaded and owner-confirmed accessible (see M2_VALIDATION). Production publishing, template selection and phone-native full Astro builds remain open.
+**Status: Content V2 is active across the workspace alongside cross-platform Node/npm CLI, 100% offline Capacitor Android (`astro-static-studio.apk`) and iOS packaging, and automated GitHub Releases.** The local editor, file-backed API, Astro renderer with bundled `Atelier v1.0.0` theme, client/server WebP conversion, safe local build path, and Cloudflare Pages Direct Upload adapter are implemented. Production publishing and physical-device acceptance testing remain subject to owner verification.
 
 ## Boundaries
 1. **CMS UI:** A responsive React + TypeScript/Vite dashboard and PWA shell for one local owner. No Admin/Editor role split is currently implemented.
@@ -13,17 +13,18 @@ Data flow:
 **Editor -> CMS forms -> validation + secure write -> content version -> build runner -> Astro static output -> publishing adapter -> static host**
 
 ## Installation model
-Start with a separate local installation/repository for each customer. Avoid a central multi-tenant platform and a Studio-hosted backend. The local owner authorizes publishing; credentials must stay out of browser code.
+- **Desktop CLI (Windows, macOS, Linux):** Distributed as a standard Node.js/npm package (`npx astro-static-studio` / `astro-studio`). Runs locally on the owner's device with zero central Studio backend.
+- **Mobile standalone apps (Android & iOS):** Packaged via Capacitor (`android/` and `ios/`) so editing, WebP conversion (`IndexedDB`), bundled default theme (`Atelier v1.0.0`), and preview work 100% offline. Internet is only required for remote hosting deployment or downloading future online themes.
 
 ## Technical baseline
 - Public site: **Astro** with pre-rendered routes and components.
-- CMS: **React + TypeScript + Vite**, with a responsive PWA dashboard shell in `apps/admin`.
-- Content: V1 and V2 are Studio JSON contract versions, not Astro Content Collections. V1 has `page`/`project` entries. The local V2 target separates pages, collection definitions and items. The current working tree validates both; the committed baseline remains V1. No Astro Content Layer loader is wired in yet.
-- Images: select JPEG/PNG on mobile/desktop, process to WebP before committing where supported, choose quality/dimensions, preserve clarity and alt text. Build-time resizing remains available for theme-specific image sizes.
-- Publishing: local Astro build plus a Cloudflare Pages Direct Upload adapter. The trusted local Node process manages credentials and upload; GitHub Actions or a hosted runner is not required.
-- First provider: owner-approved Cloudflare Pages Direct Upload via Wrangler. QA preview upload was verified against deployment metadata and owner-confirmed accessible; production deployment was not verified. See [PUBLISHING](PUBLISHING.md) and [M2_VALIDATION](M2_VALIDATION.md). Direct Upload projects cannot later switch to Git integration.
-- Theme contract: content schema remains stable and each theme maps supported page and block types to its own components.
-- Local development: dashboard `127.0.0.1:5173`, Astro preview `127.0.0.1:4321`, Node API `127.0.0.1:4322`. The local single-user workflow has no hosted authentication. Installability and mobile packaging are separate platform checks.
+- CMS: **React + TypeScript + Vite**, with Service Worker auto-update (`apps/admin`).
+- Content: **Content V2** (`content/content.json`) separating pages, collection definitions, and items, with V1 migration/backup compatibility retained.
+- Images: select JPEG/PNG on mobile or desktop, process to WebP (Sharp on Node API; browser Canvas + `IndexedDB` when offline on mobile), preserve originals and alt text.
+- Publishing: local Astro build plus a Cloudflare Pages Direct Upload adapter (`apps/api/src/publishing.ts`), and automated multi-platform artifact releases via `.github/workflows/release.yml`.
+- First provider: owner-approved Cloudflare Pages Direct Upload via Wrangler. QA preview upload was verified against deployment metadata and owner-confirmed accessible; production deployment remains subject to explicit confirmation. See [PUBLISHING](PUBLISHING.md) and [M2_VALIDATION](M2_VALIDATION.md).
+- Theme contract: `ThemeContractV1` and bundled `Atelier v1.0.0` (`packages/theme`), supporting LTR and RTL site configuration (`<html lang dir>`).
+- Local development & CLI runtime: unified Express server on `PORT=3000` (`http://localhost:3000`) serving the built admin UI (`apps/admin/dist`), `/media`, `/preview`, and `/api`.
 
 ## Security and reliability
 - **Never place repository write tokens or hosting secrets in dashboard JavaScript.** Use a secure local authorization flow or a narrowly scoped broker only if the target provider requires it.
@@ -33,8 +34,8 @@ Start with a separate local installation/repository for each customer. Avoid a c
 - Handle concurrent edits, upload failures, and build failures explicitly.
 - Media storage inside a Git repository is acceptable for a small prototype; monitor growth and move large media to a suitable store if needed.
 
-## PWA design requirements
-One intended interface for desktop and future **Android**, with iOS deferred; only the desktop workflow has been implemented and exercised. Prefer touch-friendly controls and quick photo uploads, with readable forms and responsive galleries. Provide browser-specific installation guidance when useful. Avoid reliance on unsupported background sync or offline publishing features. Offline editing is a future option, not an MVP promise.
+## Mobile & Offline Design Requirements
+One responsive interface across desktop, **Android** (`astro-static-studio.apk`), and **iOS** (Capacitor app using `iosScheme: "capacitor"`). Android PWA install buttons/prompts are intentionally excluded because Android is distributed directly as a native APK. All core editing, media WebP conversion (`IndexedDB`), bundled `Atelier v1.0.0` theme rendering, and local preview run **100% offline**; network connectivity is only required when publishing to a remote static host or downloading future online templates.
 
 ## Site rendering
 Public pages must work on simple static file hosting without server-side rendering. An email link or external contact link is fine; a true server-submitted form would need a separate service. Keep useful existing routes if migration benefits from them.

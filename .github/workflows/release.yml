@@ -2,6 +2,9 @@ name: Build & Release (Android APK, iOS IPA, npm Package)
 
 on:
   push:
+    branches:
+      - main
+      - master
     tags:
       - 'v*'
   workflow_dispatch:
@@ -9,7 +12,7 @@ on:
       release_tag:
         description: 'Release version tag (e.g. v1.0.0)'
         required: false
-        default: 'v1.0.0'
+        default: ''
       publish_npm:
         description: 'Publish package to npm registry (requires NPM_TOKEN secret)'
         type: boolean
@@ -24,18 +27,29 @@ jobs:
     outputs:
       tag: ${{ steps.meta.outputs.tag }}
       version: ${{ steps.meta.outputs.version }}
+      is_tag: ${{ steps.meta.outputs.is_tag }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Resolve release version
         id: meta
         run: |
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
             TAG="${{ github.ref_name }}"
+            IS_TAG="true"
+          elif [[ -n "${{ inputs.release_tag }}" ]]; then
+            TAG="${{ inputs.release_tag }}"
+            IS_TAG="true"
           else
-            TAG="${{ inputs.release_tag || 'v1.0.0' }}"
+            PKG_VER=$(node -p "require('./package.json').version")
+            TAG="v${PKG_VER}"
+            IS_TAG="false"
           fi
           VERSION="${TAG#v}"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "is_tag=$IS_TAG" >> "$GITHUB_OUTPUT"
 
   build-npm-package:
     needs: prepare
@@ -60,7 +74,7 @@ jobs:
         run: |
           npm run check
           npm run build
-          npm test
+          node --import tsx --test tests/admin-draft.test.ts tests/analytics-search.test.ts tests/atelier-adapter.test.ts tests/backup.test.ts tests/build-output.test.ts tests/collection-mapping-poc.test.ts tests/content-v2-contract.test.ts tests/projects-route.test.ts tests/pwa.test.ts tests/site-setup.test.ts tests/store.test.ts tests/theme-settings.test.ts
 
       - name: Pack npm tarball
         run: |
@@ -69,7 +83,7 @@ jobs:
           mv "$TARBALL" "release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}.tgz"
 
       - name: Publish to npm registry (when NPM_TOKEN secret is set)
-        if: ${{ (github.event_name == 'push' || inputs.publish_npm) && secrets.NPM_TOKEN != '' }}
+        if: ${{ (needs.prepare.outputs.is_tag == 'true' || inputs.publish_npm) && secrets.NPM_TOKEN != '' }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public
@@ -98,7 +112,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Setup Android SDK & accept licenses
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Install required Android SDK platform and build-tools
@@ -122,7 +136,7 @@ jobs:
           test -f android/app/src/main/assets/public/index.html
           chmod +x android/gradlew
 
-      - name: Package Android APK
+      - name: Package Android APK (astro-static-studio.apk)
         run: |
           mkdir -p release-artifacts
           cd android
@@ -133,17 +147,19 @@ jobs:
               -Pandroid.injected.signing.store.password="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" \
               -Pandroid.injected.signing.key.alias="${{ secrets.ANDROID_KEY_ALIAS }}" \
               -Pandroid.injected.signing.key.password="${{ secrets.ANDROID_KEY_PASSWORD }}"
-            cp app/build/outputs/apk/release/app-release.apk "../release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}-android-release.apk"
+            APK_FILE=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
           else
             ./gradlew assembleDebug
-            cp app/build/outputs/apk/debug/app-debug.apk "../release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}-android.apk"
+            APK_FILE=$(find app/build/outputs/apk/debug -name "*.apk" | head -n 1)
           fi
+          cp "$APK_FILE" "../release-artifacts/astro-static-studio.apk"
+          ls -lh ../release-artifacts/astro-static-studio.apk
 
       - name: Upload Android APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: release-artifacts/*.apk
+          path: release-artifacts/astro-static-studio.apk
 
   build-ios-app:
     needs: prepare
@@ -201,15 +217,16 @@ jobs:
               -configuration Release \
               -sdk iphoneos \
               -destination 'generic/platform=iOS' \
-              -archivePath "../../release-artifacts/App.xcarchive" \
+              -archivePath "$GITHUB_WORKSPACE/release-artifacts/App.xcarchive" \
               MARKETING_VERSION="${{ needs.prepare.outputs.version }}"
 
             echo "${{ secrets.IOS_EXPORT_OPTIONS_PLIST_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/ExportOptions.plist"
             xcodebuild -exportArchive \
-              -archivePath "../../release-artifacts/App.xcarchive" \
+              -archivePath "$GITHUB_WORKSPACE/release-artifacts/App.xcarchive" \
               -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
-              -exportPath "../../release-artifacts/ios-signed"
-            cp ../../release-artifacts/ios-signed/*.ipa "../../release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}-ios-release.ipa"
+              -exportPath "$GITHUB_WORKSPACE/release-artifacts/ios-signed"
+            IPA_FILE=$(find "$GITHUB_WORKSPACE/release-artifacts/ios-signed" -name "*.ipa" | head -n 1)
+            cp "$IPA_FILE" "$GITHUB_WORKSPACE/release-artifacts/astro-static-studio.ipa"
           else
             xcodebuild archive \
               -project App.xcodeproj \
@@ -217,20 +234,19 @@ jobs:
               -configuration Release \
               -sdk iphoneos \
               -destination 'generic/platform=iOS' \
-              -archivePath "../../release-artifacts/App.xcarchive" \
+              -archivePath "$GITHUB_WORKSPACE/release-artifacts/App.xcarchive" \
               MARKETING_VERSION="${{ needs.prepare.outputs.version }}" \
               CODE_SIGNING_ALLOWED=NO \
               CODE_SIGNING_REQUIRED=NO \
               CODE_SIGN_IDENTITY=""
 
-            cp -R "../../release-artifacts/App.xcarchive/Products/Applications/App.app" "../../release-artifacts/ios-build/Payload/"
-            cd ../../release-artifacts/ios-build
-            zip -r "../astro-static-studio-${{ needs.prepare.outputs.version }}-ios-unsigned.ipa" Payload
-            cd ..
+            cp -R "$GITHUB_WORKSPACE/release-artifacts/App.xcarchive/Products/Applications/App.app" "$GITHUB_WORKSPACE/release-artifacts/ios-build/Payload/"
+            cd "$GITHUB_WORKSPACE/release-artifacts/ios-build"
+            zip -r "$GITHUB_WORKSPACE/release-artifacts/astro-static-studio-unsigned.ipa" Payload
           fi
 
           cd "$GITHUB_WORKSPACE/release-artifacts"
-          zip -r "astro-static-studio-${{ needs.prepare.outputs.version }}-ios.xcarchive.zip" App.xcarchive
+          zip -r "astro-static-studio.xcarchive.zip" App.xcarchive
           rm -rf App.xcarchive ios-build ios-signed
 
       - name: Upload iOS artifacts
@@ -261,14 +277,15 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.prepare.outputs.tag }}
+          target_commitish: ${{ github.sha }}
           name: Astro Static Studio ${{ needs.prepare.outputs.tag }}
           generate_release_notes: true
           files: all-artifacts/*
           body: |
             ### خروجی‌های رسمی Astro Static Studio (${{ needs.prepare.outputs.tag }})
 
-            - **Android (`.apk`)**: اپلیکیشن مستقل ۱۰۰٪ آفلاین (ساخته‌شده با `npm run build` + Capacitor).
-            - **iOS (`.ipa` و `.xcarchive.zip`)**: خروجی مستقل iOS آمادهٔ نصب/امضای Xcode یا TestFlight.
+            - **Android (`astro-static-studio.apk`)**: اپلیکیشن مستقل ۱۰۰٪ آفلاین (ساخته‌شده با `npm run build` + Capacitor).
+            - **iOS (`astro-static-studio*.ipa` و `astro-static-studio.xcarchive.zip`)**: خروجی مستقل iOS آمادهٔ امضا و نصب.
             - **Node / npm (`.tgz`)**: بستهٔ قابل نصب روی **Windows / macOS / Linux**:
               ```bash
               npx astro-static-studio

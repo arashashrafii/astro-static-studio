@@ -50,12 +50,23 @@ function renderBlock(block: PageBlockV2, data: ContentV2): string {
   if (block.type === 'collectionView') {
     const collection = data.collections.find((c) => c.id === block.collectionId);
     if (!collection) return '';
+    const galleryField = collection.fields.find((f) => f.type === 'gallery');
+    const richField = collection.fields.find((f) => f.type === 'text' && f.format === 'rich');
+    if (block.itemId) {
+      const item = data.items.find((entry) => entry.id === block.itemId && entry.collectionId === collection.id && entry.published);
+      if (!item) return '';
+      const galleryImgs = galleryField && Array.isArray(item.values[galleryField.id]) ? (item.values[galleryField.id] as { src: string; alt: string; title?: string }[]) : [];
+      const cover = item.coverImage?.src ?? galleryImgs[0]?.src;
+      const richDoc = richField && item.values[richField.id] && typeof item.values[richField.id] === 'object' ? (item.values[richField.id] as RichTextDocumentV2) : undefined;
+      return `<article class="collection-block single-item-block"><h3>${escapeHtml(item.title || collection.name)}</h3>${cover ? `<img class="item-cover" src="${escapeHtml(resolveMediaSrc(cover))}" alt="${escapeHtml(item.title || '')}" />` : ''}${item.description.source === 'manual' && item.description.value ? `<p class="muted">${escapeHtml(item.description.value)}</p>` : ''}${richDoc ? `<div class="prose">${renderRichText(richDoc)}</div>` : ''}${galleryImgs.length && collection.presetId !== 'project' ? `<div class="gallery-grid">${galleryImgs.map((img) => `<figure class="gallery-item"><img src="${escapeHtml(resolveMediaSrc(img.src))}" alt="${escapeHtml(img.alt)}" />${img.title ? `<figcaption>${escapeHtml(img.title)}</figcaption>` : ''}</figure>`).join('')}</div>` : ''}</article>`;
+    }
     const items = data.items
       .filter((item) => item.collectionId === collection.id && item.published)
       .slice(0, block.limit ?? 12);
     return `<section class="collection-block"><h3>${escapeHtml(collection.name)}</h3><div class="collection-cards">${items
       .map((item) => {
-        const thumb = item.coverImage?.src;
+        const galleryImgs = galleryField && Array.isArray(item.values[galleryField.id]) ? (item.values[galleryField.id] as { src: string; alt: string }[]) : [];
+        const thumb = item.coverImage?.src ?? galleryImgs[0]?.src;
         return `<article class="card">${thumb ? `<img src="${escapeHtml(resolveMediaSrc(thumb))}" alt="${escapeHtml(item.title || '')}" />` : ''}<h4>${escapeHtml(item.title || 'بدون عنوان')}</h4>${item.description.source === 'manual' && item.description.value ? `<p>${escapeHtml(item.description.value)}</p>` : ''}</article>`;
       })
       .join('')}</div></section>`;
@@ -72,21 +83,6 @@ export function buildOfflinePreviewHtml(data: ContentV2): string {
     .map(
       (page) => `<section id="page-${escapeHtml(page.slug)}" class="site-page"><h2>${escapeHtml(page.title)}</h2>${page.blocks.map((block) => renderBlock(block, data)).join('\n')}</section>`,
     )
-    .join('\n');
-
-  const collectionsSection = data.collections
-    .map((collection) => {
-      const items = data.items.filter((i) => i.collectionId === collection.id && i.published);
-      if (!items.length) return '';
-      return `<section class="site-page"><h2>${escapeHtml(collection.name)}</h2><div class="collection-cards">${items
-        .map((item) => {
-          const galleryField = collection.fields.find((f) => f.type === 'gallery');
-          const galleryImgs = galleryField && Array.isArray(item.values[galleryField.id]) ? (item.values[galleryField.id] as { src: string; alt: string }[]) : [];
-          const cover = item.coverImage?.src ?? galleryImgs[0]?.src;
-          return `<article class="card">${cover ? `<img src="${escapeHtml(resolveMediaSrc(cover))}" alt="${escapeHtml(item.title || '')}" />` : ''}<h4>${escapeHtml(item.title || 'مورد')}</h4></article>`;
-        })
-        .join('')}</div></section>`;
-    })
     .join('\n');
 
   return `<!doctype html>
@@ -107,7 +103,7 @@ export function buildOfflinePreviewHtml(data: ContentV2): string {
   nav a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: .95rem; }
   .site-page { margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
   .site-page h2 { font-size: 1.3rem; margin: 0 0 14px; color: var(--accent); }
-  .prose img, .single-image img, .gallery-item img, .card img { max-width: 100%; height: auto; border-radius: 6px; display: block; }
+  .prose img, .single-image img, .gallery-item img, .card img, .item-cover { max-width: 100%; height: auto; border-radius: 6px; display: block; }
   .gallery-grid, .collection-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 12px; }
   figure { margin: 0; }
   figcaption { font-size: .85rem; opacity: .75; margin-top: 6px; }
@@ -125,8 +121,7 @@ export function buildOfflinePreviewHtml(data: ContentV2): string {
       </div>
       <nav>${nav}</nav>
     </header>
-    ${pageSections || '<p class="empty">هنوز صفحهٔ منتشرشده‌ای وجود ندارد.</p>'}
-    ${collectionsSection}
+    ${pageSections || '<p class="empty">هنوز صفحهٔ منتشرشده‌ای وجود ندارد. از بخش صفحه‌ها، یک صفحه بسازید و مجموعه یا پروژهٔ دلخواه را به آن اضافه کنید.</p>'}
   </div>
 </body>
 </html>`;

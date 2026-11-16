@@ -67,6 +67,8 @@ const CollectionViewSchema = z.object({
   /** Stable, theme-neutral identity for this page placement. Missing IDs are assigned by the versioned placement migration. */
   placementId: z.string().uuid().optional(),
   collectionId: z.string().uuid(),
+  /** Optional single item/project inside the collection to embed directly on a Page. */
+  itemId: z.string().uuid().optional(),
   view: z.enum(['grid', 'list', 'masonry']),
   categoryFieldId: z.string().uuid().optional(),
   categoryIds: z.array(z.string().uuid()).max(20).default([]),
@@ -187,27 +189,31 @@ export const ContentV2Schema = z.object({
     ctx.addIssue({ code: 'custom', path: ['items'], message: 'تعداد کل صفحه‌ها و موارد مجموعه از حد نسخهٔ نخست بیشتر است.' });
   }
   const ids = new Set<string>();
-  const paths = new Set<string>();
+  const paths = new Map<string, string>();
   const collectionById = new Map(content.collections.map(collection => [collection.id, collection]));
   const addUnique = (key: string, path: (string | number)[]) => {
     if (ids.has(key)) ctx.addIssue({ code: 'custom', path, message: 'شناسه تکراری است.' });
     ids.add(key);
   };
-  const addPath = (path: string, errorPath: (string | number)[]) => {
-    if (paths.has(path)) ctx.addIssue({ code: 'custom', path: errorPath, message: 'این نشانی از قبل استفاده شده است.' });
-    paths.add(path);
+  const addPath = (path: string, errorPath: (string | number)[], owner: string) => {
+    const existingOwner = paths.get(path);
+    if (existingOwner) {
+      ctx.addIssue({ code: 'custom', path: errorPath, message: `این نشانی (${path}) از قبل توسط ${existingOwner} استفاده شده است.` });
+    } else {
+      paths.set(path, owner);
+    }
   };
 
   content.pages.forEach((page, index) => {
     addUnique(page.id, ['pages', index, 'id']);
-    addPath(`/${page.slug}/`, ['pages', index, 'slug']);
+    addPath(`/${page.slug}/`, ['pages', index, 'slug'], `صفحهٔ «${page.title}»`);
     page.blocks.forEach((block, blockIndex) => {
       if (block.placementId) addUnique(block.placementId, ['pages', index, 'blocks', blockIndex, 'placementId']);
     });
   });
   content.collections.forEach((collection, index) => {
     addUnique(collection.id, ['collections', index, 'id']);
-    addPath(`/${collection.slug}/`, ['collections', index, 'slug']);
+    addPath(`/${collection.slug}/`, ['collections', index, 'slug'], `مجموعهٔ «${collection.name}»`);
     // Field IDs are unique within a collection; item values are scoped by collectionId.
     const fieldIds = new Set<string>();
     collection.fields.forEach((field, fieldIndex) => {
@@ -251,7 +257,7 @@ export const ContentV2Schema = z.object({
     if (item.description.source === 'auto' && !collection.excerptSourceFieldId) {
       ctx.addIssue({ code: 'custom', path: ['items', index, 'description', 'source'], message: 'برای توضیح خودکار، فیلد متن مبنا باید در مجموعه مشخص شود.' });
     }
-    addPath(`/${collection.routeBase}/${item.slug}/`, ['items', index, 'slug']);
+    addPath(`/${collection.routeBase}/${item.slug}/`, ['items', index, 'slug'], `مورد «${item.title || item.slug}»`);
 
     const definitions = new Map(collection.fields.map(field => [field.id, field]));
     for (const [fieldId, value] of Object.entries(item.values)) {
@@ -282,13 +288,21 @@ export const ContentV2Schema = z.object({
     if (block.type === 'collectionView') {
       const collection = collectionById.get(block.collectionId);
       if (!collection) ctx.addIssue({ code: 'custom', path: ['pages', pageIndex, 'blocks', blockIndex, 'collectionId'], message: 'مجموعهٔ این بخش پیدا نشد.' });
-      else if (block.categoryIds.length || block.categoryFieldId) {
-        const field = collection.fields.find(candidate => candidate.id === block.categoryFieldId);
-        if (!field || field.type !== 'category') {
-          ctx.addIssue({ code: 'custom', path: ['pages', pageIndex, 'blocks', blockIndex, 'categoryFieldId'], message: 'فیلتر باید به یک فیلد دسته‌بندی از همان مجموعه وصل باشد.' });
-        } else {
-          const allowedIds = new Set(field.categories.map(category => category.id));
-          if (block.categoryIds.some(id => !allowedIds.has(id))) ctx.addIssue({ code: 'custom', path: ['pages', pageIndex, 'blocks', blockIndex, 'categoryIds'], message: 'فیلتر شامل دسته‌ای بیرون از فیلد انتخاب‌شده است.' });
+      else {
+        if (block.itemId) {
+          const targetItem = content.items.find(item => item.id === block.itemId);
+          if (!targetItem || targetItem.collectionId !== collection.id) {
+            ctx.addIssue({ code: 'custom', path: ['pages', pageIndex, 'blocks', blockIndex, 'itemId'], message: 'پروژه یا مورد انتخاب‌شده در این مجموعه وجود ندارد.' });
+          }
+        }
+        if (block.categoryIds.length || block.categoryFieldId) {
+          const field = collection.fields.find(candidate => candidate.id === block.categoryFieldId);
+          if (!field || field.type !== 'category') {
+            ctx.addIssue({ code: 'custom', path: ['pages', pageIndex, 'blocks', blockIndex, 'categoryFieldId'], message: 'فیلتر باید به یک فیلد دسته‌بندی از همان مجموعه وصل باشد.' });
+          } else {
+            const allowedIds = new Set(field.categories.map(category => category.id));
+            if (block.categoryIds.some(id => !allowedIds.has(id))) ctx.addIssue({ code: 'custom', path: ['pages', pageIndex, 'blocks', blockIndex, 'categoryIds'], message: 'فیلتر شامل دسته‌ای بیرون از فیلد انتخاب‌شده است.' });
+          }
         }
       }
     }

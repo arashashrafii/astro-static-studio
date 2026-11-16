@@ -1,6 +1,6 @@
 # MVP Scope
 
-**Version status:** The committed baseline is V1. The current uncommitted workspace includes a V2 migration, dashboard and renderer; its local content is V2. V2 focused tests pass, while browser migration/CRUD acceptance remains open under issue #19. Later V1-only descriptions are historical baseline or acceptance context, not a complete description of the workspace.
+**Version status:** Content V2 is active across the workspace (pages, typed collections, rich text, WebP media, RTL/LTR settings, and V1 migration/backup compatibility). Cross-platform Node CLI (`Windows/macOS/Linux`) plus standalone 100% offline Capacitor Android (`astro-static-studio.apk`) and iOS packaging are implemented and built via GitHub Actions. Real-device APK/iOS acceptance and Cloudflare production publishing remain subject to owner verification.
 
 ## Goal
 Prove that a non-technical owner can manage a simple portfolio with **one Astro template** and a local React/TypeScript dashboard. Studio runs on the owner's device without a Studio-operated server or database. Sara Rahanjam is the sample output; do not build a universal site builder yet.
@@ -22,12 +22,12 @@ Prove that a non-technical owner can manage a simple portfolio with **one Astro 
 - The local single-owner workflow does not require account sign-in or Admin/Editor roles.
 
 ## First-release limits
-- **One site installation, one sample theme, one publishing path** in the proof of concept.
-- No drag-and-drop designer, arbitrary custom HTML editor, or automatic theme import.
-- Android is the first packaged target; iOS is deferred until Android is validated.
-- Full local Astro builds on Android are a feasibility gate; the existing renderer experiment does not prove this capability.
-- Desktop run uses Node.js/npm and does not require a separate installer.
-- Keep the current local-only Node API; do not introduce a hosted backend or database without a demonstrated need.
+- **One site installation, one bundled default theme (`Atelier v1.0.0`), one remote host adapter (`Cloudflare Pages`)** in the current release.
+- No drag-and-drop designer, arbitrary custom HTML editor, or automatic unverified third-party theme import.
+- Android is distributed as a standalone offline APK (`astro-static-studio.apk`) with all PWA install prompts removed; iOS is packaged as a standalone offline Capacitor app (`ios/`).
+- All editing, WebP image processing, bundled default theme, and local preview run 100% offline; internet is only needed for publishing or downloading future online themes.
+- Desktop installation runs cross-platform via Node.js/npm (`npx astro-static-studio` / `astro-studio`).
+- Keep the local Express API (`PORT=3000`); do not introduce a hosted Studio backend or database.
 - Avoid a broad plugin ecosystem, e-commerce, or complex user-management screens.
 
 ## Acceptance criteria
@@ -43,10 +43,10 @@ Prove that a non-technical owner can manage a simple portfolio with **one Astro 
 10. Use at least one real non-technical tester before calling the MVP usable.
 
 ## Platform note
-Desktop setup requires Node.js/npm. Android is the first native package target. iOS is a later phase. Do not claim full mobile Astro builds until verified on a real Android device.
+Desktop CLI runs via Node.js 22+ / npm on Windows, macOS, and Linux. Android (`astro-static-studio.apk`) and iOS (`astro-static-studio*.ipa` / `.xcarchive.zip`) are packaged with Capacitor and synced automatically via `.github/workflows/release.yml`. Do not claim full on-device Astro CLI builds inside mobile WebViews; mobile uses offline local editing, `IndexedDB` WebP storage, and built-in offline HTML preview, while full static Astro CLI builds and Cloudflare deployment run in Node/CI.
 
 ## Excluded from MVP
-Multiple publisher adapters; curated Astro theme gallery; visual page builder; iOS before Android proof; collaborative editing.
+Multiple publisher adapters; unverified third-party theme marketplace; visual drag-and-drop page builder; collaborative multi-user role management.
 
 ## Prototype order
 Local content/preview and a Cloudflare QA preview publish are implemented; the remaining immediate gate is task-based testing with a non-technical desktop owner. Android full-build feasibility and packaging come later. The proposed collection/block redesign follows an incremental, backed-up content migration, not a one-shot replacement.
@@ -55,7 +55,7 @@ References: [MDN PWA installability](https://developer.mozilla.org/en-US/docs/We
 
 ## Current implementation versus proposed follow-up
 
-**Implemented in this repository (desktop local workflow):** React/TypeScript PWA shell, loopback Node API, Astro sample renderer, `content/content.json` validated with Zod v1, page/project editing with text and gallery components, image conversion, local backup/restore, temporary-directory static build and Cloudflare Pages QA preview publishing. Cloudflare production publishing, real non-technical acceptance testing, Android product workflow, free-template picker, RTL/LTR site setting, article/artist/photo collection types, rich-text editor and static pagination are **not verified as implemented**.
+**Implemented in this workspace:** React/TypeScript Content V2 dashboard (`apps/admin`), unified Express server on port `3000` (`apps/api`), Astro static renderer with bundled `Atelier v1.0.0` theme (`apps/site` & `packages/theme`), V1→V2 migration and backup/restore, Sharp & client-side Canvas WebP conversion, local offline preview, cross-platform Node CLI (`npx astro-static-studio`), native Capacitor Android (`astro-static-studio.apk`) & iOS (`ios/`) projects without Android PWA install banners, and automated GitHub Releases (`.github/workflows/release.yml`). Cloudflare production publishing, physical Android/iOS device acceptance, and downloading future online themes remain to be verified/implemented.
 
 **Proposed follow-up, outside the existing v1 acceptance baseline:** a guided template-first setup, editable Pages and typed Collections with one-level categories, simple collection-view page blocks, plain rich text, theme-supported direction setting and two independent paging concerns (CMS data retrieval and generated static URLs). No arbitrary schema builder or drag-and-drop editor. See [CONTENT_MODEL.md](CONTENT_MODEL.md).
 

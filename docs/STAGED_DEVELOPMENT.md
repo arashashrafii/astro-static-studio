@@ -6,14 +6,13 @@ Canonical tracking issue: https://github.com/arashashrafii/astro-static-studio/i
 
 Progress update: #13 is verified and closed. See [DESKTOP_BUILD_BASELINE](DESKTOP_BUILD_BASELINE.md)
 and its [Verified Solution](https://github.com/arashashrafii/astro-static-studio/issues/13#issuecomment-6463842587).
-The phase tables below are the original planning snapshot. Current owner decisions (2026-11-04):
-#5 is closed; #15 is the next technical issue and begins with cold offline WebContainer
-diagnosis; #14 is deferred until Android results; #16 follows #15 with Android as the priority;
-#17 remains gated by #16, and #10 by #17; #18 is closed with current Collection scope settled;
-#19 targets Content V2 in the local uncommitted workspace, with V1 retained as migration and
-recovery input; #11 and #12 remain optional/deferred. See the matching GitHub issue comments.
-Earlier Android emulator and runtime evidence remains in the linked issue reports; it is not
-physical-device acceptance.
+The phase tables below are the original planning snapshot. Current implementation & owner decisions:
+#5 is closed; #18 is closed; Content V2, bundled Atelier v1.0.0 theme, 100% offline editing/WebP/preview,
+cross-platform Node/npm CLI (`npx astro-static-studio`), native Capacitor Android (`astro-static-studio.apk`)
+& iOS (`ios/`) projects (with Android PWA install prompts removed), and `.github/workflows/release.yml`
+for automated GitHub Releases are implemented in the current workspace. Real-device testing of the
+GitHub Release APK/IPA artifacts (#9/#14/#26) and Cloudflare production publishing remain to be verified
+by the owner after pushing to GitHub.
 
 ## Status
 Build feasibility is **Partially Verified**; the final build architecture is **Unresolved**. This map is a work queue, not architecture approval.

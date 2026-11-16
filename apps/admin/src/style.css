@@ -330,8 +330,9 @@ aside nav{display:flex;flex-direction:column}aside nav>button{width:100%;min-hei
 @media(max-width:48rem){.v2-shell .form-action-buttons .action-group-left,.v2-shell .form-action-buttons .action-group-right{@apply flex items-center gap-2}.v2-shell .block-remove-button .action-label{@apply hidden}.v2-shell .block-remove-button{@apply h-10 w-10 min-h-10 min-w-10 p-2}}
 
 /* Focused dashboard UX updates: activity, event notices, and compact collection rows. */
-.v2-shell .status-notification{@apply fixed z-[90] flex min-h-12 items-center justify-between gap-3 rounded-xl border border-studio-line bg-white px-4 py-3 text-sm text-studio-ink shadow-lg;top:6.25rem;left:calc((100vw - 15rem)/2);right:auto;width:min(38rem,calc(100vw - 19rem));transform:translateX(-50%)}
-.v2-shell .status-notification button{@apply grid h-8 w-8 min-h-8 shrink-0 place-items-center rounded-full p-0 text-xl text-studio-muted}
+.v2-shell .status-notification{@apply mb-5 flex w-full min-h-12 items-center justify-between gap-3 rounded-xl border border-studio-line bg-stone-50 px-4 py-3 text-sm text-studio-ink;position:static;top:auto;left:auto;right:auto;transform:none;box-shadow:none}
+.v2-shell .status-notification span{@apply text-sm leading-6}
+.v2-shell .status-notification button{@apply grid h-8 w-8 min-h-8 shrink-0 place-items-center rounded-full border border-stone-200 bg-white p-0 text-xl text-studio-muted}
 .v2-shell .activity-panel{@apply mt-5}
 .v2-shell .activity-chart{@apply mt-5 flex h-52 items-end justify-around gap-3 rounded-xl bg-stone-50 px-4 pb-3 pt-4}
 .v2-shell .activity-day{@apply flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-2}
@@ -347,9 +348,7 @@ aside nav{display:flex;flex-direction:column}aside nav>button{width:100%;min-hei
 .v2-shell .image-actions .icon-button{@apply grid h-10 w-10 min-h-10 min-w-10 place-items-center rounded-lg border border-stone-200 bg-white p-2 text-studio-forest}
 .v2-shell .image-actions .icon-button.danger{@apply border-red-200 text-studio-coral}
 .v2-shell .collection-kind-select .v2-help-tip,.v2-shell .page-editor-form label .v2-help-tip{@apply mr-1}
-@media(max-width:64rem){.v2-shell .status-notification{left:calc((100vw - 13rem)/2);width:min(38rem,calc(100vw - 17rem))}}
 @media(max-width:48rem){
- .v2-shell .status-notification{top:calc(3.5rem + 7rem);left:1rem;right:1rem;width:auto;transform:none}
  .v2-shell .collection-admin-row{@apply flex-row items-center gap-2 px-1 py-3}
  .v2-shell .collection-admin-row .collection-row-actions{@apply flex-row gap-1}
  .v2-shell .collection-row-actions button.icon-button{@apply h-10 w-10 min-h-10 min-w-10}
