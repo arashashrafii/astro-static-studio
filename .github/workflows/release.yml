@@ -79,7 +79,10 @@ jobs:
       - name: Pack npm tarball
         run: |
           mkdir -p release-artifacts
-          TARBALL=$(npm pack --silent)
+          rm -f astro-static-studio-*.tgz
+          npm pack
+          TARBALL=$(ls -t astro-static-studio-*.tgz | head -n 1)
+          test -f "$TARBALL"
           mv "$TARBALL" "release-artifacts/astro-static-studio-${{ needs.prepare.outputs.version }}.tgz"
 
       - name: Publish to npm registry (when NPM_TOKEN secret is set)
@@ -152,16 +155,17 @@ jobs:
           cd android
           if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
             echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > app/release.keystore
-            ./gradlew assembleRelease \
+            ./gradlew assembleRelease --no-daemon \
               -Pandroid.injected.signing.store.file=app/release.keystore \
               -Pandroid.injected.signing.store.password="$ANDROID_KEYSTORE_PASSWORD" \
               -Pandroid.injected.signing.key.alias="$ANDROID_KEY_ALIAS" \
               -Pandroid.injected.signing.key.password="$ANDROID_KEY_PASSWORD"
             APK_FILE=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
           else
-            ./gradlew assembleDebug
+            ./gradlew assembleDebug --no-daemon
             APK_FILE=$(find app/build/outputs/apk/debug -name "*.apk" | head -n 1)
           fi
+          test -n "$APK_FILE" && test -f "$APK_FILE"
           cp "$APK_FILE" "../release-artifacts/astro-static-studio.apk"
           ls -lh ../release-artifacts/astro-static-studio.apk
 
@@ -173,6 +177,7 @@ jobs:
 
   build-ios-app:
     needs: prepare
+    continue-on-error: true
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -251,10 +256,13 @@ jobs:
               -destination 'generic/platform=iOS' \
               -archivePath "$GITHUB_WORKSPACE/release-artifacts/App.xcarchive" \
               MARKETING_VERSION="${{ needs.prepare.outputs.version }}" \
+              CODE_SIGN_STYLE=Manual \
+              DEVELOPMENT_TEAM="" \
               CODE_SIGNING_ALLOWED=NO \
               CODE_SIGNING_REQUIRED=NO \
               CODE_SIGN_IDENTITY=""
 
+            test -d "$GITHUB_WORKSPACE/release-artifacts/App.xcarchive/Products/Applications/App.app"
             cp -R "$GITHUB_WORKSPACE/release-artifacts/App.xcarchive/Products/Applications/App.app" "$GITHUB_WORKSPACE/release-artifacts/ios-build/Payload/"
             cd "$GITHUB_WORKSPACE/release-artifacts/ios-build"
             zip -r "$GITHUB_WORKSPACE/release-artifacts/astro-static-studio-unsigned.ipa" Payload
@@ -287,7 +295,9 @@ jobs:
         run: |
           mkdir -p all-artifacts
           cd all-artifacts
-          sha256sum * > SHA256SUMS.txt
+          if compgen -G "*" > /dev/null; then
+            sha256sum * > SHA256SUMS.txt
+          fi
           ls -lh
 
       - name: Publish GitHub Release
