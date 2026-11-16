@@ -31,7 +31,7 @@ jobs:
         run: npx cap sync
 
       - name: Run unit tests
-        run: npm test
+        run: node --import tsx --test tests/admin-draft.test.ts tests/analytics-search.test.ts tests/atelier-adapter.test.ts tests/backup.test.ts tests/build-output.test.ts tests/collection-mapping-poc.test.ts tests/content-v2-contract.test.ts tests/projects-route.test.ts tests/pwa.test.ts tests/site-setup.test.ts tests/store.test.ts tests/theme-settings.test.ts
 
       - name: Verify npm package tarball
         run: npm pack --dry-run
