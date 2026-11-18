@@ -4,7 +4,9 @@ An **offline-first static website CMS and Astro builder** powered by **Content V
 
 ## Platforms & Installation
 
-### 1. Desktop CLI via Node / npm (Windows, macOS, Linux)
+The current targets are the standalone Android app and the Studio dashboard in a desktop browser. On desktop, Node.js runs the Studio server and you use the dashboard from your browser. Cloudflare Pages publishing deploys the generated site, while the Studio dashboard and its API run separately.
+
+### 1. Desktop Web Dashboard via Node / npm (Windows, macOS, Linux)
 
 Requires **Node.js 22+**.
 
