@@ -35,7 +35,7 @@ export const atelierManifest = ThemeManifestV1Schema.parse({
     foreground: { type: 'color', default: '#272b27' },
     accent: { type: 'color', default: '#9b4937' },
   },
-  license: { status: 'unknown', reason: 'The repository has no root LICENSE file or internal theme package license metadata; redistribution rights have not been asserted.' },
+  license: { status: 'verified', spdx: 'MIT', sourceFile: 'LICENSE' },
   dependencies: {
     lockfile: 'package-lock.json',
     packages: [

@@ -64,18 +64,17 @@ const runtime: ThemeRuntimeTarget = {
   ],
 };
 
-test('Atelier manifest records the verified contract, desktop runtime, and unknown license honestly', () => {
+test('Atelier manifest records the verified contract, desktop runtime, and MIT license', () => {
   assert.equal(atelierManifest.manifestVersion, 1);
   assert.equal(atelierManifest.contractVersion, 1);
   assert.equal(atelierManifest.compatibility.astro.testedVersion, '7.4.2');
   assert.equal(atelierManifest.compatibility.node.testedVersion, '24.13.0');
   assert.deepEqual(atelierManifest.localization.directions, ['ltr', 'rtl']);
-  assert.equal(atelierManifest.license.status, 'unknown');
+  assert.deepEqual(atelierManifest.license, { status: 'verified', spdx: 'MIT', sourceFile: 'LICENSE' });
   assert.equal(atelierManifest.adapter.entryPoint, './studio/adapter.ts');
   assert.equal(atelierManifest.adapter.exportName, 'createThemeAdapter');
   assert.equal(atelierManifest.localization.contentLocalePolicy, 'any-bcp47-pass-through');
-  assert.deepEqual(validateThemeManifest(atelierManifest, runtime).map(diagnostic => diagnostic.code), ['theme.license.unknown']);
-  assert.deepEqual(validateThemeManifest(atelierManifest, { ...runtime, nodeVersion: 'v24.13.0' }).map(diagnostic => diagnostic.code), ['theme.license.unknown']);
+  assert.deepEqual(validateThemeManifest(atelierManifest, runtime), []);
 });
 
 test('Atelier dependency claims match the workspace declarations and lockfile resolutions', async () => {
@@ -103,7 +102,7 @@ test('theme compatibility reports unknown versions, incompatible runtimes, and m
 
   const incompatible = validateThemeManifest(atelierManifest, { ...runtime, contractVersion: 2, contentVersion: 3, astroVersion: '8.0.0', nodeVersion: '25.0.0' });
   assert.deepEqual(incompatible.map(diagnostic => diagnostic.code), [
-    'theme.contract.incompatible', 'theme.content.incompatible', 'theme.astro.incompatible', 'theme.node.incompatible', 'theme.license.unknown',
+    'theme.contract.incompatible', 'theme.content.incompatible', 'theme.astro.incompatible', 'theme.node.incompatible',
   ]);
 
   const missingRequired = validateThemeManifest(atelierManifest, { ...runtime, availableCapabilities: ['content.v2'] });
@@ -112,7 +111,8 @@ test('theme compatibility reports unknown versions, incompatible runtimes, and m
 
 test('optional capabilities warn while required capabilities block compatibility', () => {
   const availableCapabilities = runtime.availableCapabilities.filter(capability => capability !== 'field.category' && capability !== 'route.collectionList');
-  const diagnostics = validateThemeManifest(atelierManifest, { ...runtime, availableCapabilities });
+  const unlicensedTheme = { ...atelierManifest, license: { status: 'unknown', reason: 'No license declared.' } };
+  const diagnostics = validateThemeManifest(unlicensedTheme, { ...runtime, availableCapabilities });
   assert.equal(diagnostics.some(diagnostic => diagnostic.severity === 'error'), false);
   assert(diagnostics.some(diagnostic => diagnostic.code === 'theme.capability.optional' && diagnostic.message.includes('field.category')));
   assert(diagnostics.some(diagnostic => diagnostic.code === 'theme.capability.optional' && diagnostic.message.includes('route.collectionList')));

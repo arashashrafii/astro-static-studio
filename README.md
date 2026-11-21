@@ -85,6 +85,14 @@ npm run lint         # Strict TypeScript check across workspaces
 npm test             # Run unit test suite
 ```
 
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for local verification and the fork and pull request workflow. [@arashashrafii](https://github.com/arashashrafii) coordinates the repository and reviews changes for `main`.
+
+## License
+
+Astro Static Studio and the bundled Atelier theme are available under the [MIT License](LICENSE). Third-party components retain their own licenses.
+
 ## Repository Structure
 
 - `apps/admin`: Persian RTL React + Vite + Tailwind CSS dashboard (`Content V2` editor, client-side WebP conversion, offline preview, Service Worker auto-update).
